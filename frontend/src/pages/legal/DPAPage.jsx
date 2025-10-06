@@ -32,7 +32,7 @@ const DPAPage = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
-                <FileShield className="h-8 w-8 text-primary" />
+                <Shield className="h-8 w-8 text-primary" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Data Processing Addendum
