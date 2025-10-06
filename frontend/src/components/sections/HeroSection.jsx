@@ -24,26 +24,24 @@ const HeroSection = () => {
 
             {/* Main Headline */}
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 text-balance leading-tight">
-              Extend your dev capacity in{' '}
+              Custom software development — start in{' '}
               <span className="gradient-text">2 weeks</span>
-              {' '}— risk-free
             </h1>
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-balance leading-relaxed">
-              Outsourcing and Dedicated Teams for US/EU startups and SMBs. 
-              Faster delivery without long hiring cycles.
+              Outsourcing teams for US/EU companies. Ship faster without long hiring cycles — risk‑free trial.
             </p>
 
             {/* Value Props */}
             <div className="flex flex-wrap justify-center gap-6 text-gray-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Senior developers only</span>
+                <span>Senior engineers only</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>2-week trial period</span>
+                <span>2‑week trial</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
@@ -52,24 +50,19 @@ const HeroSection = () => {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+            <div className="flex justify-center pt-8">
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-primary hover:bg-primary-dark text-white px-8 py-4 text-lg font-semibold rounded-xl hover-lift group"
+                style={{ backgroundColor: '#2F89FC', color: '#fff' }}
+                className="hover:bg-[#1F6ED4] px-8 py-4 text-lg font-semibold rounded-xl hover-lift group transition-colors"
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#1F6ED4'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = '#2F89FC'}
               >
                 <Link to="/contact">
                   Book a Free Consultation
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-4 text-lg font-semibold rounded-xl hover-lift"
-              >
-                <span>Get Pricing PDF</span>
               </Button>
             </div>
 
