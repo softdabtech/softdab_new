@@ -76,7 +76,7 @@ const CTASection = () => {
           </div>
 
           {/* Trust Indicators */}
-          <div className="text-sm text-gray-400">
+          <div className="text-sm text-gray-300">
             <p>✓ No setup fees • ✓ Flexible scaling • ✓ Direct communication • ✓ Transparent pricing</p>
           </div>
         </div>
