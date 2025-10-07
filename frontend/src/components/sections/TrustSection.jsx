@@ -1,5 +1,4 @@
 import React from 'react';
-import { Star } from 'lucide-react';
 
 const TrustSection = () => {
   const stats = [
@@ -9,13 +8,31 @@ const TrustSection = () => {
     { number: '50+', label: 'Happy Clients' }
   ];
 
-  const logos = [
-    'Client Logo 1',
-    'Client Logo 2', 
-    'Client Logo 3',
-    'Client Logo 4',
-    'Client Logo 5',
-    'Client Logo 6'
+  const technologies = [
+    { 
+      name: 'C++', 
+      icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg' 
+    },
+    { 
+      name: 'C#', 
+      icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg' 
+    },
+    { 
+      name: 'JavaScript', 
+      icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg' 
+    },
+    { 
+      name: 'Node.js', 
+      icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg' 
+    },
+    { 
+      name: 'Python', 
+      icon: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg' 
+    },
+    { 
+      name: 'IoT', 
+      icon: 'https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/raspberrypi.svg' 
+    }
   ];
 
   return (
@@ -35,29 +52,30 @@ const TrustSection = () => {
           ))}
         </div>
 
-        {/* Client Logos */}
+        {/* Technology Stack */}
         <div className="border-t border-gray-200 pt-12">
           <div className="text-center mb-8">
-            <p className="text-gray-600 font-medium mb-4">Trusted by leading companies</p>
-            <div className="flex justify-center items-center space-x-1 mb-6">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-              ))}
-              <span className="ml-2 text-gray-600">4.9/5 average rating</span>
-            </div>
+            <p className="text-gray-600 font-medium mb-6">Tools & Platforms we work with</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
-            {logos.map((logo, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+            {technologies.map((tech, index) => (
               <div 
                 key={index} 
-                className="flex items-center justify-center h-16 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-sm transition-shadow"
+                className="flex items-center justify-center w-16 h-16 group"
+                title={tech.name}
               >
-                <div className="text-gray-400 font-semibold text-sm">
-                  {logo}
-                </div>
+                <img 
+                  src={tech.icon}
+                  alt={tech.name}
+                  className="w-12 h-12 object-contain filter grayscale opacity-60 group-hover:opacity-100 group-hover:filter-none transition-all duration-300"
+                />
               </div>
             ))}
+          </div>
+          
+          <div className="text-center mt-6">
+            <p className="text-sm text-gray-500">We select the stack based on your product goals.</p>
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ const DedicatedTeamsPage = React.lazy(() => import('./pages/services/DedicatedTe
 const FintechPage = React.lazy(() => import('./pages/industries/FintechPage'));
 const HealthcarePage = React.lazy(() => import('./pages/industries/HealthcarePage'));
 const EcommercePage = React.lazy(() => import('./pages/industries/EcommercePage'));
+const LogisticsPage = React.lazy(() => import('./pages/industries/LogisticsPage'));
 const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
 const CaseDetailPage = React.lazy(() => import('./pages/CaseDetailPage'));
 const AboutPage = React.lazy(() => import('./pages/company/AboutPage'));
@@ -36,6 +37,7 @@ function App() {
               <Route path="/industries/fintech" element={<FintechPage />} />
               <Route path="/industries/healthcare" element={<HealthcarePage />} />
               <Route path="/industries/ecommerce" element={<EcommercePage />} />
+              <Route path="/industries/logistics" element={<LogisticsPage />} />
               <Route path="/case-studies" element={<CaseStudiesPage />} />
               <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
               <Route path="/about" element={<AboutPage />} />

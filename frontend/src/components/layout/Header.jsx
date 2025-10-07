@@ -35,6 +35,7 @@ const Header = () => {
       { name: 'Fintech', href: '/industries/fintech', description: 'Financial technology solutions' },
       { name: 'Healthcare', href: '/industries/healthcare', description: 'Healthcare & medical software' },
       { name: 'eCommerce', href: '/industries/ecommerce', description: 'Online retail & marketplace solutions' },
+      { name: 'Logistics', href: '/industries/logistics', description: 'Supply chain & fleet management' },
     ],
     company: [
       { name: 'About', href: '/about' },

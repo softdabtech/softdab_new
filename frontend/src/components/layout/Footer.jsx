@@ -15,6 +15,7 @@ const Footer = () => {
       { name: 'Fintech', href: '/industries/fintech' },
       { name: 'Healthcare', href: '/industries/healthcare' },
       { name: 'eCommerce', href: '/industries/ecommerce' },
+      { name: 'Logistics', href: '/industries/logistics' },
     ],
     company: [
       { name: 'About', href: '/about' },

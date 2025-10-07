@@ -36,7 +36,7 @@ const IndustriesSection = () => {
       description: 'Supply chain and logistics management systems with real-time tracking and optimization.',
       features: ['Fleet management', 'Route optimization', 'Real-time tracking', 'Supply chain analytics'],
       href: '/industries/logistics',
-      color: 'from-purple-500 to-purple-600'
+      color: 'from-orange-500 to-orange-600'
     }
   ];
 
