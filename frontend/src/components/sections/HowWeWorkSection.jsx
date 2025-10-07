@@ -57,8 +57,8 @@ const HowWeWorkSection = () => {
                     <div className="hidden lg:block absolute top-16 left-full w-full h-px bg-gradient-to-r from-primary to-transparent opacity-30 z-0"></div>
                   )}
                   
-                  <Card className="relative z-10 text-center hover:shadow-lg transition-all duration-300 hover-lift bg-white border border-gray-200">
-                    <CardContent className="pt-8 pb-6">
+                  <Card className="relative z-10 text-center hover:shadow-lg transition-all duration-300 hover-lift bg-white border border-gray-200 h-full">
+                    <CardContent className="pt-8 pb-6 h-full flex flex-col justify-between">
                       {/* Step Number */}
                       <div className="text-primary text-sm font-bold mb-4 opacity-60">
                         {step.number}
