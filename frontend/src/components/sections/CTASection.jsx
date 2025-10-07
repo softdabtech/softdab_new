@@ -54,8 +54,8 @@ const CTASection = () => {
                   <div className="w-16 h-16 mx-auto mb-4 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center">
                     <IconComponent className="h-8 w-8 text-cyan-400" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">{benefit.title}</h3>
-                  <p className="text-gray-300 text-sm">{benefit.description}</p>
+                  <h3 className="text-lg font-bold mb-2 text-gray-100">{benefit.title}</h3>
+                  <p className="text-gray-200 text-sm">{benefit.description}</p>
                 </div>
               );
             })}
