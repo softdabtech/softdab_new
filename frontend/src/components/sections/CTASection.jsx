@@ -33,14 +33,14 @@ const CTASection = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Headline */}
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-gray-100">
             Start in 2 weeks —{' '}
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               risk-free trial
             </span>
           </h2>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 text-balance max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-200 mb-12 text-balance max-w-3xl mx-auto">
             Join 50+ companies who've accelerated their development with SoftDAB. 
             No contracts, no risk, just results.
           </p>
