@@ -62,7 +62,7 @@ const CTASection = () => {
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <div className="flex justify-center mb-8">
             <Button 
               asChild 
               size="lg" 
@@ -72,14 +72,6 @@ const CTASection = () => {
                 Book a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-lg font-semibold rounded-xl hover-lift"
-            >
-              Get Pricing PDF
             </Button>
           </div>
 
