@@ -58,30 +58,34 @@ const HowWeWorkSection = () => {
                   )}
                   
                   <Card className="relative z-10 text-center hover:shadow-lg transition-all duration-300 hover-lift bg-white border border-gray-200 h-full">
-                    <CardContent className="pt-8 pb-6 h-full flex flex-col justify-between">
-                      {/* Step Number */}
-                      <div className="text-primary text-sm font-bold mb-4 opacity-60">
-                        {step.number}
+                    <CardContent className="pt-8 pb-6 h-full flex flex-col">
+                      <div className="flex-1 flex flex-col">
+                        {/* Step Number */}
+                        <div className="text-primary text-sm font-bold mb-4 opacity-60">
+                          {step.number}
+                        </div>
+                        
+                        {/* Icon */}
+                        <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
+                          <IconComponent className="h-8 w-8 text-primary" />
+                        </div>
+                        
+                        {/* Title */}
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">
+                          {step.title}
+                        </h3>
+                        
+                        {/* Description */}
+                        <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-1">
+                          {step.description}
+                        </p>
                       </div>
                       
-                      {/* Icon */}
-                      <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
-                        <IconComponent className="h-8 w-8 text-primary" />
-                      </div>
-                      
-                      {/* Title */}
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">
-                        {step.title}
-                      </h3>
-                      
-                      {/* Description */}
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                        {step.description}
-                      </p>
-                      
-                      {/* Timeline */}
-                      <div className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-700">
-                        {step.timeline}
+                      {/* Timeline - Always at bottom */}
+                      <div className="mt-auto">
+                        <div className="inline-flex items-center px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-700">
+                          {step.timeline}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
