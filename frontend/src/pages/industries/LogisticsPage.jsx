@@ -7,49 +7,50 @@ import { Badge } from '../../components/ui/badge';
 
 const LogisticsPage = () => {
   useEffect(() => {
+    // Title
     document.title = 'Logistics Software Development | Supply Chain Management | SoftDAB';
+
+    // Meta description (add 8 years)
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Custom logistics and supply chain software development. Fleet management, route optimization, warehouse management, and real-time tracking solutions.';
+      metaDescription.content =
+        'Custom logistics & supply chain software from a partner with 8 years in IT. Fleet management, route optimization, WMS, and real-time tracking solutions.';
     }
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://www.softdab.tech"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Industries",
-          "item": "https://www.softdab.tech/industries"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Logistics"
-        }
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
+        { '@type': 'ListItem', position: 2, name: 'Industries', item: 'https://www.softdab.tech/industries' },
+        { '@type': 'ListItem', position: 3, name: 'Logistics' }
       ]
     };
 
-    // Service Schema
+    // Service Schema (SEO)
     const serviceSchema = {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Logistics Software Development",
-      "description": "Custom logistics and supply chain management software solutions",
-      "provider": {
-        "@type": "Organization",
-        "name": "SoftDAB"
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Logistics Software Development',
+      description:
+        'Custom logistics and supply chain management software: fleet management, route optimization, WMS, and real-time visibility.',
+      provider: {
+        '@type': 'Organization',
+        name: 'SoftDAB',
+        url: 'https://www.softdab.tech',
+        foundingDate: '2017',
+        logo: 'https://www.softdab.tech/logo.png'
       },
-      "areaServed": ["United States", "European Union"],
-      "serviceType": "Software Development"
+      areaServed: ['United States', 'European Union'],
+      serviceType: 'Software Development',
+      category: 'Logistics & Supply Chain',
+      termsOfService: 'https://www.softdab.tech/terms',
+      offers: {
+        '@type': 'Offer',
+        availability: 'https://schema.org/InStock',
+        priceCurrency: 'USD'
+      }
     };
 
     const script1 = document.createElement('script');
@@ -63,11 +64,12 @@ const LogisticsPage = () => {
     document.head.appendChild(script2);
 
     return () => {
-      document.head.removeChild(script1);
-      document.head.removeChild(script2);
+      if (document.head.contains(script1)) document.head.removeChild(script1);
+      if (document.head.contains(script2)) document.head.removeChild(script2);
     };
   }, []);
 
+  // Content
   const challenges = [
     'Complex supply chain visibility across multiple stakeholders',
     'Real-time tracking and inventory management at scale',
@@ -81,54 +83,48 @@ const LogisticsPage = () => {
     {
       icon: Truck,
       title: 'Fleet Management Systems',
-      description: 'Comprehensive fleet tracking, maintenance scheduling, and driver management with real-time GPS monitoring.',
+      description:
+        'Comprehensive fleet tracking, maintenance scheduling, and driver management with real-time GPS monitoring.',
       features: ['Vehicle tracking & telematics', 'Maintenance scheduling', 'Driver performance monitoring', 'Fuel optimization']
     },
     {
       icon: MapPin,
       title: 'Route Optimization',
-      description: 'AI-powered route planning that considers traffic, delivery windows, vehicle capacity, and driver hours.',
+      description:
+        'AI-powered route planning that considers traffic, delivery windows, vehicle capacity, and driver hours.',
       features: ['Dynamic route planning', 'Traffic integration', 'Delivery time windows', 'Multi-stop optimization']
     },
     {
       icon: BarChart,
       title: 'Supply Chain Analytics',
-      description: 'Real-time visibility across your entire supply chain with predictive analytics and KPI dashboards.',
+      description:
+        'Real-time visibility across your entire supply chain with predictive analytics and KPI dashboards.',
       features: ['Real-time tracking', 'Predictive analytics', 'Performance dashboards', 'Exception alerts']
     },
     {
       icon: Clock,
       title: 'Warehouse Management',
-      description: 'Automated warehouse operations including inventory management, picking optimization, and dock scheduling.',
+      description:
+        'Automated warehouse operations including inventory management, picking optimization, and dock scheduling.',
       features: ['Inventory management', 'Pick path optimization', 'Dock scheduling', 'Automated workflows']
     }
   ];
 
   const integrations = [
-    {
-      icon: Shield,
-      title: 'ERP Integration',
-      description: 'Seamless integration with SAP, Oracle, Microsoft Dynamics, and other enterprise systems.'
-    },
-    {
-      icon: Zap,
-      title: 'API Connectivity',
-      description: 'RESTful APIs for connecting with carriers, customs systems, and third-party logistics providers.'
-    },
-    {
-      icon: CheckCircle,
-      title: 'Compliance Systems',
-      description: 'Built-in compliance with DOT regulations, international shipping requirements, and safety standards.'
-    },
-    {
-      icon: BarChart,
-      title: 'IoT & Sensors',
-      description: 'Integration with temperature sensors, RFID tags, and other IoT devices for cargo monitoring.'
-    }
+    { icon: Shield, title: 'ERP Integration', description: 'Seamless integration with SAP, Oracle, Microsoft Dynamics, and other enterprise systems.' },
+    { icon: Zap, title: 'API Connectivity', description: 'RESTful APIs for connecting with carriers, customs systems, and third-party logistics providers.' },
+    { icon: CheckCircle, title: 'Compliance Systems', description: 'Built-in compliance with DOT, international shipping, and safety standards.' },
+    { icon: BarChart, title: 'IoT & Sensors', description: 'Integration with temperature sensors, RFID tags, and other IoT devices for cargo monitoring.' }
   ];
 
   const technologies = ['React', 'Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'Docker', 'AWS', 'Google Maps API', 'TensorFlow'];
   const compliance = ['DOT Regulations', 'FMCSA Compliance', 'HAZMAT Standards', 'International Shipping', 'Customs Integration'];
+
+  // Helper
+  const humanizeKey = (key) => (key || 'Result').replace(/([A-Z])/g, ' $1').trim();
+
+  // Optional: if you have a logistics case in your dataset, plug here (kept safe)
+  // const caseStudy = (mockData?.caseStudies || []).find(s => s.industry === 'Logistics');
 
   return (
     <div className="min-h-screen">
@@ -152,20 +148,24 @@ const LogisticsPage = () => {
             <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center">
               <Truck className="h-10 w-10 text-white" />
             </div>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Badge variant="outline" className="border-orange-200 text-orange-700">8 years in IT</Badge>
+            </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Logistics & Supply Chain Software Development
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              Transform your supply chain operations with custom logistics software. 
-              Fleet management, route optimization, and real-time tracking solutions.
+              Transform your supply chain with custom software: fleet management, route optimization, WMS, and real-time visibility.
             </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
-              {compliance.map((item, index) => (
-                <Badge key={index} variant="outline" className="bg-white/80">
-                  {item}
-                </Badge>
-              ))}
-            </div>
+            {Array.isArray(compliance) && compliance.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                {compliance.map((item, index) => (
+                  <Badge key={index} variant="outline" className="bg-white/80">
+                    {item}
+                  </Badge>
+                ))}
+              </div>
+            )}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-orange-600 hover:bg-orange-700">
                 <Link to="/contact">
@@ -173,8 +173,18 @@ const LogisticsPage = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="bg-white/80 hover:bg-white">
-                View Case Study
+              {/* If you add a logistics caseStudy later, link it here and enable */}
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-white/80 hover:bg-white"
+                disabled
+                title="Case study coming soon"
+              >
+                <Link to="#">
+                  View Case Study
+                </Link>
               </Button>
             </div>
           </div>
@@ -190,7 +200,7 @@ const LogisticsPage = () => {
                 Logistics <span className="gradient-text">challenges</span> we solve
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Modern logistics operations face complex challenges that require sophisticated technology solutions. 
+                Modern logistics operations face complex challenges that require sophisticated technology solutions.
                 We build systems that address these critical pain points.
               </p>
             </div>
@@ -301,14 +311,16 @@ const LogisticsPage = () => {
             <p className="text-lg text-gray-600 mb-8">
               We use proven technologies to build robust, scalable logistics solutions.
             </p>
-            
-            <div className="flex flex-wrap justify-center gap-3">
-              {technologies.map((tech, index) => (
-                <Badge key={index} variant="outline" className="bg-white text-gray-700 border-gray-300 text-sm py-2 px-4">
-                  {tech}
-                </Badge>
-              ))}
-            </div>
+
+            {Array.isArray(technologies) && technologies.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-3">
+                {technologies.map((tech, index) => (
+                  <Badge key={index} variant="outline" className="bg-white text-gray-700 border-gray-300 text-sm py-2 px-4">
+                    {tech}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -321,7 +333,7 @@ const LogisticsPage = () => {
               Ready to optimize your logistics operations?
             </h2>
             <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-              Let's discuss how we can help you build efficient logistics software 
+              Let&apos;s discuss how we can help you build efficient logistics software
               that reduces costs and improves delivery performance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

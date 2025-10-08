@@ -11,7 +11,7 @@ const EcommercePage = () => {
     document.title = 'eCommerce Software Development | Online Marketplace Solutions | SoftDAB';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Custom eCommerce development services. Build scalable online stores, marketplaces, and B2B platforms with advanced features and integrations.';
+      metaDescription.content = 'Custom eCommerce development from a partner with 8 years in IT. Build scalable online stores, marketplaces, and B2B platforms with advanced features and integrations.';
     }
 
     // Breadcrumb Schema
@@ -39,17 +39,46 @@ const EcommercePage = () => {
       ]
     };
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(breadcrumbSchema);
-    document.head.appendChild(script);
+    // Service Schema (SEO)
+    const serviceSchema = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "eCommerce Software Development",
+      "description": "Custom development of online stores, multi-vendor marketplaces, and B2B commerce platforms with analytics and integrations.",
+      "provider": {
+        "@type": "Organization",
+        "name": "SoftDAB",
+        "url": "https://www.softdab.tech",
+        "foundingDate": "2017",
+        "logo": "https://www.softdab.tech/logo.png"
+      },
+      "areaServed": ["United States", "European Union"],
+      "serviceType": "Software Development",
+      "category": "eCommerce",
+      "offers": {
+        "@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "priceCurrency": "USD"
+      }
+    };
+
+    const script1 = document.createElement('script');
+    script1.type = 'application/ld+json';
+    script1.text = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.type = 'application/ld+json';
+    script2.text = JSON.stringify(serviceSchema);
+    document.head.appendChild(script2);
 
     return () => {
-      document.head.removeChild(script);
+      if (document.head.contains(script1)) document.head.removeChild(script1);
+      if (document.head.contains(script2)) document.head.removeChild(script2);
     };
   }, []);
 
-  const industry = mockData.industries.ecommerce;
+  const industry = mockData?.industries?.ecommerce || { features: [], technologies: [], challenges: [] };
   
   const solutions = [
     {
@@ -101,7 +130,10 @@ const EcommercePage = () => {
     }
   ];
 
-  const caseStudy = mockData.caseStudies.find(study => study.industry === 'eCommerce');
+  const caseStudy = (mockData?.caseStudies || []).find(study => study.industry === 'eCommerce');
+
+  // Helper to render safe key names
+  const humanizeKey = (key) => (key || 'Result').replace(/([A-Z])/g, ' $1').trim();
 
   return (
     <div className="min-h-screen">
@@ -125,6 +157,9 @@ const EcommercePage = () => {
             <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center">
               <ShoppingCart className="h-10 w-10 text-white" />
             </div>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Badge variant="outline" className="border-green-200 text-green-700">8 years in IT</Badge>
+            </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               eCommerce Software Development
             </h1>
@@ -132,13 +167,15 @@ const EcommercePage = () => {
               Build scalable eCommerce solutions with our expertise in online marketplaces, 
               B2B platforms, and high-performance retail applications.
             </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
-              {industry.features.map((item, index) => (
-                <Badge key={index} variant="outline" className="bg-white/80">
-                  {item}
-                </Badge>
-              ))}
-            </div>
+            {Array.isArray(industry.features) && industry.features.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                {industry.features.map((item, index) => (
+                  <Badge key={index} variant="outline" className="bg-white/80">
+                    {item}
+                  </Badge>
+                ))}
+              </div>
+            )}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
                 <Link to="/contact">
@@ -146,8 +183,17 @@ const EcommercePage = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="bg-white/80 hover:bg-white">
-                View Case Study
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-white/80 hover:bg-white"
+                disabled={!caseStudy}
+                title={caseStudy ? 'View Case Study' : 'Case study coming soon'}
+              >
+                <Link to={caseStudy ? `/case-studies/${caseStudy.id}` : '#'}>
+                  View Case Study
+                </Link>
               </Button>
             </div>
           </div>
@@ -169,7 +215,7 @@ const EcommercePage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {industry.challenges.map((challenge, index) => (
+              {(industry.challenges || []).map((challenge, index) => (
                 <Card key={index} className="bg-gray-50 border-0 hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
                     <div className="w-3 h-3 bg-orange-500 rounded-full mb-4"></div>
@@ -275,13 +321,15 @@ const EcommercePage = () => {
               We use proven technologies to build fast, scalable, and maintainable eCommerce solutions.
             </p>
             
-            <div className="flex flex-wrap justify-center gap-3">
-              {industry.technologies.map((tech, index) => (
-                <Badge key={index} variant="outline" className="bg-white text-gray-700 border-gray-300 text-sm py-2 px-4">
-                  {tech}
-                </Badge>
-              ))}
-            </div>
+            {Array.isArray(industry.technologies) && industry.technologies.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-3">
+                {industry.technologies.map((tech, index) => (
+                  <Badge key={index} variant="outline" className="bg-white text-gray-700 border-gray-300 text-sm py-2 px-4">
+                    {tech}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -313,9 +361,9 @@ const EcommercePage = () => {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                       <h4 className="font-bold text-green-800 mb-2">Key Results</h4>
                       <div className="space-y-2 text-sm">
-                        {Object.entries(caseStudy.results).map(([key, value]) => (
+                        {Object.entries(caseStudy.results || {}).map(([key, value]) => (
                           <div key={key} className="flex justify-between">
-                            <span className="text-green-700 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                            <span className="text-green-700 capitalize">{humanizeKey(key)}</span>
                             <span className="font-semibold text-green-800">{value}</span>
                           </div>
                         ))}
@@ -331,7 +379,7 @@ const EcommercePage = () => {
                         <span>{caseStudy.teamSize}</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {caseStudy.technologies.map((tech, index) => (
+                        {(caseStudy.technologies || []).map((tech, index) => (
                           <Badge key={index} variant="outline" className="text-xs">
                             {tech}
                           </Badge>

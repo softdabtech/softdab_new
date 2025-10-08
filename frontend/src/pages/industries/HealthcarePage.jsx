@@ -8,72 +8,98 @@ import { mockData } from '../../data/mockData';
 
 const HealthcarePage = () => {
   useEffect(() => {
+    // Title
     document.title = 'Healthcare Software Development | HIPAA Compliance | SoftDAB';
+
+    // Meta description (add  years)
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'HIPAA-compliant healthcare software development. Telemedicine platforms, EMR systems, and patient management solutions for healthcare providers.';
+      metaDescription.content =
+        'HIPAA-compliant healthcare software development from a partner with 8 years in IT. Telemedicine platforms, EMR/EHR systems, and patient management solutions for providers.';
     }
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://www.softdab.tech"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Industries",
-          "item": "https://www.softdab.tech/industries"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Healthcare"
-        }
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
+        { '@type': 'ListItem', position: 2, name: 'Industries', item: 'https://www.softdab.tech/industries' },
+        { '@type': 'ListItem', position: 3, name: 'Healthcare' }
       ]
     };
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(breadcrumbSchema);
-    document.head.appendChild(script);
+    // Service Schema (SEO)
+    const serviceSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Healthcare Software Development',
+      description:
+        'HIPAA-compliant development of telemedicine platforms, EMR/EHR systems, patient portals, and medical IoT solutions with HL7 FHIR interoperability.',
+      provider: {
+        '@type': 'Organization',
+        name: 'SoftDAB',
+        url: 'https://www.softdab.tech',
+        foundingDate: '2017',
+        logo: 'https://www.softdab.tech/logo.png'
+      },
+      areaServed: ['United States', 'European Union'],
+      serviceType: 'Software Development',
+      category: 'Healthcare IT',
+      termsOfService: 'https://www.softdab.tech/terms',
+      offers: {
+        '@type': 'Offer',
+        availability: 'https://schema.org/InStock',
+        priceCurrency: 'USD'
+      }
+    };
+
+    const script1 = document.createElement('script');
+    script1.type = 'application/ld+json';
+    script1.text = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.type = 'application/ld+json';
+    script2.text = JSON.stringify(serviceSchema);
+    document.head.appendChild(script2);
 
     return () => {
-      document.head.removeChild(script);
+      if (document.head.contains(script1)) document.head.removeChild(script1);
+      if (document.head.contains(script2)) document.head.removeChild(script2);
     };
   }, []);
 
-  const industry = mockData.industries.healthcare;
-  
+  // Safe reads
+  const industry = mockData?.industries?.healthcare || { compliance: [], challenges: [], technologies: [] };
+
   const solutions = [
     {
       icon: Video,
       title: 'Telemedicine Platforms',
-      description: 'Secure video consultation platforms with integrated scheduling, patient records, and prescription management.',
+      description:
+        'Secure video consultation platforms with integrated scheduling, patient records, and prescription management.',
       features: ['HD video consultations', 'Appointment scheduling', 'Digital prescriptions', 'Insurance integration']
     },
     {
       icon: Database,
       title: 'EMR/EHR Systems',
-      description: 'Electronic health record systems with interoperability, clinical workflows, and comprehensive reporting.',
+      description:
+        'Electronic health record systems with interoperability, clinical workflows, and comprehensive reporting.',
       features: ['Patient data management', 'Clinical workflows', 'HL7 FHIR compliance', 'Analytics dashboards']
     },
     {
       icon: Heart,
       title: 'Patient Portals',
-      description: 'Patient-facing applications for appointment booking, health records access, and communication with providers.',
+      description:
+        'Patient-facing applications for appointment booking, health records access, and communication with providers.',
       features: ['Appointment booking', 'Lab results access', 'Secure messaging', 'Health tracking']
     },
     {
       icon: Shield,
       title: 'Medical IoT Solutions',
-      description: 'Connected health devices and remote patient monitoring systems with real-time data collection.',
+      description:
+        'Connected health devices and remote patient monitoring systems with real-time data collection.',
       features: ['Device integration', 'Real-time monitoring', 'Alert systems', 'Data analytics']
     }
   ];
@@ -82,26 +108,32 @@ const HealthcarePage = () => {
     {
       icon: Lock,
       title: 'HIPAA Compliance',
-      description: 'Full compliance with Health Insurance Portability and Accountability Act requirements for protecting patient health information.'
+      description:
+        'Full compliance with Health Insurance Portability and Accountability Act requirements for protecting PHI.'
     },
     {
       icon: FileCheck,
       title: 'HITECH Act',
-      description: 'Compliance with Health Information Technology for Economic and Clinical Health Act provisions for electronic health records.'
+      description:
+        'Compliance with HITECH provisions to strengthen privacy and security protections for electronic health records.'
     },
     {
       icon: Shield,
       title: 'HL7 FHIR Standards',
-      description: 'Implementation of Fast Healthcare Interoperability Resources standards for seamless data exchange.'
+      description:
+        'Implementation of Fast Healthcare Interoperability Resources standards for seamless data exchange.'
     },
     {
       icon: CheckCircle,
       title: 'FDA Regulations',
-      description: 'Understanding of FDA requirements for medical device software and digital health applications.'
+      description:
+        'Understanding of FDA requirements for medical device software and digital health applications.'
     }
   ];
 
-  const caseStudy = mockData.caseStudies.find(study => study.industry === 'Healthcare');
+  const caseStudy = (mockData?.caseStudies || []).find((study) => study.industry === 'Healthcare');
+
+  const humanizeKey = (key) => (key || 'Result').replace(/([A-Z])/g, ' $1').trim();
 
   return (
     <div className="min-h-screen">
@@ -125,20 +157,25 @@ const HealthcarePage = () => {
             <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center">
               <Heart className="h-10 w-10 text-white" />
             </div>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Badge variant="outline" className="border-red-200 text-red-700"> years in IT</Badge>
+            </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Healthcare Software Development
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              Build HIPAA-compliant healthcare applications with our expertise in telemedicine, 
+              Build HIPAA-compliant healthcare applications with our expertise in telemedicine,
               patient management systems, and medical device integration.
             </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
-              {industry.compliance.map((item, index) => (
-                <Badge key={index} variant="outline" className="bg-white/80">
-                  {item}
-                </Badge>
-              ))}
-            </div>
+            {Array.isArray(industry.compliance) && industry.compliance.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                {industry.compliance.map((item, index) => (
+                  <Badge key={index} variant="outline" className="bg-white/80">
+                    {item}
+                  </Badge>
+                ))}
+              </div>
+            )}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-red-600 hover:bg-red-700">
                 <Link to="/contact">
@@ -146,8 +183,17 @@ const HealthcarePage = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="bg-white/80 hover:bg-white">
-                View Case Study
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-white/80 hover:bg-white"
+                disabled={!caseStudy}
+                title={caseStudy ? 'View Case Study' : 'Case study coming soon'}
+              >
+                <Link to={caseStudy ? `/case-studies/${caseStudy.id}` : '#'}>
+                  View Case Study
+                </Link>
               </Button>
             </div>
           </div>
@@ -163,13 +209,13 @@ const HealthcarePage = () => {
                 Healthcare <span className="gradient-text">challenges</span> we solve
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Healthcare technology requires the highest standards of security, privacy, and regulatory compliance. 
+                Healthcare technology requires the highest standards of security, privacy, and regulatory compliance.
                 We navigate these complex requirements successfully.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {industry.challenges.map((challenge, index) => (
+              {(industry.challenges || []).map((challenge, index) => (
                 <Card key={index} className="bg-gray-50 border-0 hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
                     <div className="w-3 h-3 bg-red-500 rounded-full mb-4"></div>
@@ -191,7 +237,8 @@ const HealthcarePage = () => {
                 Our healthcare <span className="gradient-text">solutions</span>
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Comprehensive healthcare technology solutions built for patient safety, regulatory compliance, and operational efficiency.
+                Comprehensive healthcare technology solutions built for patient safety, regulatory compliance,
+                and operational efficiency.
               </p>
             </div>
 
@@ -291,9 +338,9 @@ const HealthcarePage = () => {
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                       <h4 className="font-bold text-green-800 mb-2">Key Results</h4>
                       <div className="space-y-2 text-sm">
-                        {Object.entries(caseStudy.results).map(([key, value]) => (
+                        {Object.entries(caseStudy.results || {}).map(([key, value]) => (
                           <div key={key} className="flex justify-between">
-                            <span className="text-green-700 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                            <span className="text-green-700 capitalize">{humanizeKey(key)}</span>
                             <span className="font-semibold text-green-800">{value}</span>
                           </div>
                         ))}
@@ -309,7 +356,7 @@ const HealthcarePage = () => {
                         <span>{caseStudy.teamSize}</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-2">
-                        {caseStudy.technologies.map((tech, index) => (
+                        {(caseStudy.technologies || []).map((tech, index) => (
                           <Badge key={index} variant="outline" className="text-xs">
                             {tech}
                           </Badge>
@@ -317,7 +364,7 @@ const HealthcarePage = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <Button asChild className="w-full bg-red-600 hover:bg-red-700">
                     <Link to={`/case-studies/${caseStudy.id}`}>
                       Read Full Case Study
@@ -339,7 +386,7 @@ const HealthcarePage = () => {
               Ready to transform healthcare with technology?
             </h2>
             <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
-              Let's discuss how we can help you build secure, compliant healthcare applications 
+              Let&apos;s discuss how we can help you build secure, compliant healthcare applications
               that improve patient outcomes and operational efficiency.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
