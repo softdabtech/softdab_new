@@ -7,19 +7,19 @@ export const mockData = {
   company: {
     name: 'SoftDAB',
     email: 'hello@softdab.tech',
-    phone: '+380 XX XXX XXXX',
+    phone: '+380 68 379 0819',
     address: 'Kyiv, Ukraine',
-    founded: '2019',
-    employees: '50+',
+    founded: '2017',
+    employees: '10+',
     description: 'Custom software development and dedicated teams for US and EU businesses'
   },
 
   // Statistics
   stats: {
-    yearsExperience: '5+',
-    projectsDelivered: '100+',
-    clientSatisfaction: '98%',
-    happyClients: '50+'
+    yearsExperience: '8',
+    projectsDelivered: '20+',
+    clientSatisfaction: '93%',
+    happyClients: '10+'
   },
 
   // Services
@@ -192,6 +192,27 @@ export const mockData = {
       ],
       technologies: ['React', 'Next.js', 'Django', 'PostgreSQL', 'Elasticsearch', 'Redis', 'AWS', 'Shopify API'],
       features: ['Multi-vendor support', 'Advanced analytics', 'Mobile optimization', 'SEO-friendly']
+    },
+    logistics: {
+      title: 'Logistics',
+      description: 'Custom logistics and supply chain solutions: fleet management, route optimization, WMS, and real-time visibility.',
+      challenges: [
+        'Complex supply chain visibility across multiple stakeholders',
+        'Real-time tracking and inventory management at scale',
+        'Route optimization with dynamic constraints and traffic',
+        'Integration with legacy warehouse management systems',
+        'Compliance with international shipping and customs regulations',
+        'Managing fleet maintenance schedules and driver safety'
+      ],
+      solutions: [
+        'Fleet management and telematics systems',
+        'AI-powered route optimization',
+        'Real-time supply chain visibility',
+        'Warehouse management automation',
+        'Carrier and customs API integrations'
+      ],
+      technologies: ['React', 'Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'Redis', 'Docker', 'AWS', 'Google Maps API', 'TensorFlow'],
+      compliance: ['DOT Regulations', 'FMCSA Compliance', 'HAZMAT Standards', 'International Shipping', 'Customs Integration']
     }
   },
 
@@ -264,6 +285,29 @@ export const mockData = {
         text: 'SoftDAB delivered a marketplace platform that exceeded our expectations. The vendor satisfaction increase of 45% speaks volumes about the quality of their work.',
         author: 'Anna Mueller',
         position: 'CEO, EuroMarket'
+      }
+    },
+    {
+      id: 'logistics-fleet-optimization',
+      industry: 'Logistics',
+      title: 'Fleet Optimization & Real-time Tracking',
+      client: 'Global 3PL Provider',
+      description: 'Reduced delivery times by 18% and fuel costs by 12% with AI-driven route optimization and live tracking.',
+      challenge: 'Lack of real-time visibility and suboptimal routing led to missed SLAs, high fuel spend, and customer complaints.',
+      solution: 'Deployed comprehensive telematics, traffic-aware routing, delivery-window planning, and real-time KPI dashboards for operations teams.',
+      results: {
+        deliveryTime: '18% reduction in average delivery time',
+        fuelCost: '12% reduction in fuel costs',
+        onTimeRate: '95% on-time delivery rate',
+        visibility: 'End-to-end real-time visibility'
+      },
+      timeline: '14 weeks',
+      teamSize: '6 developers (2 backend, 2 frontend, 1 data engineer, 1 DevOps)',
+      technologies: ['React', 'Node.js', 'PostgreSQL', 'Redis', 'Docker', 'AWS', 'Google Maps API', 'TensorFlow'],
+      testimonial: {
+        text: 'SoftDAB helped us boost on-time delivery to 95% while cutting fuel costs by 12%. The real-time dashboards completely changed how our operations team works.',
+        author: 'Martin Lopez',
+        position: 'Operations Director, Global 3PL'
       }
     }
   ],
