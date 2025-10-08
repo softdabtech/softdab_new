@@ -1,26 +1,84 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Download, Mail, FileText } from 'lucide-react';
+import { Shield, Download, Mail } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 
 const DPAPage = () => {
   useEffect(() => {
+    // Title
     document.title = 'Data Processing Addendum (DPA) | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'SoftDAB Data Processing Addendum (DPA) for GDPR compliance. Details on how we process personal data for software development services.';
+
+    // Ensure meta description exists or create one
+    const descText =
+      'SoftDAB Data Processing Addendum (DPA) for GDPR compliance. Details on how we process personal data for software development services.';
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
     }
+    metaDescription.setAttribute('content', descText);
+
+    // Breadcrumb Schema
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
+        { '@type': 'ListItem', position: 2, name: 'Data Processing Addendum' }
+      ]
+    };
+
+    // Service/Document Schema
+    const serviceSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Data Processing Addendum (DPA)',
+      description:
+        'SoftDAB DPA outlines GDPR-compliant processing of personal data for software development and related services.',
+      provider: {
+        '@type': 'Organization',
+        name: 'SoftDAB',
+        url: 'https://www.softdab.tech',
+        foundingDate: '2017'
+      },
+      areaServed: ['European Union', 'United States'],
+      serviceType: 'Software Development',
+      termsOfService: 'https://www.softdab.tech/terms',
+      offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', priceCurrency: 'USD' }
+    };
+
+    const script1 = document.createElement('script');
+    script1.type = 'application/ld+json';
+    script1.text = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.type = 'application/ld+json';
+    script2.text = JSON.stringify(serviceSchema);
+    document.head.appendChild(script2);
+
+    return () => {
+      if (document.head.contains(script1)) document.head.removeChild(script1);
+      if (document.head.contains(script2)) document.head.removeChild(script2);
+    };
   }, []);
+
+  
+  const dpaPdfUrl = '/docs/dpa.pdf'; // поместите файл в public/docs/dpa.pdf
+  const hasPdf = true; // поставьте false, если файла пока нет
+
+  const lastUpdated = 'January 1, 2024'; 
 
   return (
     <div className="min-h-screen">
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
-          <nav className="text-sm text-gray-600">
+          <nav className="text-sm text-gray-600" aria-label="Breadcrumb">
             <Link to="/" className="hover:text-primary">Home</Link>
-            <span className="mx-2">/</span>
+            <span className="mx-2" aria-hidden="true">/</span>
             <span className="text-gray-900">Data Processing Addendum</span>
           </nav>
         </div>
@@ -32,7 +90,7 @@ const DPAPage = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
-                <Shield className="h-8 w-8 text-primary" />
+                <Shield className="h-8 w-8 text-primary" aria-hidden="true" />
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 Data Processing Addendum
@@ -41,7 +99,7 @@ const DPAPage = () => {
                 GDPR Compliance for Software Development Services
               </p>
               <p className="text-sm text-gray-500">
-                Last updated: January 1, 2024
+                Last updated: {lastUpdated}
               </p>
             </div>
 
@@ -50,7 +108,7 @@ const DPAPage = () => {
               <Card className="border-primary/20 bg-primary/5">
                 <CardHeader>
                   <CardTitle className="text-primary flex items-center">
-                    <Download className="mr-2 h-5 w-5" />
+                    <Download className="mr-2 h-5 w-5" aria-hidden="true" />
                     Download DPA
                   </CardTitle>
                 </CardHeader>
@@ -58,16 +116,29 @@ const DPAPage = () => {
                   <p className="text-gray-700 mb-4">
                     Download the full Data Processing Addendum as a PDF document.
                   </p>
-                  <Button className="w-full">
-                    Download PDF Version
-                  </Button>
+                  {hasPdf ? (
+                    <Button
+                      asChild
+                      className="w-full"
+                      aria-label="Download DPA PDF"
+                      title="Download DPA PDF"
+                    >
+                      <a href={dpaPdfUrl} download rel="noopener">
+                        Download PDF Version
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button className="w-full" disabled title="PDF coming soon">
+                      PDF coming soon
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
 
               <Card className="border-green-200 bg-green-50">
                 <CardHeader>
                   <CardTitle className="text-green-800 flex items-center">
-                    <Mail className="mr-2 h-5 w-5" />
+                    <Mail className="mr-2 h-5 w-5" aria-hidden="true" />
                     Request Signed Copy
                   </CardTitle>
                 </CardHeader>
@@ -75,7 +146,13 @@ const DPAPage = () => {
                   <p className="text-green-800 mb-4">
                     Need a signed DPA for your compliance? Contact our legal team.
                   </p>
-                  <Button asChild variant="outline" className="w-full border-green-300 text-green-800 hover:bg-green-100">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-green-300 text-green-800 hover:bg-green-100"
+                    aria-label="Contact legal team by email"
+                    title="Contact legal team by email"
+                  >
                     <a href="mailto:legal@softdab.tech">
                       Contact Legal Team
                     </a>
@@ -87,32 +164,32 @@ const DPAPage = () => {
             <div className="prose prose-gray max-w-none">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Overview</h2>
               <p className="mb-6 text-gray-700">
-                This Data Processing Addendum (“DPA”) forms part of the service agreement between SoftDAB (“Processor”) 
-                and you (“Controller”) for the provision of software development services. This DPA governs the processing 
+                This Data Processing Addendum (“DPA”) forms part of the service agreement between SoftDAB (“Processor”)
+                and you (“Controller”) for the provision of software development services. This DPA governs the processing
                 of Personal Data (as defined in the GDPR) in connection with our services.
               </p>
 
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-8">1. Definitions</h2>
               <ul className="list-disc pl-6 mb-6 text-gray-700">
-                <li><strong>"Controller"</strong> means the entity that determines the purposes and means of processing Personal Data</li>
-                <li><strong>"Processor"</strong> means SoftDAB, which processes Personal Data on behalf of the Controller</li>
-                <li><strong>"Personal Data"</strong> has the meaning set forth in the GDPR</li>
-                <li><strong>"Processing"</strong> has the meaning set forth in the GDPR</li>
-                <li><strong>"Data Subject"</strong> has the meaning set forth in the GDPR</li>
-                <li><strong>"GDPR"</strong> means the General Data Protection Regulation (EU) 2016/679</li>
+                <li><strong>"Controller"</strong> means the entity that determines the purposes and means of processing Personal Data.</li>
+                <li><strong>"Processor"</strong> means SoftDAB, which processes Personal Data on behalf of the Controller.</li>
+                <li><strong>"Personal Data"</strong> has the meaning set forth in the GDPR.</li>
+                <li><strong>"Processing"</strong> has the meaning set forth in the GDPR.</li>
+                <li><strong>"Data Subject"</strong> has the meaning set forth in the GDPR.</li>
+                <li><strong>"GDPR"</strong> means the General Data Protection Regulation (EU) 2016/679.</li>
               </ul>
 
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-8">2. Processing Details</h2>
-              
+
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Subject Matter</h3>
               <p className="mb-4 text-gray-700">
-                The processing relates to the provision of software development services including custom application development, 
+                The processing relates to the provision of software development services including custom application development,
                 dedicated team services, and related technical services.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Duration</h3>
               <p className="mb-4 text-gray-700">
-                Processing will occur for the duration of the service agreement and may continue as necessary for 
+                Processing will occur for the duration of the service agreement and may continue as necessary for
                 legal compliance or legitimate business purposes.
               </p>
 
@@ -162,7 +239,7 @@ const DPAPage = () => {
               <p className="mb-4 text-gray-700">
                 We implement appropriate technical and organizational measures including:
               </p>
-              
+
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Technical Measures</h3>
               <ul className="list-disc pl-6 mb-4 text-gray-700">
                 <li>Encryption of data in transit and at rest</li>
@@ -196,8 +273,8 @@ const DPAPage = () => {
 
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-8">6. Data Transfers</h2>
               <p className="mb-6 text-gray-700">
-                Personal Data may be transferred outside the EEA to countries that do not provide adequate protection. 
-                In such cases, we implement appropriate safeguards such as Standard Contractual Clauses or rely on 
+                Personal Data may be transferred outside the EEA to countries that do not provide adequate protection.
+                In such cases, we implement appropriate safeguards such as Standard Contractual Clauses or rely on
                 adequacy decisions by the European Commission.
               </p>
 
@@ -216,22 +293,22 @@ const DPAPage = () => {
 
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-8">8. Data Breach Notification</h2>
               <p className="mb-6 text-gray-700">
-                In case of a personal data breach, we will notify you without undue delay and no later than 72 hours 
-                after becoming aware of the breach. We will provide all information necessary for you to assess 
+                In case of a personal data breach, we will notify you without undue delay and no later than 72 hours
+                after becoming aware of the breach. We will provide all information necessary for you to assess
                 the breach and comply with notification requirements.
               </p>
 
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-8">9. Audits and Inspections</h2>
               <p className="mb-6 text-gray-700">
-                We will provide reasonable cooperation for audits and inspections by you or an independent auditor 
-                to verify compliance with this DPA. Audit costs are borne by the requesting party unless 
+                We will provide reasonable cooperation for audits and inspections by you or an independent auditor
+                to verify compliance with this DPA. Audit costs are borne by the requesting party unless
                 non-compliance is found.
               </p>
 
               <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-8">10. Liability and Indemnification</h2>
               <p className="mb-6 text-gray-700">
-                Each party's liability is limited as set forth in the main service agreement. We will indemnify you 
-                against claims arising from our non-compliance with this DPA, subject to the limitations in 
+                Each party's liability is limited as set forth in the main service agreement. We will indemnify you
+                against claims arising from our non-compliance with this DPA, subject to the limitations in
                 the main agreement.
               </p>
 
@@ -239,16 +316,16 @@ const DPAPage = () => {
               <p className="mb-4 text-gray-700">
                 For DPA-related questions or to exercise data subject rights:
               </p>
-              
+
               <Card className="bg-gray-50 border-0">
                 <CardContent className="p-6">
                   <div className="space-y-3">
                     <div className="flex items-center space-x-3">
-                      <Shield className="h-5 w-5 text-primary" />
+                      <Shield className="h-5 w-5 text-primary" aria-hidden="true" />
                       <span><strong>Data Protection Officer:</strong> dpo@softdab.tech</span>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <Mail className="h-5 w-5 text-primary" />
+                      <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
                       <span><strong>Legal Team:</strong> legal@softdab.tech</span>
                     </div>
                     <div>
