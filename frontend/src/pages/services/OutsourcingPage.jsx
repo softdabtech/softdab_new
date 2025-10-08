@@ -408,7 +408,7 @@ const OutsourcingPage = () => {
           variant="outline"
           size="lg"
           className="
-            border-white text-white hover:bg-white/10 hover:text-white
+            border-white text-white hover:bg-blue/10 hover:text-white
             w-full sm:w-[16rem] max-w-[16rem] h-14 rounded-2xl
           "
         >
