@@ -89,7 +89,7 @@ const ContactPage = () => {
     'Free initial consultation',
     'Custom project estimation',
     'Technical feasibility analysis',
-    'Risk assessment and mitigation',
+    'Risk assessment',
     'Timeline and budget planning',
     'Team composition recommendations'
   ];
@@ -104,8 +104,8 @@ const ContactPage = () => {
               Let's Build Something <span className="gradient-text">Amazing</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              Ready to start your software development project? Get a free consultation and 
-              custom quote tailored to your specific needs and requirements.
+              Ready to start your software development project? Get a free consultation and
+              custom quote tailored to your specific needs.
             </p>
             
             {/* Quick Stats */}
@@ -115,8 +115,8 @@ const ContactPage = () => {
                 <div className="text-gray-600">Response time</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">2 weeks</div>
-                <div className="text-gray-600">To start development</div>
+                <div className="text-3xl font-bold text-primary mb-2">Fast start</div>
+                <div className="text-gray-600">Quick team ramp‑up</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-primary mb-2">100%</div>

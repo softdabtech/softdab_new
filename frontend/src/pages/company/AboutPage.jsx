@@ -11,7 +11,7 @@ const AboutPage = () => {
     document.title = 'About SoftDAB - Software Development Company | Our Story';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Learn about SoftDAB - a software development company specializing in outsourcing and dedicated teams for US/EU businesses. Meet our team and values.';
+      metaDescription.content = 'Learn about SoftDAB — 8+ years in software development, specializing in custom software and dedicated teams for US/EU businesses. Meet our team and values.';
     }
   }, []);
 
@@ -39,7 +39,7 @@ const AboutPage = () => {
   ];
 
   const stats = [
-    { number: '2019', label: 'Founded' },
+    { number: '2017', label: 'Founded (8+ years in IT)' },
     { number: '50+', label: 'Team Members' },
     { number: '100+', label: 'Projects Delivered' },
     { number: '25+', label: 'Countries Served' }
@@ -66,8 +66,8 @@ const AboutPage = () => {
               About <span className="gradient-text">SoftDAB</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              We're a software development company passionate about helping US and EU businesses 
-              accelerate their digital transformation through outsourcing and dedicated teams.
+              We’ve been building software for 8+ years — helping US and EU businesses
+              accelerate digital initiatives with custom development and dedicated teams.
             </p>
             
             {/* Stats */}
@@ -98,20 +98,17 @@ const AboutPage = () => {
                 </h2>
                 <div className="space-y-6 text-gray-700 leading-relaxed">
                   <p>
-                    SoftDAB was founded in 2019 with a simple mission: to bridge the gap between 
-                    ambitious businesses and world-class software development talent. We recognized 
-                    that many companies struggle with long hiring cycles, high development costs, 
-                    and finding the right technical expertise.
+                    SoftDAB traces its roots back to 2017. What started as a small team of senior engineers
+                    has grown into a trusted partner for companies across the US and EU. From day one, our focus
+                    has been the same: solve real business problems with reliable software.
                   </p>
                   <p>
-                    Starting as a small team of experienced developers in Ukraine, we've grown into 
-                    a trusted partner for 50+ companies across the US and EU. Our success comes 
-                    from combining technical excellence with deep understanding of business needs.
+                    Over 8+ years, we’ve refined our delivery model — combining technical excellence, modern tooling,
+                    and clear communication — to de‑risk projects and ship value faster.
                   </p>
                   <p>
-                    Today, we're proud to have delivered 100+ successful projects, from MVP 
-                    development for startups to enterprise solutions for established companies. 
-                    Each project teaches us something new and makes us better partners for our clients.
+                    Today, we’ve delivered 100+ projects, from MVPs to enterprise platforms, and built long‑term
+                    partnerships grounded in outcomes, not buzzwords.
                   </p>
                 </div>
               </div>
@@ -120,8 +117,8 @@ const AboutPage = () => {
                   <div className="text-6xl mb-4">🚀</div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    To accelerate business growth by providing access to world-class 
-                    development talent and proven processes that deliver results.
+                    To accelerate business growth by providing access to world‑class
+                    development talent and proven processes that deliver measurable results.
                   </p>
                 </div>
               </div>
@@ -215,9 +212,9 @@ const AboutPage = () => {
               Why <span className="gradient-text">Ukraine</span>?
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Ukraine has become a global hub for software development, producing world-class 
-              developers and innovative tech companies. Our location gives us access to exceptional 
-              talent while maintaining cost-effectiveness for our clients.
+              Ukraine has become a global hub for software development, producing world‑class
+              engineers and innovative tech companies. Our location gives us access to exceptional
+              talent while maintaining cost‑effectiveness for our clients.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -246,8 +243,8 @@ const AboutPage = () => {
               Ready to work with us?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Join 50+ companies who trust SoftDAB with their software development needs. 
-              Let's build something amazing together.
+              Join 50+ companies who trust SoftDAB with their software development needs.
+              Let’s build something amazing together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
