@@ -10,8 +10,8 @@ const ServicesSection = () => {
       icon: Code,
       title: 'Outsourcing',
       subtitle: 'Custom Software Development',
-      description: 'End-to-end development of custom software solutions. From MVP to enterprise-grade applications.',
-      features: ['Full project ownership', 'Agile methodology', 'Quality assurance', 'On-time delivery'],
+      description: 'End‑to‑end delivery of reliable, scalable applications — from discovery to launch and support.',
+      features: ['Outcome‑driven roadmap', 'Agile delivery', 'QA & security', 'On‑time milestones'],
       href: '/services/outsourcing',
       color: 'bg-blue-500'
     },
@@ -19,8 +19,8 @@ const ServicesSection = () => {
       icon: Users,
       title: 'Dedicated Teams',
       subtitle: 'Extended Development Teams',
-      description: 'Skilled developers who integrate seamlessly with your existing team and processes.',
-      features: ['Seamless integration', 'Flexible scaling', 'Direct communication', 'Long-term partnership'],
+      description: 'Senior engineers embedded in your workflow for sustained velocity and predictable outcomes.',
+      features: ['Seamless integration', 'Flexible scaling', 'Direct communication', 'Long‑term reliability'],
       href: '/services/dedicated-teams',
       color: 'bg-green-500'
     },
@@ -28,8 +28,8 @@ const ServicesSection = () => {
       icon: Lightbulb,
       title: 'Discovery & PoC',
       subtitle: 'Proof of Concept Development',
-      description: 'Validate your ideas with rapid prototyping and proof-of-concept development.',
-      features: ['Rapid prototyping', 'Technical validation', 'Market research', 'Risk assessment'],
+      description: 'Validate feasibility fast with focused discovery, rapid prototyping, and clear next steps.',
+      features: ['Rapid prototyping', 'Technical validation', 'Risk assessment', 'Actionable plan'],
       href: '/services/discovery',
       color: 'bg-purple-500'
     },
@@ -37,8 +37,8 @@ const ServicesSection = () => {
       icon: Headphones,
       title: 'Support & Maintenance',
       subtitle: 'Ongoing Development Support',
-      description: 'Keep your applications running smoothly with ongoing support and maintenance.',
-      features: ['24/7 monitoring', 'Bug fixes', 'Performance optimization', 'Feature updates'],
+      description: 'Keep your systems healthy and evolving with proactive care and continuous improvements.',
+      features: ['24/7 monitoring', 'Bug fixes & SLAs', 'Performance tuning', 'Feature updates'],
       href: '/services/support',
       color: 'bg-orange-500'
     }
@@ -52,7 +52,7 @@ const ServicesSection = () => {
             How we help you <span className="gradient-text">scale</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Choose the engagement model that fits your needs. From complete project ownership to dedicated team augmentation.
+            Engagement models tailored to your goals — full project ownership or embedded teams that extend your capacity.
           </p>
         </div>
 
@@ -80,7 +80,7 @@ const ServicesSection = () => {
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     {service.description}
                   </p>
-                  
+                
                   <ul className="space-y-2 mb-6">
                     {service.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center text-sm text-gray-600">
@@ -89,7 +89,7 @@ const ServicesSection = () => {
                       </li>
                     ))}
                   </ul>
-                  
+                
                   <Button 
                     asChild 
                     variant="outline" 

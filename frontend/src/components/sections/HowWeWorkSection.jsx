@@ -8,28 +8,28 @@ const HowWeWorkSection = () => {
       icon: Search,
       number: '01',
       title: 'Discovery',
-      description: 'We analyze your requirements, goals, and technical needs to create a detailed project roadmap.',
-      timeline: '1-2 days'
+      description: 'We align on goals, scope, and constraints to define a clear roadmap and success metrics.',
+      timeline: '1–2 days'
     },
     {
       icon: Users,
       number: '02', 
       title: 'Team Setup',
-      description: 'We handpick the right developers and set up your dedicated team with clear communication channels.',
-      timeline: '5-7 days'
+      description: 'We assemble the right senior engineers and establish communication and delivery cadence.',
+      timeline: '5–7 days'
     },
     {
       icon: Rocket,
       number: '03',
       title: 'Delivery',
-      description: 'Your team starts working using agile methodologies with regular updates and transparent progress tracking.',
-      timeline: '2 weeks'
+      description: 'Agile execution with frequent demos, transparent progress, and actionable feedback loops.',
+      timeline: 'Iteration-based'
     },
     {
       icon: TrendingUp,
       number: '04',
       title: 'Scale',
-      description: 'Easily scale your team up or down based on project needs and business requirements.',
+      description: 'Easily adjust scope and team size as priorities evolve, without disrupting delivery.',
       timeline: 'Ongoing'
     }
   ];
@@ -42,7 +42,7 @@ const HowWeWorkSection = () => {
             How we <span className="gradient-text">work</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Our proven 4-step process gets you from idea to working software in just 2 weeks.
+            A proven, outcome-focused process — from discovery to delivery — with full transparency at every step.
           </p>
         </div>
 
@@ -98,7 +98,7 @@ const HowWeWorkSection = () => {
           <div className="text-center mt-12">
             <div className="inline-flex items-center px-6 py-3 bg-green-50 border border-green-200 rounded-xl text-green-800">
               <div className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
-              <span className="font-semibold">Start your project in 2 weeks • Risk-free trial</span>
+              <span className="font-semibold">Outcome‑driven delivery • Transparent progress • Senior teams</span>
             </div>
           </div>
         </div>

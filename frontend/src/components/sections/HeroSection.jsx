@@ -19,7 +19,7 @@ const HeroSection = () => {
             {/* Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full text-sm text-gray-700 font-medium">
               <span className="mr-2">🚀</span>
-              Trusted by 50+ US/EU companies
+              Trusted by 20+ World Wide companies
             </div>
 
             {/* Main Headline */}

@@ -7,13 +7,13 @@ const CTASection = () => {
   const benefits = [
     {
       icon: Clock,
-      title: '2-Week Start',
-      description: 'Get your team up and running in just 2 weeks'
+      title: 'Fast Kickoff',
+      description: 'Align quickly and start delivering within days'
     },
     {
       icon: Shield,
-      title: 'Risk-Free Trial', 
-      description: 'Try our services with no long-term commitments'
+      title: 'Reliable Delivery',
+      description: 'Quality, security, and predictable execution'
     },
     {
       icon: CheckCircle,
@@ -34,15 +34,11 @@ const CTASection = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Headline */}
           <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-gray-100">
-            Start in 2 weeks —{' '}
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              risk-free trial
-            </span>
+            Build software that drives measurable outcomes
           </h2>
           
           <p className="text-xl md:text-2xl text-gray-200 mb-12 text-balance max-w-3xl mx-auto">
-            Join 50+ companies who've accelerated their development with SoftDAB. 
-            No contracts, no risk, just results.
+            Senior engineering teams that design, build, and support scalable solutions tailored to your business goals.
           </p>
 
           {/* Benefits Grid */}
@@ -69,7 +65,7 @@ const CTASection = () => {
               className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl hover-lift group"
             >
               <Link to="/contact">
-                Book a Free Consultation
+                Talk to an expert
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -77,7 +73,7 @@ const CTASection = () => {
 
           {/* Trust Indicators */}
           <div className="text-sm text-gray-300">
-            <p>✓ No setup fees • ✓ Flexible scaling • ✓ Direct communication • ✓ Transparent pricing</p>
+            <p>✓ Transparent pricing • ✓ Direct communication • ✓ Flexible scaling</p>
           </div>
         </div>
       </div>
