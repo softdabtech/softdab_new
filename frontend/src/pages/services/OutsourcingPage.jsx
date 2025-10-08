@@ -359,41 +359,67 @@ const OutsourcingPage = () => {
         </div>
       </section>
 
+     
       {/* CTA Section */}
-      <section className="section-padding bg-primary text-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to start your project?</h2>
-            <p className="text-lg md:text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto">
-              Let’s discuss your requirements and create a delivery plan that fits your goals and budget.
-            </p>
+<section className="section-padding bg-primary text-white">
+  <div className="container mx-auto px-6">
+    <div className="max-w-4xl mx-auto text-center">
+      <h2 className="text-3xl md:text-4xl font-bold mb-6">
+        Ready to start your project?
+      </h2>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* Primary CTA — narrower, keep white text on hover */}
-              <Button
-                asChild
-                size="lg"
-                className="bg-white text-primary hover:bg-white/90 hover:underline hover:text-primary w-full sm:w-[22rem] max-w-[22rem] rounded-xl"
-              >
-                <Link to="/contact">
-                  Book Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
+      {/* Description (улучшен, читабельный) */}
+      <p className="text-lg md:text-xl text-blue-100/95 mb-8 max-w-2xl mx-auto">
+        Tell us about your goals and constraints — we’ll propose a delivery plan, team composition,
+        timeline, and budget options tailored to your needs.
+      </p>
 
-              {/* Secondary CTA — shorter, visible description color */}
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white text-white hover:bg-white/10 w-full sm:w-[16rem] max-w-[16rem] rounded-xl"
-              >
-                <Link to="/case-studies">View Case Studies</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Кнопки: одинаковая высота, ровное выравнивание, корректные цвета и hover */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        {/* Primary: белая на синем фоне; текст остаётся синим, без смены цвета */}
+        <Button
+          asChild
+          size="lg"
+          className="
+            bg-white text-primary hover:bg-white/90 hover:underline
+            w-full sm:w-[22rem] max-w-[22rem] h-14 rounded-2xl
+          "
+        >
+          <Link to="/contact" aria-label="Book a free consultation">
+            Book Free Consultation
+            <svg
+              className="ml-2 h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </Link>
+        </Button>
+
+        {/* Secondary: прозрачная с белой рамкой и белым текстом; на hover — лёгкая подложка, текст остаётся белым */}
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="
+            border-white text-white hover:bg-white/10 hover:text-white
+            w-full sm:w-[16rem] max-w-[16rem] h-14 rounded-2xl
+          "
+        >
+          <Link to="/case-studies" aria-label="View case studies">
+            View Case Studies
+          </Link>
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
     </div>
   );
 };
