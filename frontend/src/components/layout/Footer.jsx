@@ -41,15 +41,16 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
-              Custom software development and dedicated teams for US/EU businesses. 
-              Start in 2 weeks with a risk-free trial.
+              Custom software that solves real business problems. Senior engineering teams delivering measurable outcomes.
             </p>
             
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-400" />
-                <span className="text-gray-300">hello@softdab.tech</span>
+                <a href="mailto:hello@softdab.tech" className="text-gray-300 hover:text-white transition-colors">
+                  hello@softdab.tech
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-gray-400" />
@@ -59,13 +60,13 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.linkedin.com/company/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://twitter.com/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Twitter/X">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://github.com/softdabtech" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="GitHub">
                 <Github className="h-5 w-5" />
               </a>
             </div>

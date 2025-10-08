@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
   NavigationMenu,
@@ -18,10 +18,7 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -46,18 +43,18 @@ const Header = () => {
   const isActiveLink = (path) => location.pathname === path;
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm' 
-        : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm'
+          : 'bg-transparent'
+      }`}
+    >
       <div className="container mx-auto px-6 py-4">
         <nav className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold text-primary">
-              SoftDAB
-            </div>
+            <div className="text-2xl font-bold text-primary">SoftDAB</div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -151,32 +148,31 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:flex">
-            <Button 
-              asChild 
+            <Button
+              asChild
               className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-medium transition-all hover-lift"
             >
-              <Link to="/contact">Book a Free Consultation</Link>
+              <Link to="/contact">Talk to an expert</Link>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden">
+              <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Toggle navigation menu">
                 <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col space-y-6 mt-6">
-                <Link 
-                  to="/" 
+                <Link
+                  to="/"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-lg font-semibold"
                 >
                   Home
                 </Link>
-                
+
                 <div className="space-y-4">
                   <h4 className="font-semibold text-gray-900">Services</h4>
                   {navigation.services.map((service) => (
@@ -205,36 +201,36 @@ const Header = () => {
                   ))}
                 </div>
 
-                <Link 
-                  to="/case-studies" 
+                <Link
+                  to="/case-studies"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-lg font-semibold"
                 >
                   Case Studies
                 </Link>
 
-                <Link 
-                  to="/about" 
+                <Link
+                  to="/about"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-lg font-semibold"
                 >
                   About
                 </Link>
 
-                <Link 
-                  to="/contact" 
+                <Link
+                  to="/contact"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-lg font-semibold"
                 >
                   Contact
                 </Link>
 
-                <Button 
-                  asChild 
+                <Button
+                  asChild
                   className="bg-primary hover:bg-primary-dark text-white mt-6"
                 >
                   <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                    Book a Free Consultation
+                    Talk to an expert
                   </Link>
                 </Button>
               </nav>
