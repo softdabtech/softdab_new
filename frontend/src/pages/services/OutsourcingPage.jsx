@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Clock, Users, Shield, Award } from 'lucide-react';
+import { CheckCircle, ArrowRight, Settings, Shield, Users, Clock } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
+import { Separator } from '../../components/ui/separator';
 import { mockData } from '../../data/mockData';
 
 const OutsourcingPage = () => {
@@ -12,49 +13,28 @@ const OutsourcingPage = () => {
     document.title = 'Outsourcing - Custom Software Development | SoftDAB';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-  metaDescription.content = 'Custom software development outsourcing from a partner with 8+ years in IT. End-to-end ownership with guaranteed delivery and quality assurance.';
-}
+      metaDescription.content =
+        'Custom software development outsourcing with end-to-end ownership. Discovery, delivery, and support with predictable timelines and quality.';
+    }
 
-    // Breadcrumb Schema
     const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://www.softdab.tech"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Services",
-          "item": "https://www.softdab.tech/services"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Outsourcing"
-        }
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
+        { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.softdab.tech/services' },
+        { '@type': 'ListItem', position: 3, name: 'Outsourcing' }
       ]
     };
 
-    // Service Schema
     const serviceSchema = {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Custom Software Development Outsourcing",
-      "description": "End-to-end custom software development with full project ownership and guaranteed delivery",
-      "provider": {
-        "@type": "Organization",
-        "name": "SoftDAB"
-      },
-      "areaServed": ["United States", "European Union"],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Software Development Services"
-      }
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Custom Software Development Outsourcing',
+      description: 'End-to-end custom software development with full project ownership and guaranteed delivery',
+      provider: { '@type': 'Organization', name: 'SoftDAB' },
+      areaServed: ['United States', 'European Union'],
+      hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Software Development Services' }
     };
 
     const script1 = document.createElement('script');
@@ -74,66 +54,111 @@ const OutsourcingPage = () => {
   }, []);
 
   const service = mockData.services.outsourcing;
-  
+
   const processSteps = [
     {
       number: '01',
-      title: 'Requirements Analysis',
-      description: 'Deep dive into your business needs, technical requirements, and project goals.',
-      duration: '1-2 weeks'
+      title: 'Discovery & Alignment',
+      description:
+        'Stakeholder interviews, business goals, constraints, and success criteria. Define scope, roles, and communication cadence.',
+      duration: '1–2 weeks'
     },
     {
-      number: '02', 
-      title: 'Design & Architecture',
-      description: 'Create technical architecture, UI/UX design, and project roadmap.',
-      duration: '1-3 weeks'
+      number: '02',
+      title: 'Architecture & Planning',
+      description:
+        'Solution architecture, backlog creation, estimation, and delivery plan. Risk assessment and MVP definition.',
+      duration: '1–3 weeks'
     },
     {
       number: '03',
-      title: 'Development',
-      description: 'Agile development with regular demos and continuous client feedback.',
-      duration: '8-24 weeks'
+      title: 'Agile Delivery',
+      description:
+        'Iterative development with CI/CD. Bi‑weekly demos, transparent progress tracking, and early value delivery.',
+      duration: '8–24+ weeks'
     },
     {
       number: '04',
-      title: 'Testing & QA',
-      description: 'Comprehensive testing including automated tests, performance, and security audits.',
-      duration: '1-2 weeks'
+      title: 'Quality Assurance',
+      description:
+        'Automated and manual testing, performance checks, security review, and regression suite before each release.',
+      duration: 'Parallel to delivery'
     },
     {
       number: '05',
-      title: 'Deployment',
-      description: 'Production deployment with monitoring setup and documentation handover.',
-      duration: '1 week'
+      title: 'Release & Handover',
+      description:
+        'Production deployment, runbooks, monitoring/alerting setup, and knowledge transfer to your team.',
+      duration: '~1 week'
     },
     {
       number: '06',
-      title: 'Support',
-      description: 'Ongoing maintenance, updates, and technical support as needed.',
+      title: 'Support & Growth',
+      description:
+        'SLA‑based maintenance, bug fixing, upgrades, and a continuous roadmap for new features and optimization.',
       duration: 'Ongoing'
+    }
+  ];
+
+  // Expanded benefits text (6 blocks)
+  const whyChoose = [
+    {
+      title: 'Faster time‑to‑market',
+      text:
+        'Spin up a senior team in weeks, not months. We bring proven delivery playbooks so you ship value sooner.'
+    },
+    {
+      title: 'Predictable delivery',
+      text:
+        'Clear milestones, bi‑weekly demos, and risk management keep scope, budget, and timeline under control.'
+    },
+    {
+      title: 'Senior engineering',
+      text:
+        'Hands‑on lead engineers, solution architects, and QA who have shipped complex products at scale.'
+    },
+    {
+      title: 'Focus on outcomes',
+      text:
+        'We take full ownership from discovery to support, so your team can focus on strategy and customers.'
+    },
+    {
+      title: 'Security & compliance',
+      text:
+        'NDA, IP assignment, secure SDLC, and adherence to your compliance needs (e.g., GDPR).'
+    },
+    {
+      title: 'Flexible engagement',
+      text:
+        'Start with a scoped pilot, scale up/down as needed, and switch to your in‑house team when ready.'
     }
   ];
 
   const faqItems = [
     {
-      question: 'What types of projects do you handle with outsourcing?',
-      answer: 'We handle a wide range of projects including web applications, mobile apps, enterprise software, e-commerce platforms, SaaS products, and API integrations. From MVPs to complex enterprise solutions.'
+      question: 'How do we kick off an outsourcing project?',
+      answer:
+        'We start with a discovery workshop to clarify goals, constraints, and success criteria. Then we define scope, a high‑level plan, and form a senior delivery team. You get a clear start date, budget, and cadence.'
     },
     {
-      question: 'How do you ensure project quality and timely delivery?',
-      answer: 'We use agile methodology with regular sprints, automated testing, code reviews, and continuous client feedback. Our project managers provide daily updates and weekly demos to ensure alignment with your expectations.'
+      question: 'How do you manage delivery and communication?',
+      answer:
+        'Agile sprints with bi‑weekly demos, a shared backlog, and a single point of contact (PM/EM). Daily Slack/Teams updates and a weekly status report with risks, decisions, and next steps.'
     },
     {
-      question: 'What happens if the project scope changes during development?',
-      answer: 'We handle scope changes through a formal change request process. We assess the impact on timeline and budget, get your approval, and adjust the project plan accordingly while maintaining quality standards.'
+      question: 'What is your QA approach?',
+      answer:
+        'Test strategy per project: unit/integration tests, end‑to‑end tests, performance checks, and security review. CI/CD ensures every change is validated before release.'
     },
     {
-      question: 'Do you provide post-launch support and maintenance?',
-      answer: 'Yes, we offer comprehensive post-launch support including bug fixes, performance monitoring, security updates, and feature enhancements. Support packages are available on monthly or yearly basis.'
+      question: 'How do you handle scope changes?',
+      answer:
+        'Through a lightweight change request: impact analysis (budget/timeline), alignment with stakeholders, and updated plan. We keep transparency and avoid scope creep.'
     },
     {
-      question: 'How do you handle intellectual property and confidentiality?',
-      answer: 'We sign comprehensive NDAs and IP assignment agreements before starting any project. All code, designs, and project materials are 100% owned by you. We also follow strict security protocols to protect your data.'
+      question: 'Who owns IP and code?',
+      answer:
+        'You do. We sign NDA and IP assignment. Repos, cloud, and artifacts can be set up under your organization from day one.'
     }
   ];
 
@@ -154,34 +179,42 @@ const OutsourcingPage = () => {
 
       {/* Hero Section */}
       <section className="section-padding bg-white">
-  <div className="container mx-auto px-6">
-    <div className="max-w-4xl mx-auto text-center">
-      <div className="flex items-center justify-center gap-2 mb-6">
-        <Badge className="bg-blue-100 text-blue-800 border-blue-200">Custom Software Development</Badge>
-        <Badge variant="outline" className="border-gray-200 text-gray-700">8+ years in IT</Badge>
-      </div>
-      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-        {service.title}
-      </h1>
-      <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-        {service.description} With 8+ years in IT delivery, we take full ownership from discovery to deployment and support — so you can focus on outcomes.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
-          <Link to="/contact">
-            Start Your Project
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-        </Button>
-        <Button variant="outline" size="lg">
-          Get Pricing PDF
-        </Button>
-      </div>
-    </div>
-  </div>
-</section>
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <Badge className="bg-blue-100 text-blue-800 border-blue-200">Custom Software Development</Badge>
+              <Badge variant="outline" className="border-gray-200 text-gray-700">8+ years in IT</Badge>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+              {service.title}
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              {service.description} With 8+ years in IT delivery, we take full ownership from discovery to deployment and support — so you can focus on outcomes.
+            </p>
 
-      {/* Benefits Section */}
+            {/* CTA: make narrower, keep white text on hover, remove second button */}
+            <div className="flex justify-center">
+              <Button
+                asChild
+                size="lg"
+                className="
+                  bg-primary hover:bg-primary/90 text-white
+                  hover:underline hover:text-white
+                  w-full sm:w-[22rem] max-w-[22rem]
+                  rounded-xl
+                "
+              >
+                <Link to="/contact" aria-label="Start your project">
+                  Start Your Project
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why choose outsourcing */}
       <section className="section-padding bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="max-w-6xl mx-auto">
@@ -190,16 +223,16 @@ const OutsourcingPage = () => {
                 Why choose <span className="gradient-text">outsourcing</span>?
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                Focus on your core business while we handle the complete software development lifecycle.
+                Outsource delivery to a senior team while you stay focused on strategy and customers.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {service.benefits.map((benefit, index) => (
-                <Card key={index} className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+              {whyChoose.map((item, idx) => (
+                <Card key={idx} className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
-                    <CheckCircle className="h-8 w-8 text-green-500 mb-4" />
-                    <p className="text-gray-700 leading-relaxed">{benefit}</p>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
+                    <p className="text-gray-700 leading-relaxed text-sm">{item.text}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -217,37 +250,24 @@ const OutsourcingPage = () => {
                 Our development <span className="gradient-text">process</span>
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                A proven methodology that ensures quality, transparency, and timely delivery.
+                Lean, transparent, and quality‑driven delivery from discovery to support.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* equal height cards and aligned grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {processSteps.map((step, index) => (
-  <div key={index} className="relative">
-    {index < processSteps.length - 1 && (
-      <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-primary/30 to-transparent"></div>
-    )}
-    <Card className="relative bg-white border border-gray-200 hover:shadow-lg transition-all hover-lift">
-      <CardContent className="p-6">
-        <div className="text-primary text-sm font-bold mb-2 opacity-60">
-          {step.number}
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-3">
-          {step.title}
-        </h3>
-        {index === 0 && (
-          <Badge variant="outline" className="mb-3 text-xs text-gray-700 border-gray-200">Proven since 2017</Badge>
-        )}
-        <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-          {step.description}
-        </p>
-        <Badge variant="outline" className="text-xs">
-          {step.duration}
-        </Badge>
-      </CardContent>
-    </Card>
-  </div>
-))}
+                <Card key={index} className="h-full bg-white border border-gray-200 hover:shadow-lg transition-all">
+                  <CardContent className="p-6 flex flex-col h-full">
+                    <div className="text-primary text-sm font-bold mb-2 opacity-70">{step.number}</div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed flex-grow">{step.description}</p>
+                    <div className="mt-auto">
+                      <Badge variant="outline" className="text-xs">{step.duration}</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </div>
@@ -266,21 +286,25 @@ const OutsourcingPage = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* aligned buttons */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
               {Object.entries(service.pricing).map(([key, plan]) => (
-                <Card key={key} className={`bg-white border-0 shadow-lg hover:shadow-xl transition-all hover-lift ${key === 'professional' ? 'ring-2 ring-primary' : ''}`}>
+                <Card
+                  key={key}
+                  className={`bg-white border-0 shadow-lg hover:shadow-xl transition-all flex flex-col ${
+                    key === 'professional' ? 'ring-2 ring-primary' : ''
+                  }`}
+                >
                   {key === 'professional' && (
-                    <div className="bg-primary text-white text-center py-2 text-sm font-medium">
-                      Most Popular
-                    </div>
+                    <div className="bg-primary text-white text-center py-2 text-sm font-medium">Most Popular</div>
                   )}
                   <CardHeader className="text-center pb-4">
                     <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
                     <div className="text-2xl font-bold text-primary mt-2">{plan.price}</div>
                     <CardDescription className="text-gray-600">{plan.duration}</CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
+                  <CardContent className="flex flex-col flex-1">
+                    <ul className="space-y-3 mb-6">
                       {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-center text-sm">
                           <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
@@ -288,12 +312,16 @@ const OutsourcingPage = () => {
                         </li>
                       ))}
                     </ul>
-                    <Button 
-                      asChild 
-                      className={`w-full mt-6 ${key === 'professional' ? 'bg-primary hover:bg-primary-dark' : 'bg-gray-800 hover:bg-gray-900'}`}
-                    >
-                      <Link to="/contact">Get Started</Link>
-                    </Button>
+                    <div className="mt-auto">
+                      <Button
+                        asChild
+                        className={`w-full ${
+                          key === 'professional' ? 'bg-primary hover:bg-primary/90' : 'bg-gray-800 hover:bg-gray-900'
+                        }`}
+                      >
+                        <Link to="/contact">Get Started</Link>
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -311,7 +339,7 @@ const OutsourcingPage = () => {
                 Frequently asked <span className="gradient-text">questions</span>
               </h2>
               <p className="text-lg text-gray-600">
-                Got questions? We've got answers.
+                How we work, communicate, and deliver.
               </p>
             </div>
 
@@ -321,7 +349,7 @@ const OutsourcingPage = () => {
                   <AccordionTrigger className="text-left font-semibold hover:no-underline">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 leading-relaxed">
+                  <AccordionContent className="text-gray-700 leading-relaxed">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -335,21 +363,32 @@ const OutsourcingPage = () => {
       <section className="section-padding bg-primary text-white">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to start your project?
-            </h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Let's discuss your requirements and create a custom development plan that fits your needs and budget.
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to start your project?</h2>
+            <p className="text-lg md:text-xl text-blue-100/90 mb-8 max-w-2xl mx-auto">
+              Let’s discuss your requirements and create a delivery plan that fits your goals and budget.
             </p>
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
+              {/* Primary CTA — narrower, keep white text on hover */}
+              <Button
+                asChild
+                size="lg"
+                className="bg-white text-primary hover:bg-white/90 hover:underline hover:text-primary w-full sm:w-[22rem] max-w-[22rem] rounded-xl"
+              >
                 <Link to="/contact">
                   Book Free Consultation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-                View Case Studies
+
+              {/* Secondary CTA — shorter, visible description color */}
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-white text-white hover:bg-white/10 w-full sm:w-[16rem] max-w-[16rem] rounded-xl"
+              >
+                <Link to="/case-studies">View Case Studies</Link>
               </Button>
             </div>
           </div>
