@@ -18,20 +18,13 @@ const CookieConsentBanner = () => {
   const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem(CONSENT_KEY);
-    if (!saved) {
-      // Показываем баннер при первом визите
-      setOpen(true);
-    } else {
-      try {
-        const parsed = JSON.parse(saved);
-        setPrefs({ ...defaultPrefs, ...parsed });
-        applyConsent(parsed);
-      } catch {
-        setOpen(true);
-      }
-    }
-  }, []);
+  const openHandler = (e) => {
+    setOpen(true);
+    if (e?.detail?.openCustomize) setShowSettings(true);
+  };
+  window.addEventListener('softdab:open-cookie-banner', openHandler);
+  return () => window.removeEventListener('softdab:open-cookie-banner', openHandler);
+}, []);
 
   const saveConsent = (newPrefs) => {
     localStorage.setItem(CONSENT_KEY, JSON.stringify(newPrefs));
