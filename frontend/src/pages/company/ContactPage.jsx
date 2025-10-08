@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Mail, Phone, Clock, Send, CheckCircle } from 'lucide-react';
+import { MapPin, Mail, Clock, Send, CheckCircle } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
@@ -8,55 +8,92 @@ import { Label } from '../../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { toast } from 'sonner';
 
+const initialForm = {
+  name: '',
+  email: '',
+  company: '',
+  role: '',
+  service: '',
+  timeline: '',
+  budget: '',
+  message: '',
+  // honeypot
+  website: ''
+};
+
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    role: '',
-    service: '',
-    timeline: '',
-    budget: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     document.title = 'Contact Us - Start Your Software Development Project | SoftDAB';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Contact SoftDAB for software development projects. Get free consultation and custom quote for outsourcing and dedicated teams.';
+      metaDescription.content =
+        'Contact SoftDAB for software development projects. Get free consultation and custom quote for outsourcing and dedicated teams.';
     }
   }, []);
 
   const handleInputChange = (name, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const validate = () => {
+    const errors = [];
+    if (!formData.name.trim()) errors.push('Full Name is required');
+    if (!formData.email.trim()) {
+      errors.push('Work Email is required');
+    } else {
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+      if (!emailOk) errors.push('Please enter a valid email');
+    }
+    if (!formData.company.trim()) errors.push('Company is required');
+    if (!formData.service) errors.push('Service is required');
+    if (!formData.message.trim() || formData.message.trim().length < 20)
+      errors.push('Please provide at least 20 characters in Project Details');
+    return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    if (isSubmitting) return;
 
+    // honeypot
+    if (formData.website) {
+      // бот — тихо выходим
+      return;
+    }
+
+    const errors = validate();
+    if (errors.length) {
+      toast.error(errors[0]);
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
-      // Simulate API call - replace with real endpoint
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      toast.success('Thank you! Your message has been sent successfully. We\'ll get back to you within 24 hours.');
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        role: '',
-        service: '',
-        timeline: '',
-        budget: '',
-        message: ''
-      });
+      // Подготовка полезной мета‑информации
+      const payload = {
+        ...formData,
+        page: window.location.pathname,
+        referrer: document.referrer || null,
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString()
+      };
+
+      // TODO: заменить на реальный endpoint
+      // const res = await fetch('/api/contact', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(payload)
+      // });
+      // if (!res.ok) throw new Error('Failed to submit');
+
+      // Симуляция API
+      await new Promise(r => setTimeout(r, 1500));
+
+      toast.success("Thank you! Your message has been sent. We'll get back to you within 24 hours.");
+      setFormData(initialForm);
     } catch (error) {
       toast.error('Something went wrong. Please try again or email us directly.');
     } finally {
@@ -65,24 +102,9 @@ const ContactPage = () => {
   };
 
   const contactInfo = [
-    {
-      icon: Mail,
-      title: 'Email',
-      details: 'hello@softdab.tech',
-      description: 'Send us an email anytime'
-    },
-    {
-      icon: MapPin,
-      title: 'Location',
-      details: 'Kyiv, Ukraine',
-      description: 'European timezone (GMT+2/+3)'
-    },
-    {
-      icon: Clock,
-      title: 'Response Time',
-      details: '< 24 hours',
-      description: 'We respond quickly'
-    }
+    { icon: Mail, title: 'Email', details: 'hello@softdab.tech', description: 'Send us an email anytime' },
+    { icon: MapPin, title: 'Location', details: 'Kyiv, Ukraine', description: 'European timezone (GMT+2/+3)' },
+    { icon: Clock, title: 'Response Time', details: '< 24 hours', description: 'We respond quickly' }
   ];
 
   const benefits = [
@@ -104,10 +126,10 @@ const ContactPage = () => {
               Let's Build Something <span className="gradient-text">Amazing</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              Ready to start your software development project? Get a free consultation and
-              custom quote tailored to your specific needs.
+              Ready to start your software development project? Get a free consultation and custom quote tailored to your
+              specific needs.
             </p>
-            
+
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               <div className="text-center">
@@ -136,15 +158,24 @@ const ContactPage = () => {
               <div className="lg:col-span-2">
                 <Card className="border-0 shadow-lg">
                   <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-gray-900">
-                      Start Your Project
-                    </CardTitle>
+                    <CardTitle className="text-2xl font-bold text-gray-900">Start Your Project</CardTitle>
                     <CardDescription className="text-gray-600">
                       Tell us about your project and we'll get back to you with a detailed proposal.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} noValidate>
+                      {/* honeypot */}
+                      <input
+                        type="text"
+                        name="website"
+                        value={formData.website}
+                        onChange={(e) => handleInputChange('website', e.target.value)}
+                        className="hidden"
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+
                       {/* Basic Info */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
@@ -183,7 +214,10 @@ const ContactPage = () => {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="role">Your Role</Label>
-                          <Select onValueChange={(value) => handleInputChange('role', value)}>
+                          <Select
+                            value={formData.role}
+                            onValueChange={(value) => handleInputChange('role', value)}
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Select your role" />
                             </SelectTrigger>
@@ -202,7 +236,11 @@ const ContactPage = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="service">Service Needed *</Label>
-                          <Select onValueChange={(value) => handleInputChange('service', value)} required>
+                          <Select
+                            value={formData.service}
+                            onValueChange={(value) => handleInputChange('service', value)}
+                            required
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Select service" />
                             </SelectTrigger>
@@ -217,7 +255,10 @@ const ContactPage = () => {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="timeline">Timeline</Label>
-                          <Select onValueChange={(value) => handleInputChange('timeline', value)}>
+                          <Select
+                            value={formData.timeline}
+                            onValueChange={(value) => handleInputChange('timeline', value)}
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="When do you want to start?" />
                             </SelectTrigger>
@@ -234,7 +275,10 @@ const ContactPage = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="budget">Budget Range (Optional)</Label>
-                        <Select onValueChange={(value) => handleInputChange('budget', value)}>
+                        <Select
+                          value={formData.budget}
+                          onValueChange={(value) => handleInputChange('budget', value)}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select budget range" />
                           </SelectTrigger>
@@ -258,24 +302,27 @@ const ContactPage = () => {
                           placeholder="Tell us about your project: What do you want to build? What are your main goals? Any specific requirements or challenges?"
                           rows={6}
                         />
+                        <p className="text-xs text-gray-500">
+                          Please include scope, target platforms, current status (idea/PoC/MVP/scale), and any constraints.
+                        </p>
                       </div>
 
-                      <Button 
-                        type="submit" 
-                        className="w-full bg-primary hover:bg-primary-dark" 
+                      <Button
+                        type="submit"
+                        className="w-full h-12 bg-primary hover:bg-primary/90"
                         size="lg"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          <span className="inline-flex items-center">
+                            <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
                             Sending...
-                          </>
+                          </span>
                         ) : (
-                          <>
+                          <span className="inline-flex items-center">
                             Send Message
                             <Send className="ml-2 h-4 w-4" />
-                          </>
+                          </span>
                         )}
                       </Button>
                     </form>
@@ -285,12 +332,9 @@ const ContactPage = () => {
 
               {/* Sidebar */}
               <div className="space-y-8">
-                {/* Contact Info */}
                 <Card className="border-0 shadow-lg">
                   <CardHeader>
-                    <CardTitle className="text-xl font-bold text-gray-900">
-                      Get in Touch
-                    </CardTitle>
+                    <CardTitle className="text-xl font-bold text-gray-900">Get in Touch</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     {contactInfo.map((info, index) => {
@@ -311,15 +355,10 @@ const ContactPage = () => {
                   </CardContent>
                 </Card>
 
-                {/* What You Get */}
                 <Card className="border-0 shadow-lg">
                   <CardHeader>
-                    <CardTitle className="text-xl font-bold text-gray-900">
-                      What You Get
-                    </CardTitle>
-                    <CardDescription>
-                      Free consultation includes:
-                    </CardDescription>
+                    <CardTitle className="text-xl font-bold text-gray-900">What You Get</CardTitle>
+                    <CardDescription>Free consultation includes:</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
@@ -333,21 +372,18 @@ const ContactPage = () => {
                   </CardContent>
                 </Card>
 
-                {/* Alternative Contact */}
                 <Card className="border-0 shadow-lg bg-gradient-to-br from-primary to-primary-dark text-white">
                   <CardContent className="p-6">
                     <h3 className="text-lg font-bold mb-2">Prefer Email?</h3>
                     <p className="text-blue-100 mb-4 text-sm">
                       Send us your requirements directly and we'll respond within 24 hours.
                     </p>
-                    <Button 
-                      asChild 
-                      variant="outline" 
+                    <Button
+                      asChild
+                      variant="outline"
                       className="w-full border-white text-white hover:bg-white hover:text-primary"
                     >
-                      <a href="mailto:hello@softdab.tech">
-                        hello@softdab.tech
-                      </a>
+                      <a href="mailto:hello@softdab.tech">hello@softdab.tech</a>
                     </Button>
                   </CardContent>
                 </Card>
