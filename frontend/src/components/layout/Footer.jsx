@@ -26,7 +26,7 @@ const Footer = () => {
       { name: 'Privacy Policy', href: '/privacy' },
       { name: 'Terms of Service', href: '/terms' },
       { name: 'Data Processing Addendum', href: '/dpa' },
-    ]
+    ],
   };
 
   return (
@@ -35,17 +35,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-6">
-              <div className="text-2xl font-bold text-white">
-                SoftDAB
-              </div>
+            <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline">
+              <div className="text-2xl font-bold text-white">SoftDAB</div>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
               Custom software that solves real business problems. Senior engineering teams delivering measurable outcomes.
             </p>
-            
+
             {/* Contact Info */}
-            <div className="space-y-3">
+            <div className="space-y-3" role="list" aria-label="Contact information">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-400" />
                 <a href="mailto:hello@softdab.tech" className="text-gray-300 hover:text-white transition-colors">
@@ -59,82 +57,92 @@ const Footer = () => {
             </div>
 
             {/* Social Links */}
-            <div className="flex space-x-4 mt-6">
-              <a href="https://www.linkedin.com/company/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn">
+            <div className="flex space-x-4 mt-6" aria-label="Social links">
+              <a
+                href="https://www.linkedin.com/company/softdab"
+                target="_blank"
+                rel="noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="LinkedIn"
+              >
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="https://twitter.com/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Twitter/X">
+              <a
+                href="https://twitter.com/softdab"
+                target="_blank"
+                rel="noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Twitter/X"
+              >
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="https://github.com/softdabtech" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="GitHub">
+              <a
+                href="https://github.com/softdabtech"
+                target="_blank"
+                rel="noreferrer"
+                className="text-gray-400 hover:text-white transition-colors"
+                aria-label="GitHub"
+              >
                 <Github className="h-5 w-5" />
               </a>
             </div>
           </div>
 
           {/* Services */}
-          <div>
+          <nav aria-label="Services">
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               {footerSections.services.map((item) => (
                 <li key={item.href}>
-                  <Link 
-                    to={item.href} 
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
+                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
                     {item.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Industries */}
-          <div>
+          <nav aria-label="Industries">
             <h3 className="text-lg font-semibold mb-4">Industries</h3>
             <ul className="space-y-2">
               {footerSections.industries.map((item) => (
                 <li key={item.href}>
-                  <Link 
-                    to={item.href} 
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
+                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
                     {item.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Company & Legal */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Company</h3>
-            <ul className="space-y-2 mb-6">
-              {footerSections.company.map((item) => (
-                <li key={item.href}>
-                  <Link 
-                    to={item.href} 
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            
-            <h4 className="text-sm font-semibold mb-2 text-gray-400">Legal</h4>
-            <ul className="space-y-1">
-              {footerSections.legal.map((item) => (
-                <li key={item.href}>
-                  <Link 
-                    to={item.href} 
-                    className="text-gray-400 hover:text-gray-300 transition-colors text-sm"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <nav aria-label="Company">
+              <h3 className="text-lg font-semibold mb-4">Company</h3>
+              <ul className="space-y-2 mb-6">
+                {footerSections.company.map((item) => (
+                  <li key={item.href}>
+                    <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Legal">
+              <h4 className="text-sm font-semibold mb-2 text-gray-400">Legal</h4>
+              <ul className="space-y-1">
+                {footerSections.legal.map((item) => (
+                  <li key={item.href}>
+                    <Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </div>
 
@@ -142,27 +150,29 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center">
-  <p className="text-gray-400 text-sm">
-    © {currentYear} SoftDAB. All rights reserved.
-  </p>
+          <p className="text-gray-400 text-sm">© {currentYear} SoftDAB. All rights reserved.</p>
 
-  <div className="flex items-center space-x-6 mt-4 md:mt-0">
-    <span className="text-gray-400 text-sm">🇺🇦 Made in Ukraine</span>
+          <div className="flex items-center space-x-6 mt-4 md:mt-0">
+            <span className="text-gray-400 text-sm">🇺🇦 Made in Ukraine</span>
 
-    {/* Manage Cookies Button */}
-    <button
-      type="button"
-      onClick={() => {
-        localStorage.removeItem('softdab_cookie_consent_v1');
-window.dispatchEvent(new CustomEvent('softdab:open-cookie-banner', { detail: { openCustomize: true } }));
-      }}
-      className="inline-flex items-center rounded-lg bg-white/10 hover:bg-white/20 text-white px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-gray-900"
-      aria-label="Manage Cookies"
-    >
-      Manage Cookies
-    </button>
-  </div>
-</div>
+            {/* Manage Cookies Button */}
+            <button
+              type="button"
+              onClick={() => {
+                try {
+                  localStorage.removeItem('softdab_cookie_consent_v1');
+                } catch {}
+                window.dispatchEvent(
+                  new CustomEvent('softdab:open-cookie-banner', { detail: { openCustomize: true } })
+                );
+              }}
+              className="inline-flex items-center rounded-lg bg-white/10 hover:bg:white/20 text-white px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-gray-900"
+              aria-label="Manage Cookies"
+            >
+              Manage Cookies
+            </button>
+          </div>
+        </div>
       </div>
     </footer>
   );

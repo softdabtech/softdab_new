@@ -6,11 +6,12 @@ import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
 import LoadingSpinner from './components/ui/LoadingSpinner';
 
-// НОВОЕ: баннер и слушатель аналитики
+// Глобальные
 import CookieConsentBanner from './components/cookies/CookieConsentBanner';
 import GAListener from './components/analytics/GAListener';
+import ScrollToTop from './components/layout/ScrollToTop';
 
-// Lazy load pages for performance
+// Lazy pages
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const OutsourcingPage = React.lazy(() => import('./pages/services/OutsourcingPage'));
 const DedicatedTeamsPage = React.lazy(() => import('./pages/services/DedicatedTeamsPage'));
@@ -26,14 +27,13 @@ const PrivacyPage = React.lazy(() => import('./pages/legal/PrivacyPage'));
 const TermsPage = React.lazy(() => import('./pages/legal/TermsPage'));
 const DPAPage = React.lazy(() => import('./pages/legal/DPAPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
-
-// НОВОЕ: ленивый импорт Cookies Policy
 const CookiesPolicy = React.lazy(() => import('./pages/legal/CookiesPolicy'));
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ScrollToTop />
         <Header />
         <main className="min-h-screen">
           <Suspense fallback={<LoadingSpinner />}>
@@ -52,7 +52,6 @@ function App() {
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/dpa" element={<DPAPage />} />
-              {/* НОВОЕ: маршрут Cookies Policy */}
               <Route path="/legal/cookies" element={<CookiesPolicy />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
@@ -61,7 +60,7 @@ function App() {
         <Footer />
         <Toaster position="top-right" />
 
-        {/* НОВОЕ: глобальные компоненты (вне Suspense/Routes) */}
+        {/* Глобальные компоненты */}
         <GAListener />
         <CookieConsentBanner />
       </BrowserRouter>
