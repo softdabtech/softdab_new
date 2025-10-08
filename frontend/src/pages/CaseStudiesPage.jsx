@@ -11,13 +11,13 @@ import { mockData } from '../data/mockData';
 const CaseStudiesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState('all');
-  const [filteredCases, setFilteredCases] = useState(mockData.caseStudies);
+  const [filteredCases, setFilteredCases] = useState(mockData.caseStudies || []);
 
   useEffect(() => {
     document.title = 'Case Studies - Software Development Success Stories | SoftDAB';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Explore our software development case studies. Real results from fintech, healthcare, and eCommerce projects with measurable business outcomes.';
+      metaDescription.content = 'Explore our software development case studies from a partner with 8+ years in IT. Real results from fintech, healthcare, and eCommerce with measurable business outcomes.';
     }
 
     // Breadcrumb Schema
@@ -34,7 +34,8 @@ const CaseStudiesPage = () => {
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Case Studies"
+          "name": "Case Studies",
+          "item": "https://www.softdab.tech/case-studies"
         }
       ]
     };
@@ -50,21 +51,22 @@ const CaseStudiesPage = () => {
   }, []);
 
   useEffect(() => {
-    let filtered = mockData.caseStudies;
+    let filtered = (mockData.caseStudies || []).slice();
 
-    // Filter by industry
+    // Filter by industry (safe)
     if (selectedIndustry !== 'all') {
-      filtered = filtered.filter(caseStudy => 
-        caseStudy.industry.toLowerCase() === selectedIndustry.toLowerCase()
+      filtered = filtered.filter(cs =>
+        (cs.industry || '').toLowerCase() === selectedIndustry.toLowerCase()
       );
     }
 
-    // Filter by search term
+    // Filter by search term (safe)
     if (searchTerm) {
-      filtered = filtered.filter(caseStudy =>
-        caseStudy.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        caseStudy.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        caseStudy.industry.toLowerCase().includes(searchTerm.toLowerCase())
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(cs =>
+        (cs.title || '').toLowerCase().includes(term) ||
+        (cs.description || '').toLowerCase().includes(term) ||
+        (cs.industry || '').toLowerCase().includes(term)
       );
     }
 
@@ -72,6 +74,23 @@ const CaseStudiesPage = () => {
   }, [searchTerm, selectedIndustry]);
 
   const industries = ['all', 'fintech', 'healthcare', 'ecommerce'];
+
+  // Helper: extract a main metric token from a string like "120% growth", "3x conversion", "$1.2M ARR"
+  const extractMainMetric = (val) => {
+    if (typeof val !== 'string') return String(val || '');
+    const trimmed = val.trim();
+    const match = trimmed.match(/^([\$]?\d+(\.\d+)?%?|[\d\.]+x)\b/i);
+    if (match) return match[0];
+    return trimmed.split(' ')[0] || trimmed;
+  };
+
+  // Safe accessor for first result metric
+  const getFirstResultEntry = (resultsObj) => {
+    if (!resultsObj || typeof resultsObj !== 'object') return ['Result', ''];
+    const entries = Object.entries(resultsObj);
+    if (entries.length === 0) return ['Result', ''];
+    return entries[0];
+  };
 
   return (
     <div className="min-h-screen">
@@ -90,12 +109,15 @@ const CaseStudiesPage = () => {
       <section className="section-padding bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Badge variant="outline" className="border-gray-200 text-gray-700">8+ years in IT</Badge>
+            </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Success Stories
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              Discover how we've helped companies like yours accelerate development, 
-              reduce costs, and achieve remarkable business results.
+              Discover how we’ve helped companies accelerate development, reduce costs,
+              and achieve measurable business outcomes.
             </p>
             
             {/* Stats */}
@@ -151,7 +173,7 @@ const CaseStudiesPage = () => {
             
             {/* Results count */}
             <div className="mt-4 text-sm text-gray-600">
-              Showing {filteredCases.length} of {mockData.caseStudies.length} case studies
+              Showing {filteredCases.length} of {(mockData.caseStudies || []).length} case studies
             </div>
           </div>
         </div>
@@ -177,9 +199,10 @@ const CaseStudiesPage = () => {
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                 {filteredCases.map((caseStudy) => {
-                  // Get the main result metric
-                  const mainResult = Object.entries(caseStudy.results)[0];
-                  
+                  const [resultKey, resultVal] = getFirstResultEntry(caseStudy.results);
+                  const mainMetric = extractMainMetric(resultVal || '');
+                  const readableKey = (resultKey || 'Result').replace(/([A-Z])/g, ' $1').trim();
+
                   return (
                     <Card key={caseStudy.id} className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden">
                       {/* Header */}
@@ -194,9 +217,9 @@ const CaseStudiesPage = () => {
                               'bg-gray-100 text-gray-800'
                             }`}
                           >
-                            {caseStudy.industry}
+                            {caseStudy.industry || 'General'}
                           </Badge>
-                          <span className="text-xs text-gray-500">{caseStudy.client}</span>
+                          <span className="text-xs text-gray-500">{caseStudy.client || 'Client NDA'}</span>
                         </div>
                         <CardTitle className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                           {caseStudy.title}
@@ -208,48 +231,49 @@ const CaseStudiesPage = () => {
                       
                       <CardContent className="pt-0">
                         {/* Key Result Highlight */}
-                        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                          <div className="flex items-center">
-                            <TrendingUp className="h-5 w-5 text-green-600 mr-3" />
-                            <div>
-                              <div className="text-2xl font-bold text-green-800">
-                                {mainResult[1].includes('%') || mainResult[1].includes('x') || mainResult[1].includes('$') 
-                                  ? mainResult[1].split(' ')[0] 
-                                  : mainResult[1]
-                                }
-                              </div>
-                              <div className="text-sm text-green-700">
-                                {mainResult[0].replace(/([A-Z])/g, ' $1').trim()}
+                        {resultVal ? (
+                          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                            <div className="flex items-center">
+                              <TrendingUp className="h-5 w-5 text-green-600 mr-3" />
+                              <div>
+                                <div className="text-2xl font-bold text-green-800">
+                                  {mainMetric}
+                                </div>
+                                <div className="text-sm text-green-700">
+                                  {readableKey}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        ) : null}
                         
                         {/* Project Details */}
                         <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
                           <div className="flex items-center text-gray-600">
                             <Clock className="h-4 w-4 mr-2" />
-                            <span>{caseStudy.timeline}</span>
+                            <span>{caseStudy.timeline || '—'}</span>
                           </div>
                           <div className="flex items-center text-gray-600">
                             <Users className="h-4 w-4 mr-2" />
-                            <span>{caseStudy.teamSize.split('(')[0]}</span>
+                            <span>{(caseStudy.teamSize || '').split('(')[0] || '—'}</span>
                           </div>
                         </div>
                         
                         {/* Technologies */}
-                        <div className="flex flex-wrap gap-1 mb-6">
-                          {caseStudy.technologies.slice(0, 4).map((tech, techIndex) => (
-                            <Badge key={techIndex} variant="outline" className="text-xs">
-                              {tech}
-                            </Badge>
-                          ))}
-                          {caseStudy.technologies.length > 4 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{caseStudy.technologies.length - 4}
-                            </Badge>
-                          )}
-                        </div>
+                        {Array.isArray(caseStudy.technologies) && caseStudy.technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-6">
+                            {caseStudy.technologies.slice(0, 4).map((tech, techIndex) => (
+                              <Badge key={techIndex} variant="outline" className="text-xs">
+                                {tech}
+                              </Badge>
+                            ))}
+                            {caseStudy.technologies.length > 4 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{caseStudy.technologies.length - 4}
+                              </Badge>
+                            )}
+                          </div>
+                        )}
                         
                         {/* CTA */}
                         <Button 
@@ -280,7 +304,7 @@ const CaseStudiesPage = () => {
               Ready to become our next success story?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Let's discuss your project and create a custom development plan that delivers measurable results.
+              Let’s discuss your project and create a custom development plan that delivers measurable results.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">

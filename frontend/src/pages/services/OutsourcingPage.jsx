@@ -12,8 +12,8 @@ const OutsourcingPage = () => {
     document.title = 'Outsourcing - Custom Software Development | SoftDAB';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Custom software development outsourcing services. End-to-end project ownership with guaranteed delivery and quality assurance.';
-    }
+  metaDescription.content = 'Custom software development outsourcing from a partner with 8+ years in IT. End-to-end ownership with guaranteed delivery and quality assurance.';
+}
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
@@ -154,29 +154,32 @@ const OutsourcingPage = () => {
 
       {/* Hero Section */}
       <section className="section-padding bg-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-6 bg-blue-100 text-blue-800 border-blue-200">Custom Software Development</Badge>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              {service.title}
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              {service.description} We take full ownership of your project from conception to deployment and beyond.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
-                <Link to="/contact">
-                  Start Your Project
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg">
-                Get Pricing PDF
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="container mx-auto px-6">
+    <div className="max-w-4xl mx-auto text-center">
+      <div className="flex items-center justify-center gap-2 mb-6">
+        <Badge className="bg-blue-100 text-blue-800 border-blue-200">Custom Software Development</Badge>
+        <Badge variant="outline" className="border-gray-200 text-gray-700">8+ years in IT</Badge>
+      </div>
+      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+        {service.title}
+      </h1>
+      <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
+        {service.description} With 8+ years in IT delivery, we take full ownership from discovery to deployment and support — so you can focus on outcomes.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
+          <Link to="/contact">
+            Start Your Project
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+        <Button variant="outline" size="lg">
+          Get Pricing PDF
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Benefits Section */}
       <section className="section-padding bg-gray-50">
@@ -220,28 +223,31 @@ const OutsourcingPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {processSteps.map((step, index) => (
-                <div key={index} className="relative">
-                  {index < processSteps.length - 1 && (
-                    <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-primary/30 to-transparent"></div>
-                  )}
-                  <Card className="relative bg-white border border-gray-200 hover:shadow-lg transition-all hover-lift">
-                    <CardContent className="p-6">
-                      <div className="text-primary text-sm font-bold mb-2 opacity-60">
-                        {step.number}
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                        {step.description}
-                      </p>
-                      <Badge variant="outline" className="text-xs">
-                        {step.duration}
-                      </Badge>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
+  <div key={index} className="relative">
+    {index < processSteps.length - 1 && (
+      <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-primary/30 to-transparent"></div>
+    )}
+    <Card className="relative bg-white border border-gray-200 hover:shadow-lg transition-all hover-lift">
+      <CardContent className="p-6">
+        <div className="text-primary text-sm font-bold mb-2 opacity-60">
+          {step.number}
+        </div>
+        <h3 className="text-xl font-bold text-gray-900 mb-3">
+          {step.title}
+        </h3>
+        {index === 0 && (
+          <Badge variant="outline" className="mb-3 text-xs text-gray-700 border-gray-200">Proven since 2017</Badge>
+        )}
+        <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+          {step.description}
+        </p>
+        <Badge variant="outline" className="text-xs">
+          {step.duration}
+        </Badge>
+      </CardContent>
+    </Card>
+  </div>
+))}
             </div>
           </div>
         </div>

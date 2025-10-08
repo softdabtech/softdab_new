@@ -9,11 +9,11 @@ import { mockData } from '../../data/mockData';
 
 const DedicatedTeamsPage = () => {
   useEffect(() => {
-    document.title = 'Dedicated Teams - Extended Development Teams | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'Dedicated development teams that integrate seamlessly with your existing team. Flexible scaling with direct communication and long-term partnership.';
-    }
+  document.title = 'Dedicated Teams - Extended Development Teams | SoftDAB';
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.content = 'Dedicated development teams from a partner with 8+ years in IT. Seamless integration, flexible scaling, direct communication, and long-term partnership.';
+  }
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
@@ -146,29 +146,32 @@ const DedicatedTeamsPage = () => {
 
       {/* Hero Section */}
       <section className="section-padding bg-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-6 bg-green-100 text-green-800 border-green-200">Extended Development Teams</Badge>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              {service.title}
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              {service.description} Scale your development capacity without the overhead of hiring, training, and managing full-time employees.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
-                <Link to="/contact">
-                  Build Your Team
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg">
-                View Team Profiles
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="container mx-auto px-6">
+    <div className="max-w-4xl mx-auto text-center">
+      <div className="flex items-center justify-center gap-2 mb-6">
+        <Badge className="bg-green-100 text-green-800 border-green-200">Extended Development Teams</Badge>
+        <Badge variant="outline" className="border-gray-200 text-gray-700">8+ years in IT</Badge>
+      </div>
+      <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+        {service.title}
+      </h1>
+      <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
+        {service.description} With 8+ years in IT, we assemble and scale dedicated teams that integrate with your culture and deliver consistently — without the overhead of hiring, training, and managing full‑time employees.
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
+          <Link to="/contact">
+            Build Your Team
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+        <Button variant="outline" size="lg">
+          View Team Profiles
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Benefits Section */}
       <section className="section-padding bg-gray-50">

@@ -17,22 +17,23 @@ import { mockData } from '../data/mockData';
 const SEOHead = () => {
   useEffect(() => {
     // Set page title
-    document.title = 'SoftDAB | Outsourcing & Outstaffing Software Development';
+    document.title = 'SoftDAB | Custom Software Development & Dedicated Teams | 8 Years in IT';
     
     // Set meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Custom software development and dedicated teams for US and EU businesses. Start in ~2 weeks with a risk-free trial.';
+      metaDescription.content = 'Custom software development and dedicated teams from a partner with 8 years in IT. Serving US and EU businesses. Start in ~2 weeks with a risk-free trial.';
     }
 
-    // JSON-LD Schema
-    const schema = {
+    // JSON-LD Organization Schema
+    const organizationSchema = {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "SoftDAB",
       "url": "https://www.softdab.tech",
       "logo": "https://www.softdab.tech/logo.png",
-      "description": "Custom software development and dedicated teams for US and EU businesses",
+      "foundingDate": "2017",
+      "description": "Custom software development and dedicated teams for US and EU businesses. 8+ years delivering scalable solutions.",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "UA",
@@ -41,21 +42,59 @@ const SEOHead = () => {
       "contactPoint": {
         "@type": "ContactPoint",
         "email": "hello@softdab.tech",
-        "contactType": "Customer Service"
+        "contactType": "Customer Service",
+        "availableLanguage": ["English", "Ukrainian"]
       },
       "sameAs": [
         "https://linkedin.com/company/softdab",
         "https://twitter.com/softdab"
+      ],
+      "areaServed": [
+        {
+          "@type": "Place",
+          "name": "United States"
+        },
+        {
+          "@type": "Place",
+          "name": "European Union"
+        }
+      ],
+      "knowsAbout": [
+        "Custom Software Development",
+        "Dedicated Development Teams",
+        "Outsourcing",
+        "Outstaffing",
+        "Web Development",
+        "Mobile Development"
       ]
     };
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(schema);
-    document.head.appendChild(script);
+    // JSON-LD WebSite Schema with SearchAction
+    const websiteSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SoftDAB",
+      "url": "https://www.softdab.tech",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.softdab.tech/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    };
+
+    const script1 = document.createElement('script');
+    script1.type = 'application/ld+json';
+    script1.text = JSON.stringify(organizationSchema);
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.type = 'application/ld+json';
+    script2.text = JSON.stringify(websiteSchema);
+    document.head.appendChild(script2);
 
     return () => {
-      document.head.removeChild(script);
+      if (document.head.contains(script1)) document.head.removeChild(script1);
+      if (document.head.contains(script2)) document.head.removeChild(script2);
     };
   }, []);
 

@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 const NotFoundPage = () => {
+  useEffect(() => {
+    // Set page title
+    document.title = '404 - Page Not Found | SoftDAB';
+    
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.content = 'The page you are looking for could not be found. Explore our custom software development and dedicated team services.';
+    }
+
+    // Set noindex for 404 pages (SEO best practice)
+    const metaRobots = document.querySelector('meta[name="robots"]') || document.createElement('meta');
+    metaRobots.setAttribute('name', 'robots');
+    metaRobots.setAttribute('content', 'noindex, follow');
+    if (!document.head.contains(metaRobots)) {
+      document.head.appendChild(metaRobots);
+    }
+
+    return () => {
+      // Clean up robots meta on unmount
+      if (document.head.contains(metaRobots)) {
+        document.head.removeChild(metaRobots);
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-subtle">
       <div className="container mx-auto px-6">

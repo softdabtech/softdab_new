@@ -19,8 +19,8 @@ const CaseDetailPage = () => {
       document.title = `${study.title} - Case Study | SoftDAB`;
       const metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
-        metaDescription.content = `${study.description} Read the full case study with detailed results and technical implementation.`;
-      }
+  metaDescription.content = `${study.description} Backed by 8 years in IT delivery. Read the full case study with detailed results and technical implementation.`;
+}
 
       // Article Schema
       const articleSchema = {
@@ -117,36 +117,36 @@ const CaseDetailPage = () => {
 
             {/* Project Meta */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="flex items-center space-x-3">
-                <Calendar className="h-5 w-5 text-gray-400" />
-                <div>
-                  <div className="font-semibold text-gray-900">Timeline</div>
-                  <div className="text-gray-600">{caseStudy.timeline}</div>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Users className="h-5 w-5 text-gray-400" />
-                <div>
-                  <div className="font-semibold text-gray-900">Team Size</div>
-                  <div className="text-gray-600">{caseStudy.teamSize}</div>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Clock className="h-5 w-5 text-gray-400" />
-                <div>
-                  <div className="font-semibold text-gray-900">Industry</div>
-                  <div className="text-gray-600">{caseStudy.industry}</div>
-                </div>
-              </div>
-            </div>
+  <div className="flex items-center space-x-3">
+    <Calendar className="h-5 w-5 text-gray-400" />
+    <div>
+      <div className="font-semibold text-gray-900">Timeline</div>
+      <div className="text-gray-600">{caseStudy.timeline || '—'}</div>
+    </div>
+  </div>
+  <div className="flex items-center space-x-3">
+    <Users className="h-5 w-5 text-gray-400" />
+    <div>
+      <div className="font-semibold text-gray-900">Team Size</div>
+      <div className="text-gray-600">{caseStudy.teamSize || '—'}</div>
+    </div>
+  </div>
+  <div className="flex items-center space-x-3">
+    <Clock className="h-5 w-5 text-gray-400" />
+    <div>
+      <div className="font-semibold text-gray-900">Industry</div>
+      <div className="text-gray-600">{caseStudy.industry || '—'}</div>
+    </div>
+  </div>
+</div>
 
             {/* Technologies */}
             <div className="flex flex-wrap gap-2">
-              {caseStudy.technologies.map((tech, index) => (
-                <Badge key={index} variant="outline">
-                  {tech}
-                </Badge>
-              ))}
+              <div className="flex flex-wrap gap-2">
+               {caseStudy.technologies.map((tech, index) => (
+                  <Badge key={index} variant="outline">{tech}</Badge>
+           ))}
+              </div>
             </div>
           </div>
         </div>
@@ -205,27 +205,21 @@ const CaseDetailPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(caseStudy.results).map(([key, value], index) => (
-                <Card key={index} className="bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
-                  <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-green-600 mb-2">
-                      {value.includes('%') || value.includes('x') || value.includes('$') 
-                        ? value.split(' ')[0] 
-                        : value
-                      }
-                    </div>
-                    <div className="text-gray-700 font-medium">
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
-                    </div>
-                    {value.includes(' ') && value.split(' ').length > 1 && (
-                      <div className="text-sm text-gray-600 mt-1">
-                        {value.split(' ').slice(1).join(' ')}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+  {Object.entries(caseStudy.results || {}).map(([key, value], index) => {
+    const { main, rest } = splitMetric(value);
+    return (
+      <Card key={index} className="bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
+        <CardContent className="p-6 text-center">
+          <div className="text-3xl font-bold text-green-600 mb-2">{main}</div>
+          <div className="text-gray-700 font-medium">
+            {key.replace(/([A-Z])/g, ' $1').trim()}
+          </div>
+          {rest && <div className="text-sm text-gray-600 mt-1">{rest}</div>}
+        </CardContent>
+      </Card>
+    );
+  })}
+</div>
           </div>
         </div>
       </section>
