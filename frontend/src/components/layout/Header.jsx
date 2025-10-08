@@ -37,47 +37,53 @@ const Header = () => {
     company: [
       { name: 'About', href: '/about' },
       { name: 'Contact', href: '/contact' },
-    ]
+    ],
   };
 
   const isActiveLink = (path) => location.pathname === path;
 
+  // Единые классы для ссылок/триггеров в шапке
+  const baseItem =
+    'inline-flex items-center justify-center h-10 px-4 rounded-md text-sm font-medium transition-colors';
+  const itemColors =
+    'text-gray-700 hover:text-primary focus:text-primary hover:bg-gray-50 focus:bg-gray-50';
+  const equalWidth = 'min-w-[130px]'; // одинаковая видимая ширина
+
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm'
-          : 'bg-transparent'
+        isScrolled ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm' : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-6 py-3 lg:py-4">
         <nav className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-bold text-primary">SoftDAB</div>
+          {/* Logo (без полосы снизу на hover) */}
+          <Link to="/" className="flex items-center space-x-2 no-underline hover:no-underline focus:no-underline">
+            <div className="text-2xl font-bold text-primary select-none">SoftDAB</div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center gap-6">
             <NavigationMenu>
-              <NavigationMenuList className="flex space-x-6">
+              <NavigationMenuList className="flex items-center gap-2">
                 {/* Services Dropdown */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-gray-700 hover:text-primary transition-colors">
+                  <NavigationMenuTrigger
+                    className={`${baseItem} ${itemColors} ${equalWidth} aria-expanded:rounded-b-none`}
+                    aria-label="Services"
+                  >
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid w-[400px] gap-3 p-4">
+                    <div className="grid w-[420px] gap-3 p-4">
                       {navigation.services.map((service) => (
                         <NavigationMenuLink key={service.href} asChild>
                           <Link
                             to={service.href}
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-50 focus:bg-gray-50"
                           >
-                            <div className="text-sm font-medium leading-none">{service.name}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              {service.description}
-                            </p>
+                            <div className="text-sm font-medium leading-none text-gray-900">{service.name}</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-gray-600">{service.description}</p>
                           </Link>
                         </NavigationMenuLink>
                       ))}
@@ -87,21 +93,22 @@ const Header = () => {
 
                 {/* Industries Dropdown */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-gray-700 hover:text-primary transition-colors">
+                  <NavigationMenuTrigger
+                    className={`${baseItem} ${itemColors} ${equalWidth} aria-expanded:rounded-b-none`}
+                    aria-label="Industries"
+                  >
                     Industries
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid w-[400px] gap-3 p-4">
+                    <div className="grid w-[420px] gap-3 p-4">
                       {navigation.industries.map((industry) => (
                         <NavigationMenuLink key={industry.href} asChild>
                           <Link
                             to={industry.href}
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-50 focus:bg-gray-50"
                           >
-                            <div className="text-sm font-medium leading-none">{industry.name}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                              {industry.description}
-                            </p>
+                            <div className="text-sm font-medium leading-none text-gray-900">{industry.name}</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-gray-600">{industry.description}</p>
                           </Link>
                         </NavigationMenuLink>
                       ))}
@@ -109,11 +116,11 @@ const Header = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* Direct Links */}
+                {/* Direct Links with equal size */}
                 <NavigationMenuItem>
                   <Link
                     to="/case-studies"
-                    className={`text-gray-700 hover:text-primary transition-colors font-medium ${
+                    className={`${baseItem} ${itemColors} ${equalWidth} ${
                       isActiveLink('/case-studies') ? 'text-primary' : ''
                     }`}
                   >
@@ -124,7 +131,7 @@ const Header = () => {
                 <NavigationMenuItem>
                   <Link
                     to="/about"
-                    className={`text-gray-700 hover:text-primary transition-colors font-medium ${
+                    className={`${baseItem} ${itemColors} ${equalWidth} ${
                       isActiveLink('/about') ? 'text-primary' : ''
                     }`}
                   >
@@ -135,7 +142,7 @@ const Header = () => {
                 <NavigationMenuItem>
                   <Link
                     to="/contact"
-                    className={`text-gray-700 hover:text-primary transition-colors font-medium ${
+                    className={`${baseItem} ${itemColors} ${equalWidth} ${
                       isActiveLink('/contact') ? 'text-primary' : ''
                     }`}
                   >
@@ -146,13 +153,15 @@ const Header = () => {
             </NavigationMenu>
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button (текст не меняет цвет на hover) */}
           <div className="hidden lg:flex">
             <Button
               asChild
-              className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-medium transition-all hover-lift"
+              className="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg font-medium transition-colors"
             >
-              <Link to="/contact">Talk to an expert</Link>
+              <Link to="/contact" className="hover:text-white focus:text-white">
+                Talk to an expert
+              </Link>
             </Button>
           </div>
 
@@ -163,13 +172,9 @@ const Header = () => {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SheetContent side="right" className="w-[300px] sm:w-[380px]">
               <nav className="flex flex-col space-y-6 mt-6">
-                <Link
-                  to="/"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-semibold"
-                >
+                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
                   Home
                 </Link>
 
@@ -180,7 +185,7 @@ const Header = () => {
                       key={service.href}
                       to={service.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-gray-600 hover:text-primary pl-4"
+                      className="block text-gray-700 hover:text-primary pl-4"
                     >
                       {service.name}
                     </Link>
@@ -194,42 +199,25 @@ const Header = () => {
                       key={industry.href}
                       to={industry.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-gray-600 hover:text-primary pl-4"
+                      className="block text-gray-700 hover:text-primary pl-4"
                     >
                       {industry.name}
                     </Link>
                   ))}
                 </div>
 
-                <Link
-                  to="/case-studies"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-semibold"
-                >
+                <Link to="/case-studies" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
                   Case Studies
                 </Link>
-
-                <Link
-                  to="/about"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-semibold"
-                >
+                <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
                   About
                 </Link>
-
-                <Link
-                  to="/contact"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-semibold"
-                >
+                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
                   Contact
                 </Link>
 
-                <Button
-                  asChild
-                  className="bg-primary hover:bg-primary-dark text-white mt-6"
-                >
-                  <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button asChild className="bg-primary hover:bg-primary/90 text-white mt-6">
+                  <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white">
                     Talk to an expert
                   </Link>
                 </Button>
