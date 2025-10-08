@@ -17,7 +17,7 @@ import { mockData } from '../data/mockData';
 const SEOHead = () => {
   useEffect(() => {
     // Set page title
-    document.title = 'SoftDAB | Custom Software Development & Dedicated Teams | 8 Years in IT';
+    document.title = 'SoftDAB | Custom Software Development & Dedicated Teams';
     
     // Set meta description
     const metaDescription = document.querySelector('meta[name="description"]');

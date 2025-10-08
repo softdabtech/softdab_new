@@ -36,7 +36,7 @@ const HeroSection = () => {
             <div className="flex flex-wrap justify-center gap-6 text-gray-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Senior engineers</span>
+                <span>Middle/Senior engineers</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
