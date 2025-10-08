@@ -6,6 +6,10 @@ import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
 import LoadingSpinner from './components/ui/LoadingSpinner';
 
+// НОВОЕ: баннер и слушатель аналитики
+import CookieConsentBanner from './components/cookies/CookieConsentBanner';
+import GAListener from './components/analytics/GAListener';
+
 // Lazy load pages for performance
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const OutsourcingPage = React.lazy(() => import('./pages/services/OutsourcingPage'));
@@ -22,6 +26,9 @@ const PrivacyPage = React.lazy(() => import('./pages/legal/PrivacyPage'));
 const TermsPage = React.lazy(() => import('./pages/legal/TermsPage'));
 const DPAPage = React.lazy(() => import('./pages/legal/DPAPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
+
+// НОВОЕ: ленивый импорт Cookies Policy
+const CookiesPolicy = React.lazy(() => import('./pages/legal/CookiesPolicy'));
 
 function App() {
   return (
@@ -45,12 +52,18 @@ function App() {
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/dpa" element={<DPAPage />} />
+              {/* НОВОЕ: маршрут Cookies Policy */}
+              <Route path="/legal/cookies" element={<CookiesPolicy />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </main>
         <Footer />
         <Toaster position="top-right" />
+
+        {/* НОВОЕ: глобальные компоненты (вне Suspense/Routes) */}
+        <GAListener />
+        <CookieConsentBanner />
       </BrowserRouter>
     </div>
   );

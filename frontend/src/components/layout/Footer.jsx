@@ -142,13 +142,28 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
-            © {currentYear} SoftDAB. All rights reserved.
-          </p>
-          <div className="flex items-center space-x-6 mt-4 md:mt-0">
-            <span className="text-gray-400 text-sm">🇺🇦 Made in Ukraine</span>
-          </div>
-        </div>
+  <p className="text-gray-400 text-sm">
+    © {currentYear} SoftDAB. All rights reserved.
+  </p>
+
+  <div className="flex items-center space-x-6 mt-4 md:mt-0">
+    <span className="text-gray-400 text-sm">🇺🇦 Made in Ukraine</span>
+
+    {/* Manage Cookies Button */}
+    <button
+      type="button"
+      onClick={() => {
+        localStorage.removeItem('softdab_cookie_consent_v1');
+        // Если не хотите перезагрузку — можно диспатчить кастомное событие
+        window.location.reload();
+      }}
+      className="inline-flex items-center rounded-lg bg-white/10 hover:bg-white/20 text-white px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-gray-900"
+      aria-label="Manage Cookies"
+    >
+      Manage Cookies
+    </button>
+  </div>
+</div>
       </div>
     </footer>
   );
