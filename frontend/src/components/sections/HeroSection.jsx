@@ -24,24 +24,23 @@ const HeroSection = () => {
 
             {/* Main Headline */}
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 text-balance leading-tight">
-              Custom software development — start in{' '}
-              <span className="gradient-text">2 weeks</span>
+              Custom software that solves real business problems
             </h1>
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-balance leading-relaxed">
-              Outsourcing teams for US/EU companies. Ship faster without long hiring cycles — risk‑free trial.
+              We design, build, and support reliable, scalable solutions tailored to your processes and goals — from discovery to launch and beyond.
             </p>
 
             {/* Value Props */}
             <div className="flex flex-wrap justify-center gap-6 text-gray-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Senior engineers only</span>
+                <span>Senior engineers</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>2‑week trial</span>
+                <span>Discovery-first engagement</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
@@ -60,7 +59,7 @@ const HeroSection = () => {
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#2F89FC'}
               >
                 <Link to="/contact">
-                  Book a Free Consultation
+                  Talk to an expert
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
@@ -68,7 +67,7 @@ const HeroSection = () => {
 
             {/* Trust Indicators */}
             <div className="pt-12 text-sm text-gray-500">
-              <p>No long-term contracts • Start with 1 developer • Scale as needed</p>
+              <p>Flexible start • Measurable outcomes • Long‑term support</p>
             </div>
           </div>
         </div>
