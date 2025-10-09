@@ -29,6 +29,11 @@ const DPAPage = React.lazy(() => import('./pages/legal/DPAPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const CookiesPolicy = React.lazy(() => import('./pages/legal/CookiesPolicy'));
 
+// NEW: Case Studies detailed static pages
+const PaymentPlatformPage = React.lazy(() => import('./pages/case-studies/PaymentPlatformPage'));
+const TelemedicinePlatformPage = React.lazy(() => import('./pages/case-studies/TelemedicinePlatformPage'));
+const MarketplacePage = React.lazy(() => import('./pages/case-studies/MarketplacePage'));
+
 function App() {
   return (
     <div className="App">
@@ -45,8 +50,16 @@ function App() {
               <Route path="/industries/healthcare" element={<HealthcarePage />} />
               <Route path="/industries/ecommerce" element={<EcommercePage />} />
               <Route path="/industries/logistics" element={<LogisticsPage />} />
+
+              {/* Case Studies */}
               <Route path="/case-studies" element={<CaseStudiesPage />} />
+              {/* Dynamic detail (если используешь общий шаблон по :slug) */}
               <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
+              {/* Static detailed pages (новые) */}
+              <Route path="/case-studies/payment-platform" element={<PaymentPlatformPage />} />
+              <Route path="/case-studies/telemedicine-platform" element={<TelemedicinePlatformPage />} />
+              <Route path="/case-studies/multi-vendor-marketplace" element={<MarketplacePage />} />
+
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/privacy" element={<PrivacyPage />} />
