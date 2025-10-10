@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -12,6 +12,30 @@ import {
 } from '../ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 
+const NAVIGATION = {
+  services: [
+    { name: 'Outsourcing', href: '/services/outsourcing', description: 'Custom software development projects' },
+    { name: 'Dedicated Teams', href: '/services/dedicated-teams', description: 'Extended development teams' },
+  ],
+  industries: [
+    { name: 'Fintech', href: '/industries/fintech', description: 'Financial technology solutions' },
+    { name: 'Healthcare', href: '/industries/healthcare', description: 'Healthcare & medical software' },
+    { name: 'eCommerce', href: '/industries/ecommerce', description: 'Online retail & marketplace solutions' },
+    { name: 'Logistics', href: '/industries/logistics', description: 'Supply chain & fleet management' },
+  ],
+  company: [
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+  ],
+};
+
+const BASE_ITEM = 'inline-flex items-center justify-center h-10 px-4 rounded-md text-sm font-medium transition-colors';
+const ITEM_COLORS = 'text-gray-700 hover:text-primary focus:text-primary hover:bg-gray-50 focus:bg-gray-50';
+const EQUAL_WIDTH = 'min-w-[130px]';
+
+/**
+ * Header component for site-wide navigation
+ */
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,45 +47,21 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigation = {
-    services: [
-      { name: 'Outsourcing', href: '/services/outsourcing', description: 'Custom software development projects' },
-      { name: 'Dedicated Teams', href: '/services/dedicated-teams', description: 'Extended development teams' },
-    ],
-    industries: [
-      { name: 'Fintech', href: '/industries/fintech', description: 'Financial technology solutions' },
-      { name: 'Healthcare', href: '/industries/healthcare', description: 'Healthcare & medical software' },
-      { name: 'eCommerce', href: '/industries/ecommerce', description: 'Online retail & marketplace solutions' },
-      { name: 'Logistics', href: '/industries/logistics', description: 'Supply chain & fleet management' },
-    ],
-    company: [
-      { name: 'About', href: '/about' },
-      { name: 'Contact', href: '/contact' },
-    ],
-  };
-
-  const isActiveLink = (path) => location.pathname === path;
-
-  // Единые классы для ссылок/триггеров в шапке
-  const baseItem =
-    'inline-flex items-center justify-center h-10 px-4 rounded-md text-sm font-medium transition-colors';
-  const itemColors =
-    'text-gray-700 hover:text-primary focus:text-primary hover:bg-gray-50 focus:bg-gray-50';
-  const equalWidth = 'min-w-[130px]'; // одинаковая видимая ширина
+  const isActiveLink = useMemo(() => (path) => location.pathname === path, [location.pathname]);
 
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm' : 'bg-transparent'
       }`}
+      aria-label="Site header"
     >
       <div className="container mx-auto px-6 py-3 lg:py-4">
-        <nav className="flex items-center justify-between">
-          {/* Logo (без полосы снизу на hover) */}
-          <Link to="/" className="flex items-center space-x-2 no-underline hover:no-underline focus:no-underline">
+        <nav className="flex items-center justify-between" aria-label="Main navigation">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 no-underline hover:no-underline focus:no-underline" aria-label="Home">
             <div className="text-2xl font-bold text-primary select-none">SoftDAB</div>
           </Link>
-
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6">
             <NavigationMenu>
@@ -69,14 +69,14 @@ const Header = () => {
                 {/* Services Dropdown */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={`${baseItem} ${itemColors} ${equalWidth} aria-expanded:rounded-b-none`}
+                    className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} aria-expanded:rounded-b-none`}
                     aria-label="Services"
                   >
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid w-[420px] gap-3 p-4">
-                      {navigation.services.map((service) => (
+                      {NAVIGATION.services.map((service) => (
                         <NavigationMenuLink key={service.href} asChild>
                           <Link
                             to={service.href}
@@ -90,11 +90,10 @@ const Header = () => {
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-
                 {/* Industries Dropdown */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={`${baseItem} ${itemColors} ${equalWidth} aria-expanded:rounded-b-none`}
+                    className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} aria-expanded:rounded-b-none`}
                     aria-label="Industries"
                   >
                     Industries

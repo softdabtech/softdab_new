@@ -180,23 +180,8 @@ const ContactPage = () => {
     'Team composition suggestion',
     'Technology stack recommendations'
   ];
-  };
-  };
 
-  const contactInfo = [
-    { icon: Mail, title: 'Email', details: 'hello@softdab.tech', description: 'Send us an email anytime' },
-    { icon: MapPin, title: 'Location', details: 'Kyiv, Ukraine', description: 'European timezone (GMT+2/+3)' },
-    { icon: Clock, title: 'Response Time', details: '< 24 hours', description: 'We respond quickly' }
-  ];
-
-  const benefits = [
-    'Free initial consultation',
-    'Custom project estimation',
-    'Technical feasibility analysis',
-    'Risk assessment',
-    'Timeline and budget planning',
-    'Team composition recommendations'
-  ];
+  // ...дублирующие объявления удалены...
 
   return (
     <div className="min-h-screen">

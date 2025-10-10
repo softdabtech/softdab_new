@@ -1,52 +1,54 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Linkedin, Twitter, Github } from 'lucide-react';
 import { Separator } from '../ui/separator';
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
+const FOOTER_SECTIONS = {
+  services: [
+    { name: 'Outsourcing', href: '/services/outsourcing' },
+    { name: 'Dedicated Teams', href: '/services/dedicated-teams' },
+  ],
+  industries: [
+    { name: 'Fintech', href: '/industries/fintech' },
+    { name: 'Healthcare', href: '/industries/healthcare' },
+    { name: 'eCommerce', href: '/industries/ecommerce' },
+    { name: 'Logistics', href: '/industries/logistics' },
+  ],
+  company: [
+    { name: 'About', href: '/about' },
+    { name: 'Case Studies', href: '/case-studies' },
+    { name: 'Contact', href: '/contact' },
+  ],
+  legal: [
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Service', href: '/terms' },
+    { name: 'Data Processing Addendum', href: '/dpa' },
+  ],
+};
 
-  const footerSections = {
-    services: [
-      { name: 'Outsourcing', href: '/services/outsourcing' },
-      { name: 'Dedicated Teams', href: '/services/dedicated-teams' },
-    ],
-    industries: [
-      { name: 'Fintech', href: '/industries/fintech' },
-      { name: 'Healthcare', href: '/industries/healthcare' },
-      { name: 'eCommerce', href: '/industries/ecommerce' },
-      { name: 'Logistics', href: '/industries/logistics' },
-    ],
-    company: [
-      { name: 'About', href: '/about' },
-      { name: 'Case Studies', href: '/case-studies' },
-      { name: 'Contact', href: '/contact' },
-    ],
-    legal: [
-      { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Terms of Service', href: '/terms' },
-      { name: 'Data Processing Addendum', href: '/dpa' },
-    ],
-  };
+/**
+ * Footer component for site-wide navigation and contact info
+ */
+const Footer = () => {
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white" aria-label="Site footer">
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline">
+            <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline" aria-label="Home">
               <div className="text-2xl font-bold text-white">SoftDAB</div>
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
               Custom software that solves real business problems. Senior engineering teams delivering measurable outcomes.
             </p>
-
             {/* Contact Info */}
             <div className="space-y-3" role="list" aria-label="Contact information">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-400" />
-                <a href="mailto:hello@softdab.tech" className="text-gray-300 hover:text-white transition-colors">
+                <a href="mailto:hello@softdab.tech" className="text-gray-300 hover:text-white transition-colors" aria-label="Email">
                   hello@softdab.tech
                 </a>
               </div>
@@ -55,7 +57,6 @@ const Footer = () => {
                 <span className="text-gray-300">Kyiv, Ukraine</span>
               </div>
             </div>
-
             {/* Social Links */}
             <div className="flex space-x-4 mt-6" aria-label="Social links">
               <a
@@ -87,12 +88,11 @@ const Footer = () => {
               </a>
             </div>
           </div>
-
           {/* Services */}
           <nav aria-label="Services">
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
-              {footerSections.services.map((item) => (
+              {FOOTER_SECTIONS.services.map((item) => (
                 <li key={item.href}>
                   <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
                     {item.name}
