@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CaseStudiesSection from '../components/sections/CaseStudiesSection';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Filter, Search, TrendingUp, Clock, Users } from 'lucide-react';
@@ -37,81 +38,17 @@ const getFirstResultEntry = (resultsObj) => {
   if (!resultsObj || typeof resultsObj !== 'object') return ['Result', ''];
   const entries = Object.entries(resultsObj);
   if (entries.length === 0) return ['Result', ''];
-  return entries[0];
-};
-
-const getIndustryBadgeClasses = (industry) => {
-  const i = normalizeIndustry(industry);
-  switch (i) {
-    case 'fintech': return 'bg-blue-100 text-blue-800';
-    case 'healthcare': return 'bg-red-100 text-red-800';
-    case 'ecommerce': return 'bg-green-100 text-green-800';
-    case 'logistics': return 'bg-amber-100 text-amber-800';
-    default: return 'bg-gray-100 text-gray-800';
-  }
-};
-
-const formatTeamSize = (teamSize) => {
-  if (!teamSize) return '—';
-  return teamSize.split('(')[0].trim();
-};
-
-const CaseStudiesPage = () => {
-  const allCases = Array.isArray(mockData.caseStudies) ? mockData.caseStudies : [];
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedIndustry, setSelectedIndustry] = useState('all');
-  const [filteredCases, setFilteredCases] = useState(allCases);
-
-  // Schema for structured data
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
-      { '@type': 'ListItem', position: 2, name: 'Case Studies', item: 'https://www.softdab.tech/case-studies' },
-    ],
+  const CaseStudiesPage = () => {
+    return (
+      <div>
+        <Helmet>
+          <title>{PAGE_TITLE}</title>
+          <meta name="description" content={PAGE_DESCRIPTION} />
+        </Helmet>
+        <CaseStudiesSection />
+      </div>
+    );
   };
-
-  useEffect(() => {
-    let filtered = allCases.slice();
-    if (selectedIndustry !== 'all') {
-      filtered = filtered.filter((cs) => normalizeIndustry(cs.industry) === selectedIndustry);
-    }
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (cs) =>
-          (cs.title || '').toLowerCase().includes(term) ||
-          (cs.description || '').toLowerCase().includes(term) ||
-          normalizeIndustry(cs.industry).includes(term) ||
-          (cs.client || '').toLowerCase().includes(term)
-      );
-    }
-    setFilteredCases(filtered);
-  }, [searchTerm, selectedIndustry, allCases]);
-
-  const resetFilters = () => {
-    setSearchTerm('');
-    setSelectedIndustry('all');
-  };
-
-  const extractMainMetric = (val) => {
-    if (typeof val !== 'string') return String(val || '');
-    const trimmed = val.trim();
-    const match = trimmed.match(/^([\$]?\d+(\.\d+)?%?|[\d\.]+x)\b/i);
-    if (match) return match[0];
-    return trimmed.split(' ')[0] || trimmed;
-  };
-
-  const getFirstResultEntry = (resultsObj) => {
-    if (!resultsObj || typeof resultsObj !== 'object') return ['Result', ''];
-    const entries = Object.entries(resultsObj);
-    if (entries.length === 0) return ['Result', ''];
-    return entries[0];
-  };
-
-  const industryBadgeClasses = (industry) => {
     const i = normalizeIndustry(industry);
     if (i === 'fintech') return 'bg-blue-100 text-blue-800';
     if (i === 'healthcare') return 'bg-red-100 text-red-800';
@@ -320,29 +257,7 @@ const CaseStudiesPage = () => {
             )}
           </div>
         </div>
-      </section>
-
-      <section className="section-padding bg-primary text-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to become our next success story?</h2>
-            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Let’s discuss your project and create a custom development plan that delivers measurable results.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link to="/contact">
-                  Start Your Project
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-                <Link to="/services/outsourcing">View Our Services</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ...удалён лишний JSX, теперь только Helmet и CaseStudiesSection... */}
     </div>
   );
 };
