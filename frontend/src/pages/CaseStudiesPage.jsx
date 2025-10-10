@@ -225,9 +225,6 @@ const CaseStudiesPage = () => {
                   const slug = cs.slug || cs.id;
                   const path = `/case-studies/${slug}`;
 
-                  const metricValue = mainMetric;
-                  const metricCaption = readableKey;
-
                   return (
                     <Link
                       key={cs.id}
@@ -258,11 +255,11 @@ const CaseStudiesPage = () => {
                                 <TrendingUp className="h-5 w-5 text-green-600 shrink-0" aria-hidden="true" />
                                 <div className="flex items-baseline gap-3 flex-wrap">
                                   <div className="text-3xl font-extrabold leading-none text-green-700 tabular-nums">
-                                    {metricValue}
+                                    {mainMetric}
                                   </div>
-                                  {metricCaption && (
+                                  {readableKey && (
                                     <div className="text-sm text-green-700 leading-snug">
-                                      {metricCaption}
+                                      {readableKey}
                                     </div>
                                   )}
                                 </div>
