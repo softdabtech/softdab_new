@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CaseStudiesSection from '../components/sections/CaseStudiesSection';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Filter, Search, TrendingUp, Clock, Users } from 'lucide-react';
@@ -38,23 +37,76 @@ const getFirstResultEntry = (resultsObj) => {
   if (!resultsObj || typeof resultsObj !== 'object') return ['Result', ''];
   const entries = Object.entries(resultsObj);
   if (entries.length === 0) return ['Result', ''];
-  const CaseStudiesPage = () => {
-    return (
-      <>
-        <Helmet>
-          <title>{PAGE_TITLE}</title>
-          <meta name="description" content={PAGE_DESCRIPTION} />
-        </Helmet>
-        <CaseStudiesSection />
-      </>
-    );
+  return entries[0];
+};
+
+const formatTeamSize = (teamSize) => {
+  if (!teamSize) return '—';
+  return String(teamSize).split('(')[0].trim();
+};
+
+const getIndustryBadgeClasses = (industry) => {
+  const i = normalizeIndustry(industry);
+  if (i === 'fintech') return 'bg-blue-100 text-blue-800';
+  if (i === 'healthcare') return 'bg-red-100 text-red-800';
+  if (i === 'ecommerce') return 'bg-green-100 text-green-800';
+  if (i === 'logistics') return 'bg-amber-100 text-amber-800';
+  return 'bg-gray-100 text-gray-800';
+};
+
+const CaseStudiesPage = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedIndustry, setSelectedIndustry] = useState('all');
+  const [allCases, setAllCases] = useState([]);
+  const [filteredCases, setFilteredCases] = useState([]);
+
+  useEffect(() => {
+    const cases = mockData.caseStudies || [];
+    setAllCases(cases);
+    setFilteredCases(cases);
+  }, []);
+
+  useEffect(() => {
+    let filtered = allCases;
+
+    if (selectedIndustry !== 'all') {
+      filtered = filtered.filter(cs => normalizeIndustry(cs.industry) === normalizeIndustry(selectedIndustry));
+    }
+
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(cs =>
+        (cs.title || '').toLowerCase().includes(term) ||
+        (cs.description || '').toLowerCase().includes(term) ||
+        (cs.industry || '').toLowerCase().includes(term)
+      );
+    }
+
+    setFilteredCases(filtered);
+  }, [searchTerm, selectedIndustry, allCases]);
+
+  const resetFilters = () => {
+    setSearchTerm('');
+    setSelectedIndustry('all');
   };
-    const i = normalizeIndustry(industry);
-    if (i === 'fintech') return 'bg-blue-100 text-blue-800';
-    if (i === 'healthcare') return 'bg-red-100 text-red-800';
-    if (i === 'ecommerce') return 'bg-green-100 text-green-800';
-    if (i === 'logistics') return 'bg-amber-100 text-amber-800';
-    return 'bg-gray-100 text-gray-800';
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.softdab.tech/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Case Studies",
+        "item": "https://www.softdab.tech/case-studies"
+      }
+    ]
   };
 
   return (
@@ -72,6 +124,7 @@ const getFirstResultEntry = (resultsObj) => {
           {JSON.stringify(breadcrumbSchema)}
         </script>
       </Helmet>
+      
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
           <nav className="text-sm text-gray-600">
@@ -90,7 +143,7 @@ const getFirstResultEntry = (resultsObj) => {
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">Success Stories</h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Discover how we’ve helped companies accelerate development, reduce costs, and achieve measurable outcomes.
+              Discover how we've helped companies accelerate development, reduce costs, and achieve measurable outcomes.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -172,18 +225,17 @@ const getFirstResultEntry = (resultsObj) => {
                   const slug = cs.slug || cs.id;
                   const path = `/case-studies/${slug}`;
 
-                  // Fix: The original code references metricValue and metricCaption which were not defined.
-                  // We'll use mainMetric and derive metricCaption from resultKey.
                   const metricValue = mainMetric;
                   const metricCaption = readableKey;
 
                   return (
                     <Link
+                      key={cs.id}
                       to={path}
                       className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
                       aria-label={`Read case study about ${cs.title}`}
                     >
-                      <Card key={cs.id} className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden h-full">
+                      <Card className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden h-full">
                         <CardHeader className="pb-4">
                           <div className="flex items-center justify-between mb-2">
                             <Badge variant="secondary" className={`text-xs ${getIndustryBadgeClasses(cs.industry)}`}>
@@ -257,7 +309,7 @@ const getFirstResultEntry = (resultsObj) => {
             )}
           </div>
         </div>
-      {/* ...удалён лишний JSX, теперь только Helmet и CaseStudiesSection... */}
+      </section>
     </div>
   );
 };
