@@ -30,8 +30,23 @@ const extractMetricCaption = (val) => {
   return s.startsWith(main) ? s.slice(main.length).trim() : s;
 };
 
+// Укажем обложки по slug (или id)
+const coverBySlug = {
+  'payment-platform':
+    'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1400&q=80',
+  'telemedicine-platform':
+    'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=1400&q=80',
+  'multi-vendor-marketplace':
+    'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1400&q=80',
+};
+
+const fallbackCovers = [
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80',
+  'https://images.unsplash.com/photo-1526378722484-bd91ca387e72?auto=format&fit=crop&w=1400&q=80',
+  'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=1400&q=80',
+];
+
 const CaseStudiesSection = () => {
-  // Возьмём первые 3 кейса для главной
   const all = Array.isArray(mockData.caseStudies) ? mockData.caseStudies : [];
   const caseStudies = all.slice(0, 3);
 
@@ -48,10 +63,17 @@ const CaseStudiesSection = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-12">
-          {caseStudies.map((study) => {
+          {caseStudies.map((study, idx) => {
             const slug = study.slug || study.id;
             const path = `/case-studies/${slug}`;
-            // Попробуем достать «первую» метрику из results
+
+            // Обложка: сначала кастом по slug, затем study.image, затем один из fallbacks
+            const cover =
+              coverBySlug[slug] ||
+              study.image ||
+              fallbackCovers[idx % fallbackCovers.length];
+
+            // Метрики
             let metricValue = '';
             let metricCaption = '';
             if (study.results && typeof study.results === 'object') {
@@ -59,17 +81,13 @@ const CaseStudiesSection = () => {
               const combined = firstVal || '';
               metricValue = extractMainMetric(combined);
               metricCaption = extractMetricCaption(combined);
-              // Если в данных на главной раньше были отдельные поля metric/description — тоже поддержим
+
+              // Поддержка старого формата { metric, description }
               if (!firstVal && study.results.metric) {
                 metricValue = study.results.metric;
                 metricCaption = study.results.description || '';
               }
             }
-
-            // Фолбек для изображения (если нет image в mockData)
-            const image =
-              study.image ||
-              'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80';
 
             return (
               <Card
@@ -79,7 +97,7 @@ const CaseStudiesSection = () => {
                 {/* Image */}
                 <div className="h-48 bg-gray-200 overflow-hidden">
                   <img
-                    src={image}
+                    src={cover}
                     alt={study.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
@@ -102,18 +120,20 @@ const CaseStudiesSection = () => {
                 </CardHeader>
 
                 <CardContent className="pt-0">
-                  {/* Key Result */}
+                  {/* Key Result — вертикальное выравнивание и единый стиль */}
                   {(metricValue || metricCaption) && (
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                       <div className="flex items-center">
-                        <TrendingUp className="h-5 w-5 text-green-600 mr-2" />
-                        <div>
-                          {metricValue ? (
-                            <div className="text-2xl font-bold text-green-800">{metricValue}</div>
-                          ) : null}
-                          {metricCaption ? (
-                            <div className="text-sm text-green-700">{metricCaption}</div>
-                          ) : null}
+                        <TrendingUp className="h-5 w-5 text-green-600 mr-3 shrink-0" />
+                        <div className="flex items-baseline gap-2">
+                          <div className="text-3xl font-extrabold leading-none text-green-700">
+                            {metricValue}
+                          </div>
+                          {metricCaption && (
+                            <div className="text-sm text-green-700 leading-snug">
+                              {metricCaption}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
