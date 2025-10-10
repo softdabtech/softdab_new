@@ -40,7 +40,7 @@ const DedicatedTeamsPage = () => {
 
   const whyChoose = [
     {
-      title: 'Faster team ramp‑up',
+      title: 'Faster team rampup',
       text:
         'Assemble a senior squad in 1–2 weeks with proven delivery playbooks and immediate productivity.'
     },
