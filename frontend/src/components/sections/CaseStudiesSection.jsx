@@ -6,23 +6,43 @@ import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { mockData } from '../../data/mockData';
 
+/**
+ * Normalize the industry string to a lowercase trimmed value.
+ * @param {string} s
+ * @returns {string}
+ */
 const normalizeIndustry = (s) => (s || '').toString().trim().toLowerCase();
+
+/**
+ * Provide consistent badge classes for known industries.
+ * @param {string} industry
+ * @returns {string}
+ */
 const industryBadgeClasses = (industry) => {
-  const i = normalizeIndustry(industry);
-  if (i === 'fintech') return 'text-xs';
-  if (i === 'healthcare') return 'text-xs';
-  if (i === 'ecommerce') return 'text-xs';
-  if (i === 'logistics') return 'text-xs';
+  // This could be expanded for more custom classes per-industry
   return 'text-xs';
 };
 
+/**
+ * Extract the main metric value from a string.
+ * E.g., "12% increase" -> "12%"
+ * @param {string} val
+ * @returns {string}
+ */
 const extractMainMetric = (val) => {
   if (!val) return '';
   const s = String(val).trim();
+  // Match $XX, XX%, X.x, or Xx, etc.
   const m = s.match(/^([\$]?\d+(?:\.\d+)?%?|[\d.]+x)\b/i);
   return m ? m[0] : s.split(' ')[0];
 };
 
+/**
+ * Extract the caption that comes after the main metric.
+ * E.g., "12% increase in sales" -> "increase in sales"
+ * @param {string} val
+ * @returns {string}
+ */
 const extractMetricCaption = (val) => {
   if (!val) return '';
   const s = String(val).trim();
@@ -30,7 +50,7 @@ const extractMetricCaption = (val) => {
   return s.startsWith(main) ? s.slice(main.length).trim() : s;
 };
 
-// Укажем обложки по slug (или id)
+// Cover images by slug (or id)
 const coverBySlug = {
   'payment-platform':
     'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1400&q=80',
@@ -67,25 +87,28 @@ const CaseStudiesSection = () => {
             const slug = study.slug || study.id;
             const path = `/case-studies/${slug}`;
 
-            // Обложка: сначала кастом по slug, затем study.image, затем один из fallbacks
+            // Cover: priority is custom by slug, then study.image, then fallback
             const cover =
               coverBySlug[slug] ||
               study.image ||
               fallbackCovers[idx % fallbackCovers.length];
 
-            // Метрики
+            // Metrics
             let metricValue = '';
             let metricCaption = '';
             if (study.results && typeof study.results === 'object') {
-              const [_, firstVal] = Object.entries(study.results)[0] || [];
-              const combined = firstVal || '';
-              metricValue = extractMainMetric(combined);
-              metricCaption = extractMetricCaption(combined);
-
-              // Поддержка старого формата { metric, description }
-              if (!firstVal && study.results.metric) {
-                metricValue = study.results.metric;
-                metricCaption = study.results.description || '';
+              // Try to get the first key/value from results
+              // Old format: { metric, description }
+              if ('metric' in study.results && typeof study.results.metric === 'string') {
+                metricValue = extractMainMetric(study.results.metric);
+                metricCaption = extractMetricCaption(study.results.metric || study.results.description || '');
+              } else {
+                const firstEntry = Object.entries(study.results)[0];
+                if (firstEntry) {
+                  const [, firstVal] = firstEntry;
+                  metricValue = extractMainMetric(firstVal);
+                  metricCaption = extractMetricCaption(firstVal);
+                }
               }
             }
 
@@ -120,7 +143,7 @@ const CaseStudiesSection = () => {
                 </CardHeader>
 
                 <CardContent className="pt-0">
-                  {/* Key Result — вертикальное выравнивание и единый стиль */}
+                  {/* Key Result — vertical alignment and unified style */}
                   {(metricValue || metricCaption) && (
                     <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                       <div className="flex items-center">
@@ -147,7 +170,12 @@ const CaseStudiesSection = () => {
                     </div>
                     <div className="flex items-center text-gray-600">
                       <Users className="h-4 w-4 mr-2" />
-                      <span>{(study.teamSize || '').split('(')[0] || '—'}</span>
+                      <span>
+                        {/* Ensure teamSize is a string, and fallback works */}
+                        {study.teamSize
+                          ? String(study.teamSize).split('(')[0]
+                          : '—'}
+                      </span>
                     </div>
                   </div>
 

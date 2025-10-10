@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Filter, Search, TrendingUp, Clock, Users } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -7,6 +8,11 @@ import { Badge } from '../components/ui/badge';
 import { Input } from '../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { mockData } from '../data/mockData';
+
+// Constants
+const PAGE_TITLE = 'Case Studies - Software Development Success Stories | SoftDAB';
+const PAGE_DESCRIPTION = 'Explore our software development case studies from a partner with 8 years in IT. Real results from fintech, healthcare, eCommerce and logistics with measurable business outcomes.';
+const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80';
 
 const industryOptions = [
   { value: 'all', label: 'All Industries' },
@@ -16,7 +22,39 @@ const industryOptions = [
   { value: 'logistics', label: 'Logistics' },
 ];
 
+// Utility functions
 const normalizeIndustry = (s) => (s || '').toString().trim().toLowerCase();
+
+const extractMainMetric = (val) => {
+  if (typeof val !== 'string') return String(val || '');
+  const trimmed = val.trim();
+  const match = trimmed.match(/^([\$]?\d+(\.\d+)?%?|[\d\.]+x)\b/i);
+  if (match) return match[0];
+  return trimmed.split(' ')[0] || trimmed;
+};
+
+const getFirstResultEntry = (resultsObj) => {
+  if (!resultsObj || typeof resultsObj !== 'object') return ['Result', ''];
+  const entries = Object.entries(resultsObj);
+  if (entries.length === 0) return ['Result', ''];
+  return entries[0];
+};
+
+const getIndustryBadgeClasses = (industry) => {
+  const i = normalizeIndustry(industry);
+  switch (i) {
+    case 'fintech': return 'bg-blue-100 text-blue-800';
+    case 'healthcare': return 'bg-red-100 text-red-800';
+    case 'ecommerce': return 'bg-green-100 text-green-800';
+    case 'logistics': return 'bg-amber-100 text-amber-800';
+    default: return 'bg-gray-100 text-gray-800';
+  }
+};
+
+const formatTeamSize = (teamSize) => {
+  if (!teamSize) return '—';
+  return teamSize.split('(')[0].trim();
+};
 
 const CaseStudiesPage = () => {
   const allCases = Array.isArray(mockData.caseStudies) ? mockData.caseStudies : [];
@@ -25,28 +63,15 @@ const CaseStudiesPage = () => {
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [filteredCases, setFilteredCases] = useState(allCases);
 
-  useEffect(() => {
-    document.title = 'Case Studies - Software Development Success Stories | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content =
-        'Explore our software development case studies from a partner with 8 years in IT. Real results from fintech, healthcare, eCommerce and logistics with measurable business outcomes.';
-    }
-
-    const breadcrumbSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
-        { '@type': 'ListItem', position: 2, name: 'Case Studies', item: 'https://www.softdab.tech/case-studies' },
-      ],
-    };
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(breadcrumbSchema);
-    document.head.appendChild(script);
-    return () => document.head.removeChild(script);
-  }, []);
+  // Schema for structured data
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
+      { '@type': 'ListItem', position: 2, name: 'Case Studies', item: 'https://www.softdab.tech/case-studies' },
+    ],
+  };
 
   useEffect(() => {
     let filtered = allCases.slice();
@@ -97,6 +122,19 @@ const CaseStudiesPage = () => {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>{PAGE_TITLE}</title>
+        <meta name="description" content={PAGE_DESCRIPTION} />
+        <meta property="og:title" content={PAGE_TITLE} />
+        <meta property="og:description" content={PAGE_DESCRIPTION} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={PAGE_TITLE} />
+        <meta name="twitter:description" content={PAGE_DESCRIPTION} />
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
           <nav className="text-sm text-gray-600">
@@ -197,74 +235,85 @@ const CaseStudiesPage = () => {
                   const slug = cs.slug || cs.id;
                   const path = `/case-studies/${slug}`;
 
-                  return (
-                    <Card key={cs.id} className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden">
-                      <CardHeader className="pb-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <Badge variant="secondary" className={`text-xs ${industryBadgeClasses(cs.industry)}`}>
-                            {cs.industry || 'General'}
-                          </Badge>
-                          <span className="text-xs text-gray-500">{cs.client || 'Client NDA'}</span>
-                        </div>
-                        <CardTitle className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                          {cs.title}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600 leading-relaxed text-sm">
-                          {cs.description}
-                        </CardDescription>
-                      </CardHeader>
+                  // Fix: The original code references metricValue and metricCaption which were not defined.
+                  // We'll use mainMetric and derive metricCaption from resultKey.
+                  const metricValue = mainMetric;
+                  const metricCaption = readableKey;
 
-                      <CardContent className="pt-0">
-                        {resultVal ? (
-                          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                            <div className="flex items-center gap-3">
-                              <svg className="h-5 w-5 text-green-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17l6-6 4 4 8-8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                              <div className="flex items-baseline gap-3 flex-wrap">
-                                <div className="text-3xl font-extrabold leading-none text-green-700 tabular-nums">
-                                  {metricValue}
-                                </div>
-                                {metricCaption && (
-                                  <div className="text-sm text-green-700 leading-snug">
-                                    {metricCaption}
+                  return (
+                    <Link
+                      to={path}
+                      className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
+                      aria-label={`Read case study about ${cs.title}`}
+                    >
+                      <Card key={cs.id} className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden h-full">
+                        <CardHeader className="pb-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <Badge variant="secondary" className={`text-xs ${getIndustryBadgeClasses(cs.industry)}`}>
+                              {cs.industry || 'General'}
+                            </Badge>
+                            <span className="text-xs text-gray-500">{cs.client || 'Client NDA'}</span>
+                          </div>
+                          <CardTitle className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                            {cs.title}
+                          </CardTitle>
+                          <CardDescription className="text-gray-600 leading-relaxed text-sm">
+                            {cs.description}
+                          </CardDescription>
+                        </CardHeader>
+
+                        <CardContent className="pt-0">
+                          {resultVal ? (
+                            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6" aria-label="Key achievement">
+                              <div className="flex items-center gap-3">
+                                <TrendingUp className="h-5 w-5 text-green-600 shrink-0" aria-hidden="true" />
+                                <div className="flex items-baseline gap-3 flex-wrap">
+                                  <div className="text-3xl font-extrabold leading-none text-green-700 tabular-nums">
+                                    {metricValue}
                                   </div>
-                                )}
+                                  {metricCaption && (
+                                    <div className="text-sm text-green-700 leading-snug">
+                                      {metricCaption}
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ) : null}
+                          ) : null}
 
-                        <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                          <div className="flex items-center text-gray-600">
-                            <Clock className="h-4 w-4 mr-2" />
-                            <span>{cs.timeline || '—'}</span>
+                          <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                            <div className="flex items-center text-gray-600" aria-label="Project timeline">
+                              <Clock className="h-4 w-4 mr-2" aria-hidden="true" />
+                              <span>{cs.timeline || '—'}</span>
+                            </div>
+                            <div className="flex items-center text-gray-600" aria-label="Team size">
+                              <Users className="h-4 w-4 mr-2" aria-hidden="true" />
+                              <span>{formatTeamSize(cs.teamSize)}</span>
+                            </div>
                           </div>
-                          <div className="flex items-center text-gray-600">
-                            <Users className="h-4 w-4 mr-2" />
-                            <span>{(cs.teamSize || '').split('(')[0] || '—'}</span>
-                          </div>
-                        </div>
 
-                        {Array.isArray(cs.technologies) && cs.technologies.length > 0 && (
-                          <div className="flex flex-wrap gap-1 mb-6">
-                            {cs.technologies.slice(0, 4).map((tech, idx) => (
-                              <Badge key={idx} variant="outline" className="text-xs">
-                                {tech}
-                              </Badge>
-                            ))}
-                            {cs.technologies.length > 4 && (
-                              <Badge variant="outline" className="text-xs">+{cs.technologies.length - 4}</Badge>
-                            )}
-                          </div>
-                        )}
+                          {Array.isArray(cs.technologies) && cs.technologies.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mb-6" aria-label="Technologies used">
+                              {cs.technologies.slice(0, 4).map((tech, idx) => (
+                                <Badge key={idx} variant="outline" className="text-xs">
+                                  {tech}
+                                </Badge>
+                              ))}
+                              {cs.technologies.length > 4 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{cs.technologies.length - 4} more
+                                </Badge>
+                              )}
+                            </div>
+                          )}
 
-                        <Button asChild className="w-full group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all" variant="outline">
-                          <Link to={path}>
+                          <div className="text-primary font-medium group-hover:underline flex items-center">
                             Read Case Study
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                          </Link>
-                        </Button>
-                      </CardContent>
-                    </Card>
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   );
                 })}
               </div>
