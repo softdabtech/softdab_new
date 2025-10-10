@@ -33,7 +33,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - - name: Deploy to FTP
+      - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -44,6 +44,5 @@ jobs:
           passive: true
           timeout: 120000
           local-dir: ./frontend/dist/
-          # Замените на ваш реальный каталог на сервере:
           server-dir: /public_html/
           max-uploads: 1
