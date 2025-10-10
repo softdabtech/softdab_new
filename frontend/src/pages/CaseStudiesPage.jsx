@@ -40,13 +40,13 @@ const getFirstResultEntry = (resultsObj) => {
   if (entries.length === 0) return ['Result', ''];
   const CaseStudiesPage = () => {
     return (
-      <div>
+      <>
         <Helmet>
           <title>{PAGE_TITLE}</title>
           <meta name="description" content={PAGE_DESCRIPTION} />
         </Helmet>
         <CaseStudiesSection />
-      </div>
+      </>
     );
   };
     const i = normalizeIndustry(industry);
