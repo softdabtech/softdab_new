@@ -33,15 +33,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to FTP
+      - - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Переходим на корень репо для деплоя
-          local-dir: ./frontend/dist/
-          server-dir: ./softdab.tech/
           protocol: ftps
-          # Иногда помогает при сетевых проблемах:
-          # passive: true
+          port: 21
+          passive: true
+          timeout: 120000
+          local-dir: ./frontend/dist/
+          # Замените на ваш реальный каталог на сервере:
+          server-dir: /public_html/
+          max-uploads: 1
