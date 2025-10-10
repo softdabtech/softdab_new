@@ -112,21 +112,9 @@ export const mockData = {
         'Cost-effective compared to in-house hiring'
       ],
       teamSizes: [
-        {
-          size: '1-2 developers',
-          bestFor: 'Small projects, MVP development',
-          monthlyRate: '$8,000 - $16,000'
-        },
-        {
-          size: '3-5 developers',
-          bestFor: 'Medium projects, feature development',
-          monthlyRate: '$24,000 - $40,000'
-        },
-        {
-          size: '6+ developers',
-          bestFor: 'Large projects, full product teams',
-          monthlyRate: '$48,000+'
-        }
+        { size: '1-2 developers', bestFor: 'Small projects, MVP development', monthlyRate: '$8,000 - $16,000' },
+        { size: '3-5 developers', bestFor: 'Medium projects, feature development', monthlyRate: '$24,000 - $40,000' },
+        { size: '6+ developers', bestFor: 'Large projects, full product teams', monthlyRate: '$48,000+' }
       ]
     }
   },
@@ -220,6 +208,7 @@ export const mockData = {
   caseStudies: [
     {
       id: 'fintech-payment-platform',
+      slug: 'payment-platform',
       industry: 'Fintech',
       title: 'Payment Platform MVP',
       client: 'US Fintech Startup',
@@ -243,6 +232,7 @@ export const mockData = {
     },
     {
       id: 'healthcare-telemedicine',
+      slug: 'telemedicine-platform',
       industry: 'Healthcare',
       title: 'Telemedicine Platform',
       client: 'EU Healthcare Provider',
@@ -266,6 +256,7 @@ export const mockData = {
     },
     {
       id: 'ecommerce-marketplace',
+      slug: 'multi-vendor-marketplace',
       industry: 'eCommerce',
       title: 'Multi-vendor Marketplace',
       client: 'European Retailer',
@@ -289,6 +280,7 @@ export const mockData = {
     },
     {
       id: 'logistics-fleet-optimization',
+      slug: 'fleet-optimization-tracking',
       industry: 'Logistics',
       title: 'Fleet Optimization & Real-time Tracking',
       client: 'Global 3PL Provider',
@@ -322,7 +314,7 @@ export const mockData = {
       linkedin: '#'
     },
     {
-      name: 'Maria Kovalenko', 
+      name: 'Maria Kovalenko',
       position: 'CTO & Co-founder',
       bio: 'Former tech lead at major fintech company. Expert in scalable architecture and team leadership.',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=300&q=80',
@@ -365,26 +357,11 @@ export const mockData = {
   // FAQ
   faq: {
     general: [
-      {
-        question: 'How quickly can we start working together?',
-        answer: 'We can typically assemble your team and start development within 1-2 weeks after the initial consultation and requirements gathering.'
-      },
-      {
-        question: 'What is your pricing model?',
-        answer: 'We offer flexible pricing models including fixed-price projects, time & materials, and dedicated team arrangements. Pricing depends on project complexity and team size.'
-      },
-      {
-        question: 'Do you provide ongoing support after project completion?',
-        answer: 'Yes, we offer comprehensive post-launch support including bug fixes, feature updates, performance monitoring, and maintenance services.'
-      },
-      {
-        question: 'What technologies do you specialize in?',
-        answer: 'We specialize in modern web technologies including React, Vue.js, Node.js, Python, Django, PostgreSQL, MongoDB, and cloud platforms like AWS and Azure.'
-      },
-      {
-        question: 'How do you ensure project quality?',
-        answer: 'We follow strict quality assurance processes including code reviews, automated testing, continuous integration, and regular client feedback sessions throughout development.'
-      }
+      { question: 'How quickly can we start working together?', answer: 'We can typically assemble your team and start development within 1-2 weeks after the initial consultation and requirements gathering.' },
+      { question: 'What is your pricing model?', answer: 'We offer flexible pricing models including fixed-price projects, time & materials, and dedicated team arrangements. Pricing depends on project complexity and team size.' },
+      { question: 'Do you provide ongoing support after project completion?', answer: 'Yes, we offer comprehensive post-launch support including bug fixes, feature updates, performance monitoring, and maintenance services.' },
+      { question: 'What technologies do you specialize in?', answer: 'We specialize in modern web technologies including React, Vue.js, Node.js, Python, Django, PostgreSQL, MongoDB, and cloud platforms like AWS and Azure.' },
+      { question: 'How do you ensure project quality?', answer: 'We follow strict quality assurance processes including code reviews, automated testing, continuous integration, and regular client feedback sessions throughout development.' }
     ]
   }
 };

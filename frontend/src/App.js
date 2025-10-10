@@ -53,6 +53,7 @@ function App() {
 
               {/* Case Studies */}
               <Route path="/case-studies" element={<CaseStudiesPage />} />
+              <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
               {/* Dynamic detail (если используешь общий шаблон по :slug) */}
               <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
               {/* Static detailed pages (новые) */}

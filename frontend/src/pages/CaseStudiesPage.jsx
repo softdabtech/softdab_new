@@ -16,7 +16,6 @@ const industryOptions = [
   { value: 'logistics', label: 'Logistics' },
 ];
 
-// Нормализация значения industry из данных (Fintech/Healthcare/eCommerce/Logistics → fintech/…)
 const normalizeIndustry = (s) => (s || '').toString().trim().toLowerCase();
 
 const CaseStudiesPage = () => {
@@ -34,7 +33,6 @@ const CaseStudiesPage = () => {
         'Explore our software development case studies from a partner with 8 years in IT. Real results from fintech, healthcare, eCommerce and logistics with measurable business outcomes.';
     }
 
-    // Breadcrumb Schema
     const breadcrumbSchema = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
@@ -52,13 +50,9 @@ const CaseStudiesPage = () => {
 
   useEffect(() => {
     let filtered = allCases.slice();
-
-    // Фильтр по индустрии
     if (selectedIndustry !== 'all') {
       filtered = filtered.filter((cs) => normalizeIndustry(cs.industry) === selectedIndustry);
     }
-
-    // Поиск
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(
@@ -69,7 +63,6 @@ const CaseStudiesPage = () => {
           (cs.client || '').toLowerCase().includes(term)
       );
     }
-
     setFilteredCases(filtered);
   }, [searchTerm, selectedIndustry, allCases]);
 
@@ -78,7 +71,6 @@ const CaseStudiesPage = () => {
     setSelectedIndustry('all');
   };
 
-  // Извлечение основной метрики из строки
   const extractMainMetric = (val) => {
     if (typeof val !== 'string') return String(val || '');
     const trimmed = val.trim();
@@ -87,7 +79,6 @@ const CaseStudiesPage = () => {
     return trimmed.split(' ')[0] || trimmed;
   };
 
-  // Берём первую пару ключ-значение из results
   const getFirstResultEntry = (resultsObj) => {
     if (!resultsObj || typeof resultsObj !== 'object') return ['Result', ''];
     const entries = Object.entries(resultsObj);
@@ -95,7 +86,6 @@ const CaseStudiesPage = () => {
     return entries[0];
   };
 
-  // Цвет бейджа по индустрии
   const industryBadgeClasses = (industry) => {
     const i = normalizeIndustry(industry);
     if (i === 'fintech') return 'bg-blue-100 text-blue-800';
@@ -103,11 +93,10 @@ const CaseStudiesPage = () => {
     if (i === 'ecommerce') return 'bg-green-100 text-green-800';
     if (i === 'logistics') return 'bg-amber-100 text-amber-800';
     return 'bg-gray-100 text-gray-800';
-    };
+  };
 
   return (
     <div className="min-h-screen">
-      {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
           <nav className="text-sm text-gray-600">
@@ -118,7 +107,6 @@ const CaseStudiesPage = () => {
         </div>
       </div>
 
-      {/* Hero */}
       <section className="section-padding bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
@@ -148,12 +136,10 @@ const CaseStudiesPage = () => {
         </div>
       </section>
 
-      {/* Filters */}
       <section className="py-8 bg-gray-50 border-y border-gray-200">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-center gap-4">
-              {/* Search */}
               <div className="relative flex-1">
                 <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
@@ -164,7 +150,6 @@ const CaseStudiesPage = () => {
                 />
               </div>
 
-              {/* Industry */}
               <div className="w-full md:w-56">
                 <Select value={selectedIndustry} onValueChange={setSelectedIndustry}>
                   <SelectTrigger className="w-full h-10">
@@ -181,7 +166,6 @@ const CaseStudiesPage = () => {
                 </Select>
               </div>
 
-              {/* Clear */}
               <div className="w-full md:w-auto">
                 <Button variant="outline" className="w-full md:w-auto h-10" onClick={resetFilters}>
                   Clear
@@ -196,7 +180,6 @@ const CaseStudiesPage = () => {
         </div>
       </section>
 
-      {/* Grid */}
       <section className="section-padding bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
@@ -211,12 +194,11 @@ const CaseStudiesPage = () => {
                   const [resultKey, resultVal] = getFirstResultEntry(cs.results);
                   const mainMetric = extractMainMetric(resultVal || '');
                   const readableKey = (resultKey || 'Result').replace(/([A-Z])/g, ' $1').trim();
+                  const slug = cs.slug || cs.id;
+                  const path = `/case-studies/${slug}`;
 
                   return (
-                    <Card
-                      key={cs.id}
-                      className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden"
-                    >
+                    <Card key={cs.id} className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden">
                       <CardHeader className="pb-4">
                         <div className="flex items-center justify-between mb-2">
                           <Badge variant="secondary" className={`text-xs ${industryBadgeClasses(cs.industry)}`}>
@@ -233,7 +215,6 @@ const CaseStudiesPage = () => {
                       </CardHeader>
 
                       <CardContent className="pt-0">
-                        {/* Key Result */}
                         {resultVal ? (
                           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                             <div className="flex items-center">
@@ -246,7 +227,6 @@ const CaseStudiesPage = () => {
                           </div>
                         ) : null}
 
-                        {/* Details */}
                         <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
                           <div className="flex items-center text-gray-600">
                             <Clock className="h-4 w-4 mr-2" />
@@ -258,7 +238,6 @@ const CaseStudiesPage = () => {
                           </div>
                         </div>
 
-                        {/* Technologies */}
                         {Array.isArray(cs.technologies) && cs.technologies.length > 0 && (
                           <div className="flex flex-wrap gap-1 mb-6">
                             {cs.technologies.slice(0, 4).map((tech, idx) => (
@@ -267,20 +246,13 @@ const CaseStudiesPage = () => {
                               </Badge>
                             ))}
                             {cs.technologies.length > 4 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{cs.technologies.length - 4}
-                              </Badge>
+                              <Badge variant="outline" className="text-xs">+{cs.technologies.length - 4}</Badge>
                             )}
                           </div>
                         )}
 
-                        {/* CTA */}
-                        <Button
-                          asChild
-                          className="w-full group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all"
-                          variant="outline"
-                        >
-                          <Link to={`/case-studies/${cs.id}`}>
+                        <Button asChild className="w-full group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all" variant="outline">
+                          <Link to={path}>
                             Read Case Study
                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                           </Link>
@@ -295,7 +267,6 @@ const CaseStudiesPage = () => {
         </div>
       </section>
 
-      {/* CTA bottom */}
       <section className="section-padding bg-primary text-white">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">

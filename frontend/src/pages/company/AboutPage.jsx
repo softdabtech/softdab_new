@@ -11,7 +11,7 @@ const AboutPage = () => {
     document.title = 'About SoftDAB - Software Development Company | Our Story';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.content = 'Learn about SoftDAB — 8+ years in software development, specializing in custom software and dedicated teams for US/EU businesses. Meet our team and values.';
+      metaDescription.content = 'Learn about SoftDAB — 8 years in software development, specializing in custom software and dedicated teams for US/EU businesses. Meet our team and values.';
     }
   }, []);
 
@@ -39,10 +39,10 @@ const AboutPage = () => {
   ];
 
   const stats = [
-    { number: '2017', label: 'Founded (8+ years in IT)' },
-    { number: '50+', label: 'Team Members' },
-    { number: '100+', label: 'Projects Delivered' },
-    { number: '25+', label: 'Countries Served' }
+    { number: '2017', label: 'Founded (8 years in IT)' },
+    { number: '20+', label: 'Team Members' },
+    { number: '20+', label: 'Projects Delivered' },
+    { number: '10+', label: 'Countries Served' }
   ];
 
   return (
@@ -66,7 +66,7 @@ const AboutPage = () => {
               About <span className="gradient-text">SoftDAB</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              We’ve been building software for 8+ years — helping US and EU businesses
+              We’ve been building software for 8 years — helping US and EU businesses
               accelerate digital initiatives with custom development and dedicated teams.
             </p>
             
@@ -103,7 +103,7 @@ const AboutPage = () => {
                     has been the same: solve real business problems with reliable software.
                   </p>
                   <p>
-                    Over 8+ years, we’ve refined our delivery model — combining technical excellence, modern tooling,
+                    Over 8 years, we’ve refined our delivery model — combining technical excellence, modern tooling,
                     and clear communication — to de‑risk projects and ship value faster.
                   </p>
                   <p>
