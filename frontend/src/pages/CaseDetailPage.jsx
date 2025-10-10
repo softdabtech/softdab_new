@@ -1,13 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { ArrowRight, TrendingUp, Clock, Users } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import React, { useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, TrendingUp, Clock, Users } from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { mockData } from '../data/mockData';
 
 // Constants
-const INDUSTRY_BADGE_CLASS = 'text-xs';
 const DEFAULT_IMAGE_FALLBACK = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80';
 
 // Utility functions
@@ -49,145 +48,202 @@ const getMetric = (results) => {
 };
 
 const CaseDetailPage = () => {
-  const caseStudies = Array.isArray(mockData.caseStudies) ? mockData.caseStudies : [];
-  const pageTitle = "Case Studies | SoftDAB";
-  const pageDescription = "Explore our portfolio of successful software development projects across various industries.";
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  
+  // Find the case study by slug
+  const caseStudy = (mockData.caseStudies || []).find(study => 
+    (study.slug || study.id) === slug
+  );
+
+  const pageTitle = caseStudy 
+    ? `${caseStudy.title} Case Study | SoftDAB`
+    : "Case Study Not Found | SoftDAB";
+  
+  const pageDescription = caseStudy
+    ? `Learn how ${caseStudy.title} achieved ${getMetric(caseStudy.results).value} through our software development services.`
+    : "The requested case study could not be found.";
+
+  useEffect(() => {
+    // Handle case study not found
+    if (!caseStudy) {
+      setTimeout(() => navigate('/case-studies'), 5000); // Redirect after 5 seconds
+    }
+
+    // Update page title and meta tags
+    document.title = pageTitle;
+
+    const metaTags = [
+      { name: 'description', content: pageDescription },
+      { property: 'og:title', content: pageTitle },
+      { property: 'og:description', content: pageDescription },
+      { property: 'og:type', content: 'article' },
+      { name: 'twitter:title', content: pageTitle },
+      { name: 'twitter:description', content: pageDescription }
+    ];
+
+    // Add image meta tags if available
+    if (caseStudy?.image) {
+      metaTags.push(
+        { property: 'og:image', content: caseStudy.image },
+        { name: 'twitter:image', content: caseStudy.image },
+        { name: 'twitter:card', content: 'summary_large_image' }
+      );
+    }
+
+    metaTags.forEach(({ name, property, content }) => {
+      let meta = document.querySelector(`meta[${name ? `name="${name}"` : `property="${property}"`}]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        if (name) meta.name = name;
+        if (property) meta.setAttribute('property', property);
+        document.head.appendChild(meta);
+      }
+      meta.content = content;
+    });
+
+    return () => {
+      document.title = 'SoftDAB';
+      metaTags.forEach(({ name, property }) => {
+        const meta = document.querySelector(`meta[${name ? `name="${name}"` : `property="${property}"`}]`);
+        if (meta && meta.parentNode) {
+          meta.content = '';
+        }
+      });
+    };
+  }, [pageTitle, pageDescription, caseStudy, navigate]);
 
   return (
-    <section className="section-padding bg-gray-50">
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-      </Helmet>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-6 py-12">
+        <div className="max-w-4xl mx-auto">
+          {/* Back button */}
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/case-studies')}
+            className="mb-8 text-gray-600 hover:text-gray-900"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Case Studies
+          </Button>
 
-      <div className="container mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Case <span className="gradient-text">Studies</span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Real projects, measurable outcomes, and the tech behind them.
-          </p>
-        </div>
+          {caseStudy ? (
+            <>
+              {/* Header */}
+              <header className="mb-12">
+                <div className="flex items-center gap-4 mb-6">
+                  <Badge variant="secondary" className="text-sm">
+                    {caseStudy.industry || 'General'}
+                  </Badge>
+                  <span className="text-sm text-gray-500">
+                    {caseStudy.client || 'Client NDA'}
+                  </span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                  {caseStudy.title}
+                </h1>
+                <p className="text-xl text-gray-600">
+                  {caseStudy.description}
+                </p>
+              </header>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {caseStudies.map((study) => {
-            const slug = study.slug || study.id;
-            const path = `/case-studies/${slug}`;
+              {/* Main image */}
+              {caseStudy.image && (
+                <div className="rounded-xl overflow-hidden mb-12 bg-gray-100">
+                  <img
+                    src={caseStudy.image || DEFAULT_IMAGE_FALLBACK}
+                    alt={`${caseStudy.title} project overview`}
+                    className="w-full h-auto object-cover"
+                    onError={(e) => {
+                      e.target.src = DEFAULT_IMAGE_FALLBACK;
+                    }}
+                  />
+                </div>
+              )}
 
-            // Extract main metric and caption, covering both formats
-            const { value: metricValue, caption: metricCaption } = getMetric(study.results);
-
-            // Use image with fallback
-            const image = study.image || DEFAULT_IMAGE_FALLBACK;
-
-            // Team size extraction - cleaner fallback logic
-            const teamSizeDisplay = study.teamSize
-              ? String(study.teamSize).split('(')[0].trim()
-              : '—';
-
-            return (
-              <Link
-                key={slug}
-                to={path}
-                className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
-                aria-label={`Read case study about ${study.title}`}
-              >
-                <Card className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden h-full">
-                  {/* Image */}
-                  <div className="h-48 bg-gray-200 overflow-hidden">
-                    <img
-                      src={image}
-                      alt={study.title ? `Case study for ${study.title}` : "Case study image"}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.src = DEFAULT_IMAGE_FALLBACK;
-                      }}
-                    />
-                  </div>
-
-                  <CardHeader className="pb-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge variant="secondary" className={INDUSTRY_BADGE_CLASS}>
-                        {study.industry || 'General'}
-                      </Badge>
-                      <span className="text-xs text-gray-500">{study.client || 'Client NDA'}</span>
-                    </div>
-                    <CardTitle className="text-xl font-bold text-gray-900 mb-2">
-                      {study.title}
-                    </CardTitle>
-                    <CardDescription className="text-gray-600 leading-relaxed">
-                      {study.description}
-                    </CardDescription>
-                  </CardHeader>
-
-                  <CardContent className="pt-0">
-                    {/* Metric block — aligned as on main */}
-                    {(metricValue || metricCaption) && (
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6" aria-label="Key achievement">
-                        <div className="flex items-center">
-                          <TrendingUp className="h-5 w-5 text-green-600 mr-3 shrink-0" aria-hidden="true" />
-                          <div className="flex items-baseline gap-2">
-                            <div className="text-3xl font-extrabold leading-none text-green-700">
-                              {metricValue}
-                            </div>
-                            {metricCaption && (
-                              <div className="text-sm text-green-700 leading-snug">
-                                {metricCaption}
+              {/* Key metrics */}
+              {caseStudy.results && (
+                <Card className="mb-12">
+                  <CardContent className="p-6">
+                    <h2 className="text-2xl font-bold mb-6">Key Achievements</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {Object.entries(caseStudy.results).map(([key, value], index) => (
+                        <div
+                          key={index}
+                          className="bg-green-50 border border-green-200 rounded-lg p-4"
+                        >
+                          <div className="flex items-center">
+                            <TrendingUp className="h-5 w-5 text-green-600 mr-3" />
+                            <div>
+                              <div className="text-2xl font-bold text-green-700">
+                                {extractMainMetric(value)}
                               </div>
-                            )}
+                              <div className="text-sm text-green-600">
+                                {key}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
-
-                    {/* Project Details */}
-                    <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                      <div className="flex items-center text-gray-600" aria-label="Project timeline">
-                        <Clock className="h-4 w-4 mr-2" aria-hidden="true" />
-                        <span>{study.timeline || '—'}</span>
-                      </div>
-                      <div className="flex items-center text-gray-600" aria-label="Team size">
-                        <Users className="h-4 w-4 mr-2" aria-hidden="true" />
-                        <span>{teamSizeDisplay}</span>
-                      </div>
-                    </div>
-
-                    {/* Technologies */}
-                    {Array.isArray(study.technologies) && study.technologies.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mb-6" aria-label="Technologies used">
-                        {study.technologies.slice(0, 4).map((tech, techIndex) => (
-                          <Badge key={techIndex} variant="outline" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                        {study.technologies.length > 4 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{study.technologies.length - 4}
-                          </Badge>
-                        )}
-                      </div>
-                    )}
-
-                    <div className="text-primary font-medium group-hover:underline flex items-center">
-                      Read Full Case Study
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                      ))}
                     </div>
                   </CardContent>
                 </Card>
-              </Link>
-            );
-          })}
+              )}
+
+              {/* Project details */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Project Timeline</h3>
+                  <div className="flex items-center text-gray-600">
+                    <Clock className="h-5 w-5 mr-3" />
+                    <span>{caseStudy.timeline || 'Timeline information not available'}</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Team Size</h3>
+                  <div className="flex items-center text-gray-600">
+                    <Users className="h-5 w-5 mr-3" />
+                    <span>
+                      {caseStudy.teamSize
+                        ? String(caseStudy.teamSize).split('(')[0].trim()
+                        : 'Team size information not available'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technologies */}
+              {Array.isArray(caseStudy.technologies) && caseStudy.technologies.length > 0 && (
+                <div className="mb-12">
+                  <h3 className="text-lg font-semibold mb-4">Technologies Used</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {caseStudy.technologies.map((tech, index) => (
+                      <Badge key={index} variant="outline">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            // Not found state
+            <div className="text-center py-16">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                Case Study Not Found
+              </h1>
+              <p className="text-gray-600 mb-8">
+                We couldn't find the case study you're looking for.
+                Redirecting you to the case studies page in 5 seconds...
+              </p>
+              <Button onClick={() => navigate('/case-studies')}>
+                Go to Case Studies
+              </Button>
+            </div>
+          )}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

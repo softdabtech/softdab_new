@@ -3,44 +3,60 @@ import { Link } from 'react-router-dom';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
+const QUICK_LINKS = [
+  { to: '/services/outsourcing', text: 'Outsourcing Services' },
+  { to: '/services/dedicated-teams', text: 'Dedicated Teams' },
+  { to: '/case-studies', text: 'Case Studies' },
+  { to: '/about', text: 'About Us' }
+];
+
 const NotFoundPage = () => {
   useEffect(() => {
-    // Set page title
+    // Update page title
     document.title = '404 - Page Not Found | SoftDAB';
-    
-    // Set meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'The page you are looking for could not be found. Explore our custom software development and dedicated team services.';
-    }
 
-    // Set noindex for 404 pages (SEO best practice)
-    const metaRobots = document.querySelector('meta[name="robots"]') || document.createElement('meta');
-    metaRobots.setAttribute('name', 'robots');
-    metaRobots.setAttribute('content', 'noindex, follow');
-    if (!document.head.contains(metaRobots)) {
+    // Update meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.name = 'description';
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.content = 'The page you are looking for could not be found. Explore our custom software development and dedicated team services.';
+
+    // Set noindex for 404 pages
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta');
+      metaRobots.name = 'robots';
       document.head.appendChild(metaRobots);
     }
+    metaRobots.content = 'noindex, follow';
 
+    // Cleanup function
     return () => {
-      // Clean up robots meta on unmount
-      if (document.head.contains(metaRobots)) {
-        document.head.removeChild(metaRobots);
+      document.title = 'SoftDAB';
+      if (metaDescription.parentNode) {
+        metaDescription.content = '';
+      }
+      if (metaRobots.parentNode) {
+        metaRobots.content = 'index, follow';
       }
     };
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-subtle">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-subtle">
+
       <div className="container mx-auto px-6">
-        <div className="max-w-2xl mx-auto text-center">
+        <section className="max-w-2xl mx-auto text-center" role="alert" aria-labelledby="error-heading">
           {/* Large 404 */}
-          <div className="text-9xl md:text-[12rem] font-bold text-primary/20 mb-6">
+          <div className="text-9xl md:text-[12rem] font-bold text-primary/20 mb-6" aria-hidden="true">
             404
           </div>
           
           {/* Heading */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h1 id="error-heading" className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Page Not Found
           </h1>
           
@@ -51,43 +67,41 @@ const NotFoundPage = () => {
           </p>
           
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <nav className="flex flex-col sm:flex-row gap-4 justify-center mb-12" aria-label="Primary navigation">
             <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
               <Link to="/">
-                <Home className="mr-2 h-5 w-5" />
-                Go Home
+                <Home className="mr-2 h-5 w-5" aria-hidden="true" />
+                <span>Go Home</span>
               </Link>
             </Button>
             
             <Button asChild variant="outline" size="lg">
               <Link to="/contact">
-                <Search className="mr-2 h-5 w-5" />
-                Contact Support
+                <Search className="mr-2 h-5 w-5" aria-hidden="true" />
+                <span>Contact Support</span>
               </Link>
             </Button>
-          </div>
+          </nav>
           
           {/* Quick Links */}
-          <div className="text-center">
-            <p className="text-gray-600 mb-4">Or try one of these popular pages:</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/services/outsourcing" className="text-primary hover:underline">
-                Outsourcing Services
-              </Link>
-              <Link to="/services/dedicated-teams" className="text-primary hover:underline">
-                Dedicated Teams
-              </Link>
-              <Link to="/case-studies" className="text-primary hover:underline">
-                Case Studies
-              </Link>
-              <Link to="/about" className="text-primary hover:underline">
-                About Us
-              </Link>
-            </div>
-          </div>
-        </div>
+          <nav aria-label="Quick links">
+            <p className="text-gray-600 mb-4" id="quick-links-heading">Or try one of these popular pages:</p>
+            <ul className="flex flex-wrap justify-center gap-4" aria-labelledby="quick-links-heading">
+              {QUICK_LINKS.map(({ to, text }) => (
+                <li key={to}>
+                  <Link 
+                    to={to} 
+                    className="text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded"
+                  >
+                    {text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 
