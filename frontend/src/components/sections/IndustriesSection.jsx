@@ -102,11 +102,11 @@ const IndustriesSection = () => {
         {/* Bottom Stats */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">100%</div>
+            <div className="text-3xl font-bold text-primary mb-2">90%</div>
             <div className="text-gray-600">Regulatory adherence</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-2">50+</div>
+            <div className="text-3xl font-bold text-primary mb-2">10+</div>
             <div className="text-gray-600">Industry‑specific projects</div>
           </div>
           <div className="text-center">
