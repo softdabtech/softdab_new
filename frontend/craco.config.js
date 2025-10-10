@@ -12,6 +12,13 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
     },
     configure: (webpackConfig) => {
+      // Enable source maps for specific packages
+      webpackConfig.module.rules.push({
+        test: /\.js$/,
+        enforce: 'pre',
+        include: /node_modules\/posthog-js/,
+        use: ['source-map-loader'],
+      });
 
       
       

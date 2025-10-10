@@ -1,38 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
-import LoadingSpinner from './components/ui/LoadingSpinner';
-
-// Глобальные
+import AppRoutes from './routes';
 import CookieConsentBanner from './components/cookies/CookieConsentBanner';
 import GAListener from './components/analytics/GAListener';
 import ScrollToTop from './components/layout/ScrollToTop';
-
-// Lazy pages
-const HomePage = React.lazy(() => import('./pages/HomePage'));
-const OutsourcingPage = React.lazy(() => import('./pages/services/OutsourcingPage'));
-const DedicatedTeamsPage = React.lazy(() => import('./pages/services/DedicatedTeamsPage'));
-const FintechPage = React.lazy(() => import('./pages/industries/FintechPage'));
-const HealthcarePage = React.lazy(() => import('./pages/industries/HealthcarePage'));
-const EcommercePage = React.lazy(() => import('./pages/industries/EcommercePage'));
-const LogisticsPage = React.lazy(() => import('./pages/industries/LogisticsPage'));
-const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
-const CaseDetailPage = React.lazy(() => import('./pages/CaseDetailPage'));
-const AboutPage = React.lazy(() => import('./pages/company/AboutPage'));
-const ContactPage = React.lazy(() => import('./pages/company/ContactPage'));
-const PrivacyPage = React.lazy(() => import('./pages/legal/PrivacyPage'));
-const TermsPage = React.lazy(() => import('./pages/legal/TermsPage'));
-const DPAPage = React.lazy(() => import('./pages/legal/DPAPage'));
-const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
-const CookiesPolicy = React.lazy(() => import('./pages/legal/CookiesPolicy'));
-
-// NEW: Case Studies detailed static pages
-const PaymentPlatformPage = React.lazy(() => import('./pages/case-studies/PaymentPlatformPage'));
-const TelemedicinePlatformPage = React.lazy(() => import('./pages/case-studies/TelemedicinePlatformPage'));
-const MarketplacePage = React.lazy(() => import('./pages/case-studies/MarketplacePage'));
 
 function App() {
   return (
@@ -41,42 +16,14 @@ function App() {
         <ScrollToTop />
         <Header />
         <main className="min-h-screen">
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/services/outsourcing" element={<OutsourcingPage />} />
-              <Route path="/services/dedicated-teams" element={<DedicatedTeamsPage />} />
-              <Route path="/industries/fintech" element={<FintechPage />} />
-              <Route path="/industries/healthcare" element={<HealthcarePage />} />
-              <Route path="/industries/ecommerce" element={<EcommercePage />} />
-              <Route path="/industries/logistics" element={<LogisticsPage />} />
-
-              {/* Case Studies */}
-              <Route path="/case-studies" element={<CaseStudiesPage />} />
-              <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
-              {/* Dynamic detail (если используешь общий шаблон по :slug) */}
-              <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
-              {/* Static detailed pages (новые) */}
-              <Route path="/case-studies/payment-platform" element={<PaymentPlatformPage />} />
-              <Route path="/case-studies/telemedicine-platform" element={<TelemedicinePlatformPage />} />
-              <Route path="/case-studies/multi-vendor-marketplace" element={<MarketplacePage />} />
-
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/privacy" element={<PrivacyPage />} />
-              <Route path="/terms" element={<TermsPage />} />
-              <Route path="/dpa" element={<DPAPage />} />
-              <Route path="/legal/cookies" element={<CookiesPolicy />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
+          <AppRoutes />
         </main>
         <Footer />
-        <Toaster position="top-right" />
-
-        {/* Глобальные компоненты */}
+        
+        {/* Global components */}
         <GAListener />
         <CookieConsentBanner />
+        <Toaster />
       </BrowserRouter>
     </div>
   );

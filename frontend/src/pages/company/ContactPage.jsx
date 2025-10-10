@@ -6,7 +6,12 @@ import { Input } from '../../components/ui/input';
 import { Textarea } from '../../components/ui/textarea';
 import { Label } from '../../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
-import { toast } from 'sonner';
+import { FormContainer, FormField, SubmitButton, showToast } from '../../components/ui/form-animations';
+import Skeleton from 'react-loading-skeleton';
+import { validateForm } from '../../lib/validation';
+import { addCSRFToken } from '../../lib/csrf';
+import { useRateLimit } from '../../hooks/use-rate-limit';
+import { motion } from 'framer-motion';
 
 const initialForm = {
   name: '',
@@ -17,6 +22,9 @@ const initialForm = {
   timeline: '',
   budget: '',
   message: '',
+  // GDPR согласие
+  gdprConsent: false,
+  marketingConsent: false,
   // honeypot
   website: ''
 };
@@ -24,6 +32,7 @@ const initialForm = {
 const ContactPage = () => {
   const [formData, setFormData] = useState(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { isBlocked, checkRateLimit, incrementAttempts } = useRateLimit();
 
   useEffect(() => {
     document.title = 'Contact Us - Start Your Software Development Project | SoftDAB';
@@ -38,43 +47,45 @@ const ContactPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const validate = () => {
-    const errors = [];
-    if (!formData.name.trim()) errors.push('Full Name is required');
-    if (!formData.email.trim()) {
-      errors.push('Work Email is required');
-    } else {
-      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
-      if (!emailOk) errors.push('Please enter a valid email');
-    }
-    if (!formData.company.trim()) errors.push('Company is required');
-    if (!formData.service) errors.push('Service is required');
-    if (!formData.message.trim() || formData.message.trim().length < 20)
-      errors.push('Please provide at least 20 characters in Project Details');
-    return errors;
-  };
+  const [errors, setErrors] = useState({});
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
 
-    // honeypot
-    if (formData.website) {
-      // бот — тихо выходим
+    // Проверка rate limit
+    const rateLimit = checkRateLimit();
+    if (!rateLimit.allowed) {
+      showToast('error', rateLimit.message);
       return;
     }
 
-    const errors = validate();
-    if (errors.length) {
-      toast.error(errors[0]);
+      // Проверка GDPR согласия
+    if (!formData.gdprConsent) {
+      setErrors({ gdprConsent: 'You must accept our Privacy Policy to continue' });
+      showToast('error', 'Please accept our Privacy Policy to continue');
       return;
     }
 
-    setIsSubmitting(true);
+    // Валидация формы
+    const validation = await validateForm(formData);
+    if (!validation.success) {
+      const errorMessages = validation.errors.reduce((acc, err) => ({
+        ...acc,
+        [err.path]: err.message
+      }), {});
+      setErrors(errorMessages);
+      showToast('error', 'Please fix the errors in the form');
+      return;
+    }    setIsSubmitting(true);
+    setSubmitStatus('loading');
+    showToast('loading', 'Sending your message...');
+
     try {
       // Подготовка полезной мета‑информации
       const payload = {
-        ...formData,
+        ...validation.data,
         page: window.location.pathname,
         referrer: document.referrer || null,
         userAgent: navigator.userAgent,
@@ -84,21 +95,92 @@ const ContactPage = () => {
       // TODO: заменить на реальный endpoint
       // const res = await fetch('/api/contact', {
       //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(payload)
+      //   ...addCSRFToken({
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify(payload)
+      //   })
       // });
       // if (!res.ok) throw new Error('Failed to submit');
 
       // Симуляция API
       await new Promise(r => setTimeout(r, 1500));
 
-      toast.success("Thank you! Your message has been sent. We'll get back to you within 24 hours.");
+      setSubmitStatus('success');
+      showToast('success', "Thank you! Your message has been sent. We'll get back to you within 24 hours.");
       setFormData(initialForm);
+      setErrors({});
+      incrementAttempts();
     } catch (error) {
-      toast.error('Something went wrong. Please try again or email us directly.');
+      setSubmitStatus('error');
+      showToast('error', 'Something went wrong. Please try again or email us directly.');
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Добавляем скрытое поле для honeypot
+  const getHoneypotStyle = () => ({
+    position: 'absolute',
+    left: '-9999px',
+    visibility: 'hidden'
+  });
+
+  // Контактная информация
+  const contactInfo = [
+    {
+      icon: MapPin,
+      title: 'Office',
+      content: 'Estonia, Tallinn'
+    },
+    {
+      icon: Mail,
+      title: 'Email',
+      content: 'hello@softdab.tech'
+    },
+    {
+      icon: Clock,
+      title: 'Response Time',
+      content: 'Within 24 hours'
+    }
+  ];
+
+  // Варианты для селектов
+  const services = [
+    'Web Development',
+    'Mobile Development',
+    'Desktop Development',
+    'IoT Solutions',
+    'Custom Development',
+    'System Integration',
+    'Consulting'
+  ];
+
+  const timelines = [
+    'Within 1 month',
+    '1-3 months',
+    '3-6 months',
+    '6+ months',
+    'Not sure yet'
+  ];
+
+  const budgets = [
+    'Less than €10,000',
+    '€10,000 - €25,000',
+    '€25,000 - €50,000',
+    'Over €50,000',
+    'Not sure yet'
+  ];
+
+  // Список преимуществ
+  const benefits = [
+    'Detailed project assessment',
+    'Technical consultation',
+    'Cost estimation',
+    'Timeline planning',
+    'Team composition suggestion',
+    'Technology stack recommendations'
+  ];
+  };
   };
 
   const contactInfo = [
