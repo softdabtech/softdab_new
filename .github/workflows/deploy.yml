@@ -45,4 +45,4 @@ jobs:
           timeout: 120000
           local-dir: ./frontend/dist/
           server-dir: /softdab.tech/www/
-          dangerous-clean-slate: true
+          max-uploads: 1
