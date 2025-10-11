@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
+// УДАЛЕНО: import { BrowserRouter } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
@@ -12,19 +12,18 @@ import ScrollToTop from './components/layout/ScrollToTop';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <ScrollToTop />
-        <Header />
-        <main className="min-h-screen">
-          <AppRoutes />
-        </main>
-        <Footer />
-        
-        {/* Global components */}
-        <GAListener />
-        <CookieConsentBanner />
-        <Toaster />
-      </BrowserRouter>
+      {/* Router уже есть в main.jsx */}
+      <ScrollToTop />
+      <Header />
+      <main className="min-h-screen">
+        <AppRoutes />
+      </main>
+      <Footer />
+
+      {/* Global components */}
+      <GAListener />
+      <CookieConsentBanner />
+      <Toaster />
     </div>
   );
 }
