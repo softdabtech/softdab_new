@@ -34,15 +34,15 @@ jobs:
         run: npm run build
 
       - name: Deploy to FTP
-  uses: SamKirkland/FTP-Deploy-Action@4.3.3
-  with:
-    server: ${{ secrets.FTP_SERVER }}
-    username: ${{ secrets.FTP_USERNAME }}
-    password: ${{ secrets.FTP_PASSWORD }}
-    protocol: ftps
-    port: 21
-    passive: true
-    timeout: 120000
-    local-dir: ./frontend/dist/
-    server-dir: /public_html/
-    dangerous-clean-slate: false
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          passive: true
+          timeout: 120000
+          local-dir: ./frontend/dist/
+          server-dir: /public_html/
+          max-uploads: 1
