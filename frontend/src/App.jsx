@@ -1,12 +1,12 @@
-// src/App.jsx (ВЕРСИЯ ДЛЯ ДИАГНОСТИКИ РОУТЕРА)
+// src/App.jsx (ВОССТАНОВЛЕННАЯ ВЕРСИЯ)
 import React from 'react';
 import './App.css';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
-// import AppRoutes from './routes'; // <-- ЗАКОММЕНТИРОВАНО
+import AppRoutes from './routes'; // <-- РАСКОММЕНТИРОВАНО
 import CookieConsentBanner from './components/cookies/CookieConsentBanner';
-// import GAListener from './components/analytics/GAListener';
+// import GAListener from './components/analytics/GAListener'; // <-- ОСТАВЛЯЕМ ВЫКЛЮЧЕННЫМ
 import ScrollToTop from './components/layout/ScrollToTop';
 
 function App() {
@@ -15,15 +15,12 @@ function App() {
       <ScrollToTop />
       <Header />
       <main className="min-h-screen">
-        {/* <AppRoutes /> */} {/* <-- ЗАКОММЕНТИРОВАНО */}
-        <h1 style={{ color: 'black', fontSize: '48px', textAlign: 'center', paddingTop: '100px' }}>
-          It works!
-        </h1>
+        <AppRoutes /> {/* <-- РАСКОММЕНТИРОВАНО */}
       </main>
       <Footer />
 
       {/* Global components */}
-      {/* <GAListener /> */}
+      {/* <GAListener /> */} {/* <-- ОСТАВЛЯЕМ ВЫКЛЮЧЕННЫМ */}
       <CookieConsentBanner />
       <Toaster />
     </div>
