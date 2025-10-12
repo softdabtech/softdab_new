@@ -42,6 +42,6 @@ jobs:
           port: 21
           timeout: 120000
           local-dir: ./frontend/dist/
-          server-dir: /softdab.tech/www/
-          # Эта опция удалит всё в server-dir перед загрузкой
+          # ИЗМЕНЕНИЕ ЗДЕСЬ: убрали первый слэш
+          server-dir: softdab.tech/www/
           dangerous-clean-slate: true
