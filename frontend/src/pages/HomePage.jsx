@@ -1,16 +1,20 @@
-// frontend/src/pages/HomePage.jsx (ФИНАЛЬНЫЙ ТЕСТ НА ИМПОРТЫ)
+// frontend/src/pages/HomePage.jsx (ТЕСТИРУЕМ Helmet)
 import React from 'react';
+import { Helmet } from 'react-helmet-async'; // <-- ВОЗВРАЩАЕМ ЭТОТ ИМПОРТ
 
-// НЕТ ДРУГИХ ИМПОРТОВ. НИ HELMET, НИ СЕКЦИЙ, НИЧЕГО.
+const PAGE_TITLE = 'SoftDAB | Testing Helmet';
 
 const HomePage = () => {
   return (
     <main className="min-h-screen" style={{ padding: '100px', textAlign: 'center' }}>
+      <Helmet>
+        <title>{PAGE_TITLE}</title>
+      </Helmet>
       <h1 style={{ fontSize: '48px', color: 'black' }}>
-        It Finally Works!
+        Testing Helmet...
       </h1>
       <p style={{ color: 'black', marginTop: '20px' }}>
-        The error is caused by one of the imported libraries in the original HomePage.jsx.
+        If you see this, Helmet is NOT the problem.
       </p>
     </main>
   );
