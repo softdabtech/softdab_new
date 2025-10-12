@@ -1,4 +1,4 @@
-// src/main.jsx
+// src/main.jsx (ФИНАЛЬНАЯ ВЕРСИЯ)
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -22,9 +22,8 @@ const app = (
   <React.StrictMode>
     <BrowserRouter>
       {/* 
-        Мы всегда рендерим Provider, но передаем в него клиент,
-        только если он был успешно инициализирован.
-        Это предотвратит падение приложения.
+        Этот код включает PostHog, но сделан так, 
+        чтобы сайт не падал, даже если ключ не подтянется.
       */}
       <PostHogProvider client={POSTHOG_KEY ? posthog : undefined}>
         <App />
