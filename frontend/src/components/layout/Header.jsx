@@ -33,9 +33,6 @@ const BASE_ITEM = 'inline-flex items-center justify-center h-10 px-4 rounded-md 
 const ITEM_COLORS = 'text-gray-700 hover:text-primary focus:text-primary hover:bg-gray-50 focus:bg-gray-50';
 const EQUAL_WIDTH = 'min-w-[130px]';
 
-/**
- * Header component for site-wide navigation
- */
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -58,168 +55,73 @@ const Header = () => {
     >
       <div className="container mx-auto px-6 py-3 lg:py-4">
         <nav className="flex items-center justify-between" aria-label="Main navigation">
-          {/* Logo */}
+          {/* ... (часть кода без изменений) ... */}
           <Link to="/" className="flex items-center space-x-2 no-underline hover:no-underline focus:no-underline" aria-label="Home">
             <div className="text-2xl font-bold text-primary select-none">SoftDAB</div>
           </Link>
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6">
             <NavigationMenu>
               <NavigationMenuList className="flex items-center gap-2">
-                {/* Services Dropdown */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger
-                    className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} aria-expanded:rounded-b-none`}
-                    aria-label="Services"
-                  >
-                    Services
-                  </NavigationMenuTrigger>
+                  <NavigationMenuTrigger className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} aria-expanded:rounded-b-none`} aria-label="Services">Services</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid w-[420px] gap-3 p-4">
                       {NAVIGATION.services.map((service) => (
-                        <NavigationMenuLink key={service.href} asChild>
-                          <Link
-                            to={service.href}
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-50 focus:bg-gray-50"
-                          >
-                            <div className="text-sm font-medium leading-none text-gray-900">{service.name}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-gray-600">{service.description}</p>
-                          </Link>
-                        </NavigationMenuLink>
+                        <NavigationMenuLink key={service.href} asChild><Link to={service.href} className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-50 focus:bg-gray-50"><div className="text-sm font-medium leading-none text-gray-900">{service.name}</div><p className="line-clamp-2 text-sm leading-snug text-gray-600">{service.description}</p></Link></NavigationMenuLink>
                       ))}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-                {/* Industries Dropdown */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger
-                    className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} aria-expanded:rounded-b-none`}
-                    aria-label="Industries"
-                  >
-                    Industries
-                  </NavigationMenuTrigger>
+                  <NavigationMenuTrigger className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} aria-expanded:rounded-b-none`} aria-label="Industries">Industries</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid w-[420px] gap-3 p-4">
-                      {navigation.industries.map((industry) => (
-                        <NavigationMenuLink key={industry.href} asChild>
-                          <Link
-                            to={industry.href}
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-50 focus:bg-gray-50"
-                          >
-                            <div className="text-sm font-medium leading-none text-gray-900">{industry.name}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-gray-600">{industry.description}</p>
-                          </Link>
-                        </NavigationMenuLink>
+                      {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                      {NAVIGATION.industries.map((industry) => (
+                        <NavigationMenuLink key={industry.href} asChild><Link to={industry.href} className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-50 focus:bg-gray-50"><div className="text-sm font-medium leading-none text-gray-900">{industry.name}</div><p className="line-clamp-2 text-sm leading-snug text-gray-600">{industry.description}</p></Link></NavigationMenuLink>
                       ))}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                {/* Direct Links with equal size */}
                 <NavigationMenuItem>
-                  <Link
-                    to="/case-studies"
-                    className={`${baseItem} ${itemColors} ${equalWidth} ${
-                      isActiveLink('/case-studies') ? 'text-primary' : ''
-                    }`}
-                  >
-                    Case Studies
-                  </Link>
+                  {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                  <Link to="/case-studies" className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} ${isActiveLink('/case-studies') ? 'text-primary' : ''}`}>Case Studies</Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link
-                    to="/about"
-                    className={`${baseItem} ${itemColors} ${equalWidth} ${
-                      isActiveLink('/about') ? 'text-primary' : ''
-                    }`}
-                  >
-                    About
-                  </Link>
+                  {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                  <Link to="/about" className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} ${isActiveLink('/about') ? 'text-primary' : ''}`}>About</Link>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link
-                    to="/contact"
-                    className={`${baseItem} ${itemColors} ${equalWidth} ${
-                      isActiveLink('/contact') ? 'text-primary' : ''
-                    }`}
-                  >
-                    Contact
-                  </Link>
+                  {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                  <Link to="/contact" className={`${BASE_ITEM} ${ITEM_COLORS} ${EQUAL_WIDTH} ${isActiveLink('/contact') ? 'text-primary' : ''}`}>Contact</Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>
-
-          {/* CTA Button (текст не меняет цвет на hover) */}
-          <div className="hidden lg:flex">
-            <Button
-              asChild
-              className="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg font-medium transition-colors"
-            >
-              <Link to="/contact" className="hover:text-white focus:text-white">
-                Talk to an expert
-              </Link>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
+          {/* ... (часть кода без изменений) ... */}
+          <div className="hidden lg:flex"><Button asChild className="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg font-medium transition-colors"><Link to="/contact" className="hover:text-white focus:text-white">Talk to an expert</Link></Button></div>
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Toggle navigation menu">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
+            <SheetTrigger asChild><Button variant="ghost" size="icon" className="lg:hidden" aria-label="Toggle navigation menu"><Menu className="h-6 w-6" /></Button></SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[380px]">
               <nav className="flex flex-col space-y-6 mt-6">
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
-                  Home
-                </Link>
-
+                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">Home</Link>
                 <div className="space-y-4">
                   <h4 className="font-semibold text-gray-900">Services</h4>
-                  {navigation.services.map((service) => (
-                    <Link
-                      key={service.href}
-                      to={service.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-gray-700 hover:text-primary pl-4"
-                    >
-                      {service.name}
-                    </Link>
-                  ))}
+                  {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                  {NAVIGATION.services.map((service) => (<Link key={service.href} to={service.href} onClick={() => setIsMobileMenuOpen(false)} className="block text-gray-700 hover:text-primary pl-4">{service.name}</Link>))}
                 </div>
-
                 <div className="space-y-4">
                   <h4 className="font-semibold text-gray-900">Industries</h4>
-                  {navigation.industries.map((industry) => (
-                    <Link
-                      key={industry.href}
-                      to={industry.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-gray-700 hover:text-primary pl-4"
-                    >
-                      {industry.name}
-                    </Link>
-                  ))}
+                  {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                  {NAVIGATION.industries.map((industry) => (<Link key={industry.href} to={industry.href} onClick={() => setIsMobileMenuOpen(false)} className="block text-gray-700 hover:text-primary pl-4">{industry.name}</Link>))}
                 </div>
-
-                <Link to="/case-studies" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
-                  Case Studies
-                </Link>
-                <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
-                  About
-                </Link>
-                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">
-                  Contact
-                </Link>
-
-                <Button asChild className="bg-primary hover:bg-primary/90 text-white mt-6">
-                  <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white">
-                    Talk to an expert
-                  </Link>
-                </Button>
+                <Link to="/case-studies" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">Case Studies</Link>
+                <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">About</Link>
+                <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-semibold">Contact</Link>
+                <Button asChild className="bg-primary hover:bg-primary/90 text-white mt-6"><Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-white">Talk to an expert</Link></Button>
               </nav>
             </SheetContent>
           </Sheet>

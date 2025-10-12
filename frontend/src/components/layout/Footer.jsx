@@ -26,9 +26,6 @@ const FOOTER_SECTIONS = {
   ],
 };
 
-/**
- * Footer component for site-wide navigation and contact info
- */
 const Footer = () => {
   const currentYear = useMemo(() => new Date().getFullYear(), []);
 
@@ -36,7 +33,7 @@ const Footer = () => {
     <footer className="bg-gray-900 text-white" aria-label="Site footer">
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {/* Company Info */}
+          {/* ... (часть кода без изменений) ... */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline" aria-label="Home">
               <div className="text-2xl font-bold text-white">SoftDAB</div>
@@ -44,7 +41,6 @@ const Footer = () => {
             <p className="text-gray-300 mb-6 max-w-md">
               Custom software that solves real business problems. Senior engineering teams delivering measurable outcomes.
             </p>
-            {/* Contact Info */}
             <div className="space-y-3" role="list" aria-label="Contact information">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-400" />
@@ -57,76 +53,39 @@ const Footer = () => {
                 <span className="text-gray-300">Kyiv, Ukraine</span>
               </div>
             </div>
-            {/* Social Links */}
             <div className="flex space-x-4 mt-6" aria-label="Social links">
-              <a
-                href="https://www.linkedin.com/company/softdab"
-                target="_blank"
-                rel="noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="https://twitter.com/softdab"
-                target="_blank"
-                rel="noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Twitter/X"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="https://github.com/softdabtech"
-                target="_blank"
-                rel="noreferrer"
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5" />
-              </a>
+              <a href="https://www.linkedin.com/company/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
+              <a href="https://twitter.com/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Twitter/X"><Twitter className="h-5 w-5" /></a>
+              <a href="https://github.com/softdabtech" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="GitHub"><Github className="h-5 w-5" /></a>
             </div>
           </div>
-          {/* Services */}
+          
           <nav aria-label="Services">
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               {FOOTER_SECTIONS.services.map((item) => (
-                <li key={item.href}>
-                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
-                    {item.name}
-                  </Link>
-                </li>
+                <li key={item.href}><Link to={item.href} className="text-gray-300 hover:text-white transition-colors">{item.name}</Link></li>
               ))}
             </ul>
           </nav>
 
-          {/* Industries */}
           <nav aria-label="Industries">
             <h3 className="text-lg font-semibold mb-4">Industries</h3>
             <ul className="space-y-2">
-              {footerSections.industries.map((item) => (
-                <li key={item.href}>
-                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
-                    {item.name}
-                  </Link>
-                </li>
+              {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+              {FOOTER_SECTIONS.industries.map((item) => (
+                <li key={item.href}><Link to={item.href} className="text-gray-300 hover:text-white transition-colors">{item.name}</Link></li>
               ))}
             </ul>
           </nav>
 
-          {/* Company & Legal */}
           <div>
             <nav aria-label="Company">
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-2 mb-6">
-                {footerSections.company.map((item) => (
-                  <li key={item.href}>
-                    <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
-                      {item.name}
-                    </Link>
-                  </li>
+                {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                {FOOTER_SECTIONS.company.map((item) => (
+                  <li key={item.href}><Link to={item.href} className="text-gray-300 hover:text-white transition-colors">{item.name}</Link></li>
                 ))}
               </ul>
             </nav>
@@ -134,43 +93,21 @@ const Footer = () => {
             <nav aria-label="Legal">
               <h4 className="text-sm font-semibold mb-2 text-gray-400">Legal</h4>
               <ul className="space-y-1">
-                {footerSections.legal.map((item) => (
-                  <li key={item.href}>
-                    <Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">
-                      {item.name}
-                    </Link>
-                  </li>
+                {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+                {FOOTER_SECTIONS.legal.map((item) => (
+                  <li key={item.href}><Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">{item.name}</Link></li>
                 ))}
               </ul>
             </nav>
           </div>
         </div>
-
+        {/* ... (остальная часть кода без изменений) ... */}
         <Separator className="my-8 bg-gray-700" />
-
-        {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">© {currentYear} SoftDAB. All rights reserved.</p>
-
           <div className="flex items-center space-x-6 mt-4 md:mt-0">
             <span className="text-gray-400 text-sm">🇺🇦 Made in Ukraine</span>
-
-            {/* Manage Cookies Button */}
-            <button
-              type="button"
-              onClick={() => {
-                try {
-                  localStorage.removeItem('softdab_cookie_consent_v1');
-                } catch {}
-                window.dispatchEvent(
-                  new CustomEvent('softdab:open-cookie-banner', { detail: { openCustomize: true } })
-                );
-              }}
-              className="inline-flex items-center rounded-lg bg-white/10 hover:bg:white/20 text-white px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-gray-900"
-              aria-label="Manage Cookies"
-            >
-              Manage Cookies
-            </button>
+            <button type="button" onClick={() => { try { localStorage.removeItem('softdab_cookie_consent_v1'); } catch {} window.dispatchEvent(new CustomEvent('softdab:open-cookie-banner', { detail: { openCustomize: true } })); }} className="inline-flex items-center rounded-lg bg-white/10 hover:bg:white/20 text-white px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-gray-900" aria-label="Manage Cookies">Manage Cookies</button>
           </div>
         </div>
       </div>
