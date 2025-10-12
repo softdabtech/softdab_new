@@ -70,7 +70,7 @@ const CTASection = () => {
             </Button>
           </div>
           <div className="text-sm text-gray-300">
-            <p>✓ Transparent pricing • ✓ Direct communication • ✓ Flexible scaling</p>
+            <p>✓ Transparent pricing • ✓ Direct communication • ✓ Flexible scaling •</p>
           </div>
         </div>
       </div>
