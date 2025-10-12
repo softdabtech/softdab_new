@@ -1,4 +1,4 @@
-// frontend/src/components/layout/Header.jsx (ФИНАЛЬНАЯ РАБОЧАЯ ВЕРСИЯ)
+// frontend/src/components/layout/Header.jsx (СТАБИЛЬНАЯ ВЕРСИЯ)
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'lucide-react';
@@ -14,7 +14,6 @@ import {
 } from '../ui/navigation-menu';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 
-// Пути на 100% синхронизированы с routes.jsx
 const NAVIGATION = {
   services: [
     { name: 'Custom Development', href: '/services/custom-development', description: 'End-to-end software project delivery.' },
@@ -26,7 +25,7 @@ const NAVIGATION = {
   ],
 };
 
-const ListItem = React.forwardRef(({ className, title, children, href, ...props }, ref) => {
+const ListItem = React.forwardRef(({ title, children, href, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -55,8 +54,10 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
+    // Scroll to top on route change
+    window.scrollTo(0, 0);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <header
@@ -69,7 +70,6 @@ const Header = () => {
           <span className="text-2xl font-bold text-primary">SoftDAB</span>
         </Link>
 
-        {/* Desktop Navigation */}
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -119,7 +119,6 @@ const Header = () => {
             <Link to="/company/contact">Talk to an expert</Link>
           </Button>
 
-          {/* Mobile Navigation */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden">
