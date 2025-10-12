@@ -1,8 +1,9 @@
-// frontend/src/routes.jsx (ВЕРСИЯ ДЛЯ ТЕСТА)
+// frontend/src/routes.jsx (ТЕСТИРУЕМ HOMEPAGE)
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-// Оставляем только самые необходимые импорты для теста
+// Включаем HomePage
+const HomePage = React.lazy(() => import('./pages/HomePage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 const AboutPage = React.lazy(() => import('./pages/company/AboutPage'));
 
@@ -13,14 +14,13 @@ export const AppRoutes = () => {
   return (
     <Suspense fallback={<LoadingSkeleton />}>
       <Routes>
-        {/* 
-          Для теста мы направляем главную страницу (/) на AboutPage.
-          Это упростит проверку.
-        */}
-        <Route path="/" element={<AboutPage />} />
+        {/* Возвращаем HomePage на главную */}
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Оставляем рабочую страницу About для контроля */}
         <Route path="/company/about" element={<AboutPage />} />
         
-        {/* Все остальные роуты временно отключены */}
+        {/* Все остальные роуты пока выключены */}
         
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
