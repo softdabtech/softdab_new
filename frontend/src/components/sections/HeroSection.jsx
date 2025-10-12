@@ -1,6 +1,7 @@
+// frontend/src/components/sections/HeroSection.jsx (ФИНАЛЬНАЯ ЧИСТАЯ ВЕРСИЯ)
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, CheckCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react'; // Убрали неиспользуемый Play
 import { Button } from '../ui/button';
 
 const HeroSection = () => {
@@ -48,15 +49,12 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* CTAs */}
+            {/* CTAs - ИСПРАВЛЕННАЯ КНОПКА */}
             <div className="flex justify-center pt-8">
               <Button 
                 asChild 
                 size="lg" 
-                style={{ backgroundColor: '#2F89FC', color: '#fff' }}
-                className="hover:bg-[#1F6ED4] px-8 py-4 text-lg font-semibold rounded-xl hover-lift group transition-colors"
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#1F6ED4'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#2F89FC'}
+                className="bg-[#2F89FC] text-white hover:bg-[#1F6ED4] px-8 py-4 text-lg font-semibold rounded-xl hover-lift group transition-colors"
               >
                 <Link to="/contact">
                   Talk to an expert
