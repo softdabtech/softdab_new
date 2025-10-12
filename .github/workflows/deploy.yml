@@ -31,7 +31,6 @@ jobs:
         run: npm ci
 
       - name: Build
-        # Добавлена команда для проверки, передан ли ключ
         run: |
           echo "VITE_POSTHOG_KEY is set: ${{ env.VITE_POSTHOG_KEY != '' }}"
           npm run build
@@ -46,8 +45,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          passive: true
           timeout: 120000
           local-dir: ./frontend/dist/
           server-dir: /softdab.tech/www/
-          max-uploads: 1
