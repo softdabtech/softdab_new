@@ -6,7 +6,7 @@ import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
 import AppRoutes from './routes';
 import CookieConsentBanner from './components/cookies/CookieConsentBanner';
-import GAListener from './components/analytics/GAListener';
+//import GAListener from './components/analytics/GAListener';
 import ScrollToTop from './components/layout/ScrollToTop';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
       <Footer />
 
       {/* Global components */}
-      <GAListener />
+      {/* <GAListener /> */}
       <CookieConsentBanner />
       <Toaster />
     </div>
