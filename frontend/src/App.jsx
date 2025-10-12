@@ -1,22 +1,24 @@
+// src/App.jsx (ВЕРСИЯ ДЛЯ ДИАГНОСТИКИ РОУТЕРА)
 import React from 'react';
 import './App.css';
-// УДАЛЕНО: import { BrowserRouter } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
-import AppRoutes from './routes';
+// import AppRoutes from './routes'; // <-- ЗАКОММЕНТИРОВАНО
 import CookieConsentBanner from './components/cookies/CookieConsentBanner';
-//import GAListener from './components/analytics/GAListener';
+// import GAListener from './components/analytics/GAListener';
 import ScrollToTop from './components/layout/ScrollToTop';
 
 function App() {
   return (
     <div className="App">
-      {/* Router уже есть в main.jsx */}
       <ScrollToTop />
       <Header />
       <main className="min-h-screen">
-        <AppRoutes />
+        {/* <AppRoutes /> */} {/* <-- ЗАКОММЕНТИРОВАНО */}
+        <h1 style={{ color: 'black', fontSize: '48px', textAlign: 'center', paddingTop: '100px' }}>
+          It works!
+        </h1>
       </main>
       <Footer />
 
