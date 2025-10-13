@@ -272,7 +272,7 @@ const CaseStudiesPage = () => {
                           <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
                             <div className="flex items-center text-gray-600" aria-label="Project timeline">
                               <Clock className="h-4 w-4 mr-2" aria-hidden="true" />
-                              <span>{cs.timeline || '—'}</span>
+                              <span>{cs.duration || cs.timeline || '—'}</span>
                             </div>
                             <div className="flex items-center text-gray-600" aria-label="Team size">
                               <Users className="h-4 w-4 mr-2" aria-hidden="true" />

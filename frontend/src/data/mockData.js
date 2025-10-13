@@ -19,7 +19,7 @@ export const mockData = {
         'System Response Time': '< 100ms'
       },
       image: '/case-studies/iot-platform.jpg',
-      href: '/case-studies/iot-platform'
+      slug: 'iot-platform'
     },
     {
       id: 'legal-doc-processing',
@@ -35,7 +35,7 @@ export const mockData = {
         'Cost Savings': '60%'
       },
       image: '/case-studies/legal-doc.jpg',
-      href: '/case-studies/legal-doc-processing'
+      slug: 'legal-doc-processing'
     },
     {
       id: 'developer-portal',
@@ -51,7 +51,7 @@ export const mockData = {
         'Developer Satisfaction': '92%'
       },
       image: '/case-studies/dev-portal.jpg',
-      href: '/case-studies/developer-portal'
+      slug: 'developer-portal'
     },
     {
       id: 'payment-platform',
@@ -67,7 +67,7 @@ export const mockData = {
         'Success Rate': '99.99%'
       },
       image: '/case-studies/payment-platform.jpg',
-      href: '/case-studies/payment-platform'
+      slug: 'payment-platform'
     },
     {
       id: 'telemedicine-platform',
@@ -83,7 +83,7 @@ export const mockData = {
         'Platform Uptime': '99.9%'
       },
       image: '/case-studies/telemedicine.jpg',
-      href: '/case-studies/telemedicine-platform'
+      slug: 'telemedicine-platform'
     }
   ],
 
