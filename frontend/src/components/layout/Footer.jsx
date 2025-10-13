@@ -36,8 +36,8 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white" aria-label="Site footer">
       <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+          <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline" aria-label="Home">
               <div className="text-2xl font-bold text-white">SoftDAB</div>
             </Link>
@@ -63,7 +63,7 @@ const Footer = () => {
             </div>
           </div>
           
-          <nav aria-label="Services" className="lg:col-span-2">
+          <nav aria-label="Services" className="lg:col-span-1">
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               {FOOTER_SECTIONS.services.map((item) => (
@@ -76,7 +76,7 @@ const Footer = () => {
             </ul>
           </nav>
 
-          <nav aria-label="Industries" className="lg:col-span-2">
+          <nav aria-label="Industries" className="lg:col-span-1">
             <h3 className="text-lg font-semibold mb-4">Industries</h3>
             <ul className="space-y-2">
               {FOOTER_SECTIONS.industries.map((item) => (
@@ -89,33 +89,31 @@ const Footer = () => {
             </ul>
           </nav>
 
-          <div className="lg:col-span-2">
-            <nav aria-label="Company">
-              <h3 className="text-lg font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 mb-6">
-                {FOOTER_SECTIONS.company.map((item) => (
-                  <li key={item.href}>
-                    <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+          <nav aria-label="Company" className="lg:col-span-1">
+            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <ul className="space-y-2">
+              {FOOTER_SECTIONS.company.map((item) => (
+                <li key={item.href}>
+                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-            <nav aria-label="Legal">
-              <h4 className="text-sm font-semibold mb-2 text-gray-400">Legal</h4>
-              <ul className="space-y-2">
-                {FOOTER_SECTIONS.legal.map((item) => (
-                  <li key={item.href}>
-                    <Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
+          <nav aria-label="Legal" className="lg:col-span-1">
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2">
+              {FOOTER_SECTIONS.legal.map((item) => (
+                <li key={item.href}>
+                  <Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
         
         <Separator className="my-8 bg-gray-800" />
