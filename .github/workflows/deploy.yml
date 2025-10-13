@@ -49,7 +49,3 @@ jobs:
             **/.git*/**
             **/node_modules/**
             **/.DS_Store
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
