@@ -219,100 +219,29 @@ const CaseStudiesPage = () => {
                 <Button onClick={resetFilters} variant="outline">Clear Filters</Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-                {filteredCases.map((cs) => {
-                  const [resultKey, resultVal] = getFirstResultEntry(cs.results);
-                  const mainMetric = extractMainMetric(resultVal || '');
-                  const readableKey = (resultKey || 'Result').replace(/([A-Z])/g, ' $1').trim();
-                  const slug = cs.slug || cs.id;
-                  const path = `/case-studies/${slug}`;
-
-                  return (
-                    <Link
-                      key={cs.id}
-                      to={path}
-                      className="block focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
-                      aria-label={`Read case study about ${cs.title}`}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {filteredCases.map((study) => (
+                  <Card key={study.id} className="p-6 flex flex-col items-center text-center hover-lift transition-shadow">
+                    <img src={study.image || DEFAULT_IMAGE} alt="" className="w-16 h-16 mb-4" aria-hidden="true" />
+                    <h3 className="text-lg font-bold mb-2">{study.title}</h3>
+                    <p className="text-gray-700 mb-4 text-sm">{study.description}</p>
+                    <div className="flex flex-wrap gap-2 justify-center mb-4">
+                      {study.technologies && study.technologies.map((tech, i) => (
+                        <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">{tech}</span>
+                      ))}
+                    </div>
+                    <Button 
+                      asChild 
+                      size="sm" 
+                      className="mt-auto group"
                     >
-                      <Card className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden h-full">
-                        <CardHeader className="pb-4">
-                          {cs.image && (
-                            <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
-                              <img
-                                src={cs.image || DEFAULT_IMAGE}
-                                alt={cs.title}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
-                          <div className="flex items-center justify-between mb-2">
-                            <Badge variant="secondary" className={`text-xs ${getIndustryBadgeClasses(cs.industry)}`}>
-                              {cs.industry || 'General'}
-                            </Badge>
-                            <span className="text-xs text-gray-500">{cs.client || 'Client NDA'}</span>
-                          </div>
-                          <CardTitle className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                            {cs.title}
-                          </CardTitle>
-                          <CardDescription className="text-gray-600 leading-relaxed text-sm">
-                            {cs.description}
-                          </CardDescription>
-                        </CardHeader>
-
-                        <CardContent className="pt-0">
-                          {resultVal ? (
-                            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6" aria-label="Key achievement">
-                              <div className="flex items-center gap-3">
-                                <TrendingUp className="h-5 w-5 text-green-600 shrink-0" aria-hidden="true" />
-                                <div className="flex items-baseline gap-3 flex-wrap">
-                                  <div className="text-3xl font-extrabold leading-none text-green-700 tabular-nums">
-                                    {mainMetric}
-                                  </div>
-                                  {readableKey && (
-                                    <div className="text-sm text-green-700 leading-snug">
-                                      {readableKey}
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          ) : null}
-
-                          <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                            <div className="flex items-center text-gray-600" aria-label="Project timeline">
-                              <Clock className="h-4 w-4 mr-2" aria-hidden="true" />
-                              <span>{cs.duration || cs.timeline || '—'}</span>
-                            </div>
-                            <div className="flex items-center text-gray-600" aria-label="Team size">
-                              <Users className="h-4 w-4 mr-2" aria-hidden="true" />
-                              <span>{formatTeamSize(cs.teamSize)}</span>
-                            </div>
-                          </div>
-
-                          {Array.isArray(cs.technologies) && cs.technologies.length > 0 && (
-                            <div className="flex flex-wrap gap-1 mb-6" aria-label="Technologies used">
-                              {cs.technologies.slice(0, 4).map((tech, idx) => (
-                                <Badge key={idx} variant="outline" className="text-xs">
-                                  {tech}
-                                </Badge>
-                              ))}
-                              {cs.technologies.length > 4 && (
-                                <Badge variant="outline" className="text-xs">
-                                  +{cs.technologies.length - 4} more
-                                </Badge>
-                              )}
-                            </div>
-                          )}
-
-                          <div className="text-primary font-medium group-hover:underline flex items-center">
-                            Read Case Study
-                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  );
-                })}
+                      <Link to={`/case-studies/${study.slug || study.id}`} aria-label={`Read more about ${study.title}`}>
+                        Read More
+                        <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                      </Link>
+                    </Button>
+                  </Card>
+                ))}
               </div>
             )}
           </div>
