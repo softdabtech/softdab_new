@@ -33,15 +33,23 @@ jobs:
           VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
 
       - name: Deploy to FTP with Clean Slate
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          timeout: 120000
+          timeout: 360000  # Увеличили таймаут до 6 минут
           local-dir: ./frontend/dist/
-          # ИЗМЕНЕНИЕ ЗДЕСЬ: убрали первый слэш
           server-dir: softdab.tech/www/
           dangerous-clean-slate: true
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
