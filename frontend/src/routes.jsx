@@ -20,7 +20,7 @@ const OutsourcingPage = React.lazy(() => import('./pages/services/OutsourcingPag
 const IndustriesPage = React.lazy(() => import('./pages/industries/IndustriesPage'));
 const FintechPage = React.lazy(() => import('./pages/industries/FintechPage'));
 const HealthcarePage = React.lazy(() => import('./pages/industries/HealthcarePage'));
-const EcommercePage = React.lazy(() => import('./pages/industries/EcommercePage'));
+const EcommercePage = React.lazy(() => import('./pages/industries/ecommercePage'));
 
 // Case Studies
 const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
