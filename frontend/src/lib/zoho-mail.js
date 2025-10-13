@@ -1,5 +1,3 @@
-import { Buffer } from 'buffer';
-
 // Функция для формирования JSON данных для Zoho Mail API
 const createEmailData = (formData) => {
   const teamEmailContent = `
@@ -57,35 +55,53 @@ SoftDAB Team
   };
 };
 
-export const sendZohoMail = async (formData, zohoAuthToken) => {
+export const sendZohoMail = async (formData) => {
   try {
     const emailData = createEmailData(formData);
-    const emailRequests = [emailData.teamEmail, emailData.clientEmail].map(email => {
-      const requestData = {
-        fromAddress: email.fromAddress,
-        toAddress: email.toAddress,
-        subject: email.subject,
-        content: email.content,
+    const token = await getZohoToken();
+    
+    // Отправляем письмо команде
+    const teamResponse = await fetch('https://mail.zoho.com/api/accounts/self/messages', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Zoho-oauthtoken ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        fromAddress: emailData.teamEmail.fromAddress,
+        toAddress: emailData.teamEmail.toAddress,
+        subject: emailData.teamEmail.subject,
+        content: emailData.teamEmail.content,
         mailFormat: "text",
         askReceipt: "no"
-      };
-
-      return fetch('https://mail.zoho.com/api/accounts/self/messages', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Zoho-oauthtoken ${zohoAuthToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
-      }).then(response => {
-        if (!response.ok) {
-          throw new Error(`Failed to send email to ${email.toAddress}`);
-        }
-        return response.json();
-      });
+      })
     });
 
-    await Promise.all(emailRequests);
+    if (!teamResponse.ok) {
+      throw new Error('Failed to send team notification');
+    }
+
+    // Отправляем письмо клиенту
+    const clientResponse = await fetch('https://mail.zoho.com/api/accounts/self/messages', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Zoho-oauthtoken ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        fromAddress: emailData.clientEmail.fromAddress,
+        toAddress: emailData.clientEmail.toAddress,
+        subject: emailData.clientEmail.subject,
+        content: emailData.clientEmail.content,
+        mailFormat: "text",
+        askReceipt: "no"
+      })
+    });
+
+    if (!clientResponse.ok) {
+      throw new Error('Failed to send client notification');
+    }
+
     return true;
   } catch (error) {
     console.error('Failed to send email:', error);
@@ -98,7 +114,10 @@ export const getZohoToken = async () => {
   const clientId = process.env.REACT_APP_ZOHO_CLIENT_ID;
   const clientSecret = process.env.REACT_APP_ZOHO_CLIENT_SECRET;
   const code = process.env.REACT_APP_ZOHO_CODE;
-  const scope = process.env.REACT_APP_ZOHO_SCOPE;
+
+  if (!clientId || !clientSecret || !code) {
+    throw new Error('Missing Zoho credentials');
+  }
 
   try {
     const response = await fetch('https://accounts.zoho.com/oauth/v2/token', {
@@ -111,7 +130,7 @@ export const getZohoToken = async () => {
         client_id: clientId,
         client_secret: clientSecret,
         grant_type: 'authorization_code',
-        scope: scope
+        scope: 'ZohoMail.messages.CREATE'
       })
     });
 

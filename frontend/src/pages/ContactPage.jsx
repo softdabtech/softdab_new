@@ -133,11 +133,8 @@ const ContactPage = () => {
     incrementCounter();
 
     try {
-      // Get Zoho access token
-      const token = await getZohoToken();
-      
       // Send emails using Zoho Mail API
-      await sendZohoMail(formData, token);
+      await sendZohoMail(formData);
 
       // Reset form on success
       setFormData(initialFormData);
