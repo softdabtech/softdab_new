@@ -158,10 +158,10 @@ const CustomDevelopmentPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <Badge className="mb-6 bg-blue-100 text-blue-800 border-blue-200">End-to-End Software Development</Badge>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              {service.title}
+              {service?.title || 'Custom Software Development'}
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              {service.description} We build reliable, scalable solutions that drive your business forward.
+              {service?.description || 'Transform your business ideas into powerful software solutions with our end-to-end development services.'} We build reliable, scalable solutions that drive your business forward.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
@@ -192,7 +192,14 @@ const CustomDevelopmentPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {service.benefits.map((benefit, index) => (
+              {(service?.benefits || [
+                'Tailored solutions that perfectly match your business needs',
+                'Full project ownership from requirements to deployment',
+                'Senior developers with deep technical expertise',
+                'Agile development with regular deliveries',
+                'Comprehensive testing and quality assurance',
+                'Long-term technical partnership'
+              ]).map((benefit, index) => (
                 <Card key={index} className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
                     <CheckCircle className="h-8 w-8 text-green-500 mb-4" />

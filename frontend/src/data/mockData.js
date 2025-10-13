@@ -24,6 +24,27 @@ export const mockData = {
 
   // Services
   services: {
+    customDevelopment: {
+      title: 'Custom Software Development',
+      subtitle: 'End-to-end Solutions',
+      description: 'Transform your business ideas into powerful software solutions with our end-to-end development services.',
+      benefits: [
+        'Tailored solutions that perfectly match your business needs',
+        'Full project ownership from requirements to deployment',
+        'Senior developers with deep technical expertise',
+        'Agile development with regular deliveries',
+        'Comprehensive testing and quality assurance',
+        'Long-term technical partnership'
+      ],
+      features: [
+        'Web and mobile applications',
+        'Enterprise software solutions',
+        'API development and integration',
+        'Cloud-native applications',
+        'DevOps and infrastructure',
+        'Technical consulting'
+      ]
+    },
     outsourcing: {
       title: 'Outsourcing',
       subtitle: 'Custom Software Development',
