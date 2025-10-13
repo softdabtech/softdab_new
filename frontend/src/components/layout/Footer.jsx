@@ -5,8 +5,11 @@ import { Separator } from '../ui/separator';
 
 const FOOTER_SECTIONS = {
   services: [
-    { name: 'Outsourcing', href: '/services/outsourcing' },
+    { name: 'Custom Development', href: '/services/custom-development' },
     { name: 'Dedicated Teams', href: '/services/dedicated-teams' },
+    { name: 'Outsourcing', href: '/services/outsourcing' },
+    { name: 'Discovery & PoC', href: '/services/discovery' },
+    { name: 'Support & Maintenance', href: '/services/support' },
   ],
   industries: [
     { name: 'Fintech', href: '/industries/fintech' },
@@ -15,14 +18,15 @@ const FOOTER_SECTIONS = {
     { name: 'Logistics', href: '/industries/logistics' },
   ],
   company: [
-    { name: 'About', href: '/about' },
+    { name: 'About Us', href: '/company/about' },
     { name: 'Case Studies', href: '/case-studies' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Contact', href: '/company/contact' },
+    { name: 'Careers', href: '/company/careers' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Data Processing Addendum', href: '/dpa' },
+    { name: 'Privacy Policy', href: '/legal/privacy' },
+    { name: 'Cookie Policy', href: '/legal/cookies' },
+    { name: 'Data Processing Addendum', href: '/legal/dpa' },
   ],
 };
 
@@ -32,9 +36,8 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white" aria-label="Site footer">
       <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {/* ... (часть кода без изменений) ... */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-4">
             <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline" aria-label="Home">
               <div className="text-2xl font-bold text-white">SoftDAB</div>
             </Link>
@@ -60,48 +63,71 @@ const Footer = () => {
             </div>
           </div>
           
-          <nav aria-label="Services">
+          <nav aria-label="Services" className="lg:col-span-2">
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               {FOOTER_SECTIONS.services.map((item) => (
-                <li key={item.href}><Link to={item.href} className="text-gray-300 hover:text-white transition-colors">{item.name}</Link></li>
+                <li key={item.href}>
+                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                    {item.name}
+                  </Link>
+                </li>
               ))}
             </ul>
           </nav>
 
-          <nav aria-label="Industries">
+          <nav aria-label="Industries" className="lg:col-span-2">
             <h3 className="text-lg font-semibold mb-4">Industries</h3>
             <ul className="space-y-2">
-              {/* ИСПРАВЛЕНО ЗДЕСЬ */}
               {FOOTER_SECTIONS.industries.map((item) => (
-                <li key={item.href}><Link to={item.href} className="text-gray-300 hover:text-white transition-colors">{item.name}</Link></li>
+                <li key={item.href}>
+                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                    {item.name}
+                  </Link>
+                </li>
               ))}
             </ul>
           </nav>
 
-          <div>
+          <div className="lg:col-span-2">
             <nav aria-label="Company">
               <h3 className="text-lg font-semibold mb-4">Company</h3>
               <ul className="space-y-2 mb-6">
-                {/* ИСПРАВЛЕНО ЗДЕСЬ */}
                 {FOOTER_SECTIONS.company.map((item) => (
-                  <li key={item.href}><Link to={item.href} className="text-gray-300 hover:text-white transition-colors">{item.name}</Link></li>
+                  <li key={item.href}>
+                    <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </nav>
 
             <nav aria-label="Legal">
               <h4 className="text-sm font-semibold mb-2 text-gray-400">Legal</h4>
-              <ul className="space-y-1">
-                {/* ИСПРАВЛЕНО ЗДЕСЬ */}
+              <ul className="space-y-2">
                 {FOOTER_SECTIONS.legal.map((item) => (
-                  <li key={item.href}><Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">{item.name}</Link></li>
+                  <li key={item.href}>
+                    <Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </nav>
           </div>
         </div>
-        {/* ... (остальная часть кода без изменений) ... */}
+        
+        <Separator className="my-8 bg-gray-800" />
+        
+        <div className="flex flex-col sm:flex-row justify-between items-center text-gray-400 text-sm">
+          <div>
+            © {currentYear} SoftDAB. All rights reserved.
+          </div>
+          <div className="mt-4 sm:mt-0">
+            Made with ❤️ in Ukraine
+          </div>
+        </div>
         <Separator className="my-8 bg-gray-700" />
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">© {currentYear} SoftDAB. All rights reserved.</p>
