@@ -7,7 +7,7 @@ const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 // Company pages
 const AboutPage = React.lazy(() => import('./pages/company/AboutPage'));
-const ContactPage = React.lazy(() => import('./pages/company/ContactPage'));
+const ContactPage = React.lazy(() => import('./pages/ContactPage')); // Updated path
 const CareersPage = React.lazy(() => import('./pages/company/CareersPage'));
 
 // Services pages
