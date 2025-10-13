@@ -236,6 +236,15 @@ const CaseStudiesPage = () => {
                     >
                       <Card className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white overflow-hidden h-full">
                         <CardHeader className="pb-4">
+                          {cs.image && (
+                            <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
+                              <img
+                                src={cs.image || DEFAULT_IMAGE}
+                                alt={cs.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
                           <div className="flex items-center justify-between mb-2">
                             <Badge variant="secondary" className={`text-xs ${getIndustryBadgeClasses(cs.industry)}`}>
                               {cs.industry || 'General'}

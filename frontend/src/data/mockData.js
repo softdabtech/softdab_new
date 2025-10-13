@@ -18,7 +18,7 @@ export const mockData = {
         'Maintenance Efficiency': '45%',
         'System Response Time': '< 100ms'
       },
-      image: '/case-studies/iot-platform.jpg',
+      image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=1400&q=80',
       slug: 'iot-platform'
     },
     {
@@ -34,7 +34,7 @@ export const mockData = {
         'Accuracy Rate': '95%',
         'Cost Savings': '60%'
       },
-      image: '/case-studies/legal-doc.jpg',
+      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1400&q=80',
       slug: 'legal-doc-processing'
     },
     {

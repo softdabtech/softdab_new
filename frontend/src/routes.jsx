@@ -50,11 +50,6 @@ export const AppRoutes = () => {
         
         {/* Case Studies */}
         <Route path="/case-studies" element={<CaseStudiesPage />} />
-        <Route path="/case-studies/payment-platform" element={<PaymentPlatformPage />} />
-        <Route path="/case-studies/telemedicine-platform" element={<TelemedicinePlatformPage />} />
-        <Route path="/case-studies/iot-platform" element={<IoTPlatformPage />} />
-        <Route path="/case-studies/legal-doc-processing" element={<LegalDocProcessingPage />} />
-        <Route path="/case-studies/developer-portal" element={<DeveloperPortalPage />} />
         <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
         
         {/* Company */}
