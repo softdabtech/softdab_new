@@ -191,7 +191,12 @@ const AboutPage = () => {
                     <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
                     <p className="text-primary font-medium mb-3">{member.position}</p>
                     <p className="text-gray-600 text-sm leading-relaxed mb-4">{member.bio}</p>
-                    <Button asChild variant="ghost" size="sm">
+                    <Button 
+                      asChild 
+                      variant="ghost" 
+                      size="sm"
+                      className="hover:scale-100"
+                    >
                       <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
                         LinkedIn
                       </a>
@@ -247,10 +252,15 @@ const AboutPage = () => {
               Let’s build something amazing together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
+              <Button 
+                asChild 
+                size="lg" 
+                variant="outline"
+                className="w-full sm:w-auto"
+              >
                 <Link to="/contact">
                   Start Your Project
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">

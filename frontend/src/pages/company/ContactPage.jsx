@@ -376,8 +376,8 @@ const ContactPage = () => {
 
                       <Button
                         type="submit"
-                        className="w-full h-12 bg-primary hover:bg-primary/90"
                         size="lg"
+                        className="w-full"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (
@@ -386,9 +386,9 @@ const ContactPage = () => {
                             Sending...
                           </span>
                         ) : (
-                          <span className="inline-flex items-center">
+                          <span className="inline-flex items-center group">
                             Send Message
-                            <Send className="ml-2 h-4 w-4" />
+                            <Send className="group-hover:translate-x-1 transition-transform" />
                           </span>
                         )}
                       </Button>
@@ -448,9 +448,12 @@ const ContactPage = () => {
                     <Button
                       asChild
                       variant="outline"
-                      className="w-full border-white text-white hover:bg-white hover:text-primary"
+                      className="w-full border-white text-white"
                     >
-                      <a href="mailto:hello@softdab.tech">hello@softdab.tech</a>
+                      <a href="mailto:hello@softdab.tech" className="group">
+                        hello@softdab.tech
+                        <Mail className="ml-2 group-hover:translate-x-1 transition-transform" />
+                      </a>
                     </Button>
                   </CardContent>
                 </Card>

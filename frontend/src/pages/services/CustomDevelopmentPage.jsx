@@ -294,14 +294,26 @@ const CustomDevelopmentPage = () => {
               Let's discuss your requirements and create a custom solution that perfectly matches your business needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link to="/contact">
+              <Button 
+                asChild 
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto"
+              >
+                <Link to="/contact" className="group">
                   Book Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-                View Case Studies
+              <Button 
+                asChild
+                variant="outline" 
+                size="lg"
+                className="w-full sm:w-auto border-white text-white"
+              >
+                <Link to="/case-studies">
+                  View Case Studies
+                </Link>
               </Button>
             </div>
           </div>

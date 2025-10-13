@@ -52,13 +52,16 @@ export const CookieConsent = () => {
                 <Button 
                   variant="outline" 
                   onClick={handleNecessary}
+                  size="default"
+                  className="hover:scale-100"
                   aria-label="Accept only necessary cookies"
                 >
                   Only Necessary
                 </Button>
                 <Button 
                   onClick={handleAll}
-                  className="bg-primary text-white"
+                  size="default"
+                  className="hover:scale-100"
                   aria-label="Accept all cookies"
                 >
                   Accept All

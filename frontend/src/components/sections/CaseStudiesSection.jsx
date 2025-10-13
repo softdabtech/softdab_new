@@ -57,20 +57,29 @@ const CaseStudiesSection = () => {
                   <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">{tag}</span>
                 ))}
               </div>
-              <Button asChild size="sm" className="mt-auto">
+              <Button 
+                asChild 
+                size="sm" 
+                className="mt-auto group"
+              >
                 <Link to={study.link} aria-label={`Read more about ${study.title}`}>
                   Read More
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </Link>
               </Button>
             </Card>
           ))}
         </div>
         <div className="flex justify-center">
-          <Button asChild size="lg" className="px-8 py-4 font-semibold rounded-xl" aria-label="View all case studies">
+          <Button 
+            asChild 
+            size="lg" 
+            className="w-full sm:w-auto group"
+            aria-label="View all case studies"
+          >
             <Link to="/case-studies">
               View all case studies
-              <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
+              <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </Link>
           </Button>
         </div>
