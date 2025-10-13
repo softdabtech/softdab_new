@@ -1,101 +1,306 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Code, ArrowRight, Shield, Zap, Users } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { CheckCircle, ArrowRight, Clock, Users, Shield, Award } from 'lucide-react';
 import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
+import { mockData } from '../../data/mockData';
 
 const CustomDevelopmentPage = () => {
-  const features = [
+  useEffect(() => {
+    document.title = 'Custom Software Development Services | End-to-End Solutions | SoftDAB';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.content = 'End-to-end custom software development services. From discovery to deployment, we deliver reliable and scalable solutions tailored to your business needs.';
+    }
+
+    // Breadcrumb Schema
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.softdab.tech"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.softdab.tech/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Custom Development"
+        }
+      ]
+    };
+
+    // Service Schema
+    const serviceSchema = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Custom Software Development",
+      "description": "End-to-end custom software development with full project ownership and guaranteed delivery",
+      "provider": {
+        "@type": "Organization",
+        "name": "SoftDAB"
+      },
+      "areaServed": ["United States", "European Union"],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Software Development Services"
+      }
+    };
+
+    const script1 = document.createElement('script');
+    script1.type = 'application/ld+json';
+    script1.text = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement('script');
+    script2.type = 'application/ld+json';
+    script2.text = JSON.stringify(serviceSchema);
+    document.head.appendChild(script2);
+
+    return () => {
+      document.head.removeChild(script1);
+      document.head.removeChild(script2);
+    };
+  }, []);
+
+  const service = mockData.services.customDevelopment;
+  
+  const processSteps = [
     {
-      icon: Code,
-      title: 'End-to-end Delivery',
-      description: 'From discovery to launch and support, we handle the complete development lifecycle.',
-      list: ['Requirements analysis', 'Architecture design', 'Development & QA', 'Deployment support']
+      number: '01',
+      title: 'Discovery & Planning',
+      description: 'Deep dive into your business needs, technical requirements, and project goals.',
+      duration: '1-2 weeks'
     },
     {
-      icon: Zap,
-      title: 'Agile Development',
-      description: 'Iterative approach with regular releases and continuous feedback integration.',
-      list: ['2-week sprints', 'Regular demos', 'Flexible planning', 'Continuous delivery']
+      number: '02', 
+      title: 'Design & Architecture',
+      description: 'Create technical architecture, UI/UX design, and project roadmap.',
+      duration: '2-3 weeks'
     },
     {
-      icon: Shield,
-      title: 'Quality & Security',
-      description: 'Comprehensive testing and security measures throughout development.',
-      list: ['Automated testing', 'Security audits', 'Code reviews', 'Performance checks']
+      number: '03',
+      title: 'Development',
+      description: 'Agile development with regular demos and continuous client feedback.',
+      duration: '8-24 weeks'
     },
     {
-      icon: Users,
-      title: 'Expert Team',
-      description: 'Senior developers with deep expertise in modern technologies.',
-      list: ['Solution architects', 'Senior developers', 'QA engineers', 'DevOps specialists']
+      number: '04',
+      title: 'Testing & QA',
+      description: 'Comprehensive testing including automated tests, performance, and security audits.',
+      duration: '1-2 weeks'
+    },
+    {
+      number: '05',
+      title: 'Deployment',
+      description: 'Production deployment with monitoring setup and documentation handover.',
+      duration: '1 week'
+    },
+    {
+      number: '06',
+      title: 'Support',
+      description: 'Ongoing maintenance, updates, and technical support as needed.',
+      duration: 'Ongoing'
+    }
+  ];
+
+  const faqItems = [
+    {
+      question: 'What types of software do you develop?',
+      answer: 'We develop a wide range of custom software solutions including web applications, mobile apps, enterprise software, APIs and integrations, SaaS products, and cloud-based systems. Our expertise spans various technologies and business domains.'
+    },
+    {
+      question: 'How do you ensure project quality and timely delivery?',
+      answer: 'We follow agile methodology with 2-week sprints, automated testing, code reviews, and continuous client feedback. Our project managers provide regular updates and demos to ensure alignment with your expectations.'
+    },
+    {
+      question: 'What is your development process?',
+      answer: 'We follow a proven 6-step process: Discovery & Planning, Design & Architecture, Development, Testing & QA, Deployment, and ongoing Support. Each phase includes clear deliverables and regular checkpoints.'
+    },
+    {
+      question: 'Do you provide post-launch support?',
+      answer: 'Yes, we offer comprehensive post-launch support including bug fixes, performance monitoring, security updates, and feature enhancements. Support packages are tailored to your needs.'
+    },
+    {
+      question: 'How do you handle intellectual property rights?',
+      answer: 'We sign comprehensive NDAs and IP agreements. All code, designs, and project materials are 100% owned by you. We follow strict security protocols to protect your intellectual property.'
     }
   ];
 
   return (
-    <Card className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white p-6">
-      <CardHeader className="pb-4">
-        <div className="flex items-start space-x-4">
-          <div className="p-3 rounded-xl bg-blue-500 text-white">
-            <Code className="h-6 w-6" />
-          </div>
-          <div className="flex-1">
-            <CardTitle className="text-xl font-bold text-gray-900 mb-1">
-              Custom Development
-            </CardTitle>
-            <CardDescription className="text-gray-600 font-medium">
-              End-to-end Software Development
-            </CardDescription>
+    <div className="min-h-screen">
+      {/* Breadcrumb */}
+      <div className="bg-gray-50 py-4 mt-20">
+        <div className="container mx-auto px-6">
+          <nav className="text-sm text-gray-600">
+            <Link to="/" className="hover:text-primary">Home</Link>
+            <span className="mx-2">/</span>
+            <span className="text-gray-900">Services</span>
+            <span className="mx-2">/</span>
+            <span className="text-gray-900">Custom Development</span>
+          </nav>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <section className="section-padding bg-white">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge className="mb-6 bg-blue-100 text-blue-800 border-blue-200">End-to-End Software Development</Badge>
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+              {service.title}
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
+              {service.description} We build reliable, scalable solutions that drive your business forward.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">
+                <Link to="/contact">
+                  Start Your Project
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg">
+                Get Solution Guide
+              </Button>
+            </div>
           </div>
         </div>
-      </CardHeader>
+      </section>
 
-      <CardContent className="pt-0">
-        <p className="text-gray-600 mb-6 leading-relaxed">
-          End‑to‑end delivery of reliable, scalable applications — from discovery to launch and support.
-          We take full ownership of your project to deliver value faster.
-        </p>
+      {/* Benefits Section */}
+      <section className="section-padding bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Why choose <span className="gradient-text">custom development</span>?
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Get a tailored solution that perfectly matches your business needs and scales with your growth.
+              </p>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          {features.map((feature, index) => (
-            <Card key={index} className="bg-white border border-gray-100">
-              <CardHeader className="p-6 pb-4">
-                <div className="flex items-start space-x-4">
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    {React.createElement(feature.icon, { className: "h-5 w-5 text-primary" })}
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg font-semibold mb-2">{feature.title}</CardTitle>
-                    <CardDescription className="text-sm text-gray-600">
-                      {feature.description}
-                    </CardDescription>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {service.benefits.map((benefit, index) => (
+                <Card key={index} className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+                  <CardContent className="p-6">
+                    <CheckCircle className="h-8 w-8 text-green-500 mb-4" />
+                    <p className="text-gray-700 leading-relaxed">{benefit}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section className="section-padding bg-white">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Our development <span className="gradient-text">process</span>
+              </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                A proven methodology that ensures quality, transparency, and timely delivery.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {processSteps.map((step, index) => (
+                <div key={index} className="relative">
+                  {index < processSteps.length - 1 && (
+                    <div className="hidden lg:block absolute top-8 left-full w-full h-px bg-gradient-to-r from-primary/30 to-transparent"></div>
+                  )}
+                  <Card className="relative bg-white border border-gray-200 hover:shadow-lg transition-all hover-lift">
+                    <CardContent className="p-6">
+                      <div className="text-primary text-sm font-bold mb-2 opacity-60">
+                        {step.number}
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">
+                        {step.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                        {step.description}
+                      </p>
+                      <Badge variant="outline" className="text-xs">
+                        {step.duration}
+                      </Badge>
+                    </CardContent>
+                  </Card>
                 </div>
-              </CardHeader>
-              <CardContent className="p-6 pt-0">
-                <ul className="space-y-2">
-                  {feature.list.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-center text-sm text-gray-600">
-                      <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          ))}
+              ))}
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div className="flex justify-end">
-          <Button asChild variant="outline" className="group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
-            <Link to="/contact">
-              Start Your Project
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </Button>
+      {/* FAQ Section */}
+      <section className="section-padding bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Frequently asked <span className="gradient-text">questions</span>
+              </h2>
+              <p className="text-lg text-gray-600">
+                Got questions? We've got answers.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border border-gray-200 rounded-lg px-6">
+                  <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600 leading-relaxed">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
-      </CardContent>
-    </Card>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section-padding bg-primary text-white">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to start your project?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+              Let's discuss your requirements and create a custom solution that perfectly matches your business needs.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
+                <Link to="/contact">
+                  Book Free Consultation
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+                View Case Studies
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
