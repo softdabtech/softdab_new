@@ -1,13 +1,14 @@
+// frontend/src/pages/NotFoundPage.jsx (ИСПРАВЛЕННАЯ ВЕРСИЯ)
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft, Search } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 const QUICK_LINKS = [
-  { to: '/services/outsourcing', text: 'Outsourcing Services' },
-  { to: '/services/dedicated-teams', text: 'Dedicated Teams' },
+  { to: '/services/custom-development', text: 'Custom Development' },
+  { to: '/services/dedicated-team', text: 'Dedicated Teams' },
   { to: '/case-studies', text: 'Case Studies' },
-  { to: '/about', text: 'About Us' }
+  { to: '/company/about', text: 'About Us' }
 ];
 
 const NotFoundPage = () => {
@@ -46,8 +47,7 @@ const NotFoundPage = () => {
   }, []);
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-subtle">
-
+    <div className="min-h-screen flex items-center justify-center bg-gradient-subtle">
       <div className="container mx-auto px-6">
         <section className="max-w-2xl mx-auto text-center" role="alert" aria-labelledby="error-heading">
           {/* Large 404 */}
@@ -76,7 +76,7 @@ const NotFoundPage = () => {
             </Button>
             
             <Button asChild variant="outline" size="lg">
-              <Link to="/contact">
+              <Link to="/company/contact">
                 <Search className="mr-2 h-5 w-5" aria-hidden="true" />
                 <span>Contact Support</span>
               </Link>
@@ -101,7 +101,7 @@ const NotFoundPage = () => {
           </nav>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

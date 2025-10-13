@@ -1,6 +1,6 @@
-// frontend/src/components/layout/Header.jsx (СТАБИЛЬНАЯ ВЕРСИЯ)
+// frontend/src/components/layout/Header.jsx (ФИНАЛЬНАЯ РАБОЧАЯ ВЕРСИЯ)
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
@@ -20,26 +20,37 @@ const NAVIGATION = {
     { name: 'Dedicated Team', href: '/services/dedicated-team', description: 'Seamless extension of your in-house team.' },
   ],
   industries: [
-    { name: 'Fintech', href: '/industries', description: 'Financial technology solutions.' },
-    { name: 'Healthcare', href: '/industries', description: 'Healthcare & medical software.' },
+    { name: 'Fintech', href: '/industries#fintech', description: 'Financial technology solutions.' },
+    { name: 'Healthcare', href: '/industries#healthcare', description: 'Healthcare & medical software.' },
+    { name: 'eCommerce', href: '/industries#ecommerce', description: 'Online retail & marketplace solutions.' },
+    { name: 'Logistics', href: '/industries#logistics', description: 'Supply chain & fleet management.' },
   ],
 };
 
+// ИСПРАВЛЕННЫЙ ListItem с правильной навигацией
 const ListItem = React.forwardRef(({ title, children, href, ...props }, ref) => {
+  const navigate = useNavigate();
+  
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(href);
+  };
+
   return (
     <li>
       <NavigationMenuLink asChild>
-        <Link
-          to={href}
+        <a
+          href={href}
+          onClick={handleClick}
           ref={ref}
-          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer"
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
-        </Link>
+        </a>
       </NavigationMenuLink>
     </li>
   );
@@ -54,7 +65,6 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
-    // Scroll to top on route change
     window.scrollTo(0, 0);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
@@ -87,7 +97,7 @@ const Header = () => {
             <NavigationMenuItem>
               <NavigationMenuTrigger>Industries</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px]">
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
                   {NAVIGATION.industries.map((component) => (
                     <ListItem key={component.name} title={component.name} href={component.href}>
                       {component.description}
