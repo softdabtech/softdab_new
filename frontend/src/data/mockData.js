@@ -24,6 +24,41 @@ export const mockData = {
 
   // Services
   services: {
+    discovery: {
+      title: 'Discovery & PoC',
+      subtitle: 'Technical Validation Services',
+      description: 'Validate your ideas with our comprehensive Discovery & Proof of Concept services. Get clarity and reduce risks before full development.',
+      benefits: [
+        'Risk mitigation through early validation',
+        'Clear technical roadmap and direction',
+        'Faster time-to-market',
+        'Cost-effective solution validation',
+        'Expert technical assessment',
+        'Rapid prototyping and testing'
+      ],
+      features: [
+        'Technical feasibility analysis',
+        'Rapid prototyping',
+        'Architecture design',
+        'Risk assessment',
+        'Cost estimation',
+        'Implementation roadmap'
+      ],
+      process: [
+        'Requirements workshop',
+        'Technical research',
+        'Prototype development',
+        'Testing & validation',
+        'Documentation',
+        'Roadmap planning'
+      ]
+    },
+    clientSatisfaction: '93%',
+    happyClients: '10+'
+  },
+
+  // Services
+  services: {
     customDevelopment: {
       title: 'Custom Software Development',
       subtitle: 'End-to-end Solutions',

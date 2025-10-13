@@ -15,6 +15,7 @@ const ServicesPage = React.lazy(() => import('./pages/services/ServicesPage'));
 const CustomDevelopmentPage = React.lazy(() => import('./pages/services/CustomDevelopmentPage'));
 const DedicatedTeamsPage = React.lazy(() => import('./pages/services/DedicatedTeamsPage'));
 const OutsourcingPage = React.lazy(() => import('./pages/services/OutsourcingPage'));
+const DiscoveryPage = React.lazy(() => import('./pages/services/DiscoveryPage'));
 
 // Industries pages
 const IndustriesPage = React.lazy(() => import('./pages/industries/IndustriesPage'));
@@ -59,6 +60,7 @@ export const AppRoutes = () => {
         <Route path="/services/custom-development" element={<CustomDevelopmentPage />} />
         <Route path="/services/dedicated-team" element={<DedicatedTeamsPage />} />
         <Route path="/services/outsourcing" element={<OutsourcingPage />} />
+        <Route path="/services/discovery" element={<DiscoveryPage />} />
         
         {/* Industries */}
         <Route path="/industries" element={<IndustriesPage />} />
