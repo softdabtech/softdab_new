@@ -125,14 +125,22 @@ const Header = () => {
         </NavigationMenu>
 
         <div className="flex items-center gap-4">
-          <Button asChild className="hidden lg:flex">
+          <Button 
+            asChild 
+            size="default"
+            className="hidden lg:flex"
+          >
             <Link to="/company/contact">Talk to an expert</Link>
           </Button>
 
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden">
-                <Menu className="h-6 w-6" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="lg:hidden hover:scale-100"
+              >
+                <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
@@ -199,7 +207,11 @@ const Header = () => {
 
               {/* Mobile CTA Button */}
               <div className="mt-8 border-t pt-6">
-                <Button asChild className="w-full">
+                <Button 
+                  asChild 
+                  size="default"
+                  className="w-full"
+                >
                   <Link to="/company/contact" onClick={() => setIsMobileMenuOpen(false)}>
                     Talk to an expert
                   </Link>

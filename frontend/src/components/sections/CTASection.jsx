@@ -59,13 +59,14 @@ const CTASection = () => {
           <div className="flex justify-center mb-6 sm:mb-8">
             <Button 
               asChild 
-              size="lg" 
-              className="bg-white text-gray-900 hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-xl hover-lift group w-full sm:w-auto mx-4 sm:mx-0"
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto mx-4 sm:mx-0"
               aria-label="Contact SoftDAB"
             >
               <Link to="/company/contact">
                 Talk to an expert
-                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
             </Button>
           </div>

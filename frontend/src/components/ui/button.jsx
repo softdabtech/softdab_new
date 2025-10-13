@@ -6,62 +6,67 @@ import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
   // Base styles - consistent with design system
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all duration-200 focus-visible:outline-none disabled:pointer-events-none disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:flex-shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all duration-300 focus-visible:outline-none disabled:pointer-events-none disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:flex-shrink-0",
   {
     variants: {
       variant: {
-        // Primary button - brand colors with WCAG AA compliance
+        // Primary button - brand colors
         default: [
-          "text-white shadow-sm",
-          "bg-[#2F89FC] hover:bg-[#1F6ED4]",
+          "text-white",
+          "bg-[#2F89FC]",
+          "hover:scale-[1.02] hover:underline underline-offset-2",
           "focus-visible:ring-2 focus-visible:ring-[#2F89FC] focus-visible:ring-offset-2",
-          "disabled:bg-[#94C7FF] disabled:text-white",
+          "disabled:bg-[#94C7FF] disabled:text-white disabled:no-underline disabled:transform-none",
         ],
         // Secondary/outline button
         outline: [
-          "border border-gray-300 bg-white shadow-sm",
-          "text-gray-700 hover:bg-gray-50 hover:border-gray-400",
+          "border border-[#2F89FC] bg-white",
+          "text-[#2F89FC]",
+          "hover:scale-[1.02] hover:underline underline-offset-2",
           "focus-visible:ring-2 focus-visible:ring-[#2F89FC] focus-visible:ring-offset-2",
-          "disabled:border-gray-200 disabled:text-gray-400 disabled:bg-gray-50",
+          "disabled:border-gray-200 disabled:text-gray-400 disabled:no-underline disabled:transform-none",
         ],
         // Ghost button - minimal style
         ghost: [
-          "text-gray-700 hover:bg-gray-100",
+          "text-gray-700",
+          "hover:scale-[1.02] hover:underline underline-offset-2",
           "focus-visible:ring-2 focus-visible:ring-[#2F89FC] focus-visible:ring-offset-2",
-          "disabled:text-gray-400",
+          "disabled:text-gray-400 disabled:no-underline disabled:transform-none",
         ],
         // Link style button
         link: [
-          "text-[#2F89FC] underline-offset-4 hover:underline hover:text-[#1F6ED4]",
+          "text-[#2F89FC]",
+          "hover:scale-[1.02] hover:underline underline-offset-2",
           "focus-visible:ring-2 focus-visible:ring-[#2F89FC] focus-visible:ring-offset-2",
-          "disabled:text-gray-400 disabled:no-underline",
+          "disabled:text-gray-400 disabled:no-underline disabled:transform-none",
         ],
         // Destructive/danger button
         destructive: [
-          "bg-red-600 text-white shadow-sm hover:bg-red-700",
+          "bg-red-600 text-white",
+          "hover:scale-[1.02] hover:underline underline-offset-2",
           "focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2",
-          "disabled:bg-red-300",
+          "disabled:bg-red-300 disabled:no-underline disabled:transform-none",
         ],
       },
       size: {
-        // Small button - 36px height
+        // Small button - 32px height
         sm: [
-          "h-9 px-3 text-sm rounded-lg",
+          "h-8 px-3 text-sm rounded-lg",
           "[&_svg]:h-4 [&_svg]:w-4",
         ],
-        // Default button - 44px height (WCAG minimum)
+        // Default button - 40px height
         default: [
-          "h-11 px-6 text-base rounded-lg",
+          "h-10 px-5 text-base rounded-lg",
           "[&_svg]:h-5 [&_svg]:w-5",
         ],
-        // Large button - 56px height
+        // Large button - 48px height
         lg: [
-          "h-14 px-8 text-lg rounded-xl",
-          "[&_svg]:h-6 [&_svg]:w-6",
+          "h-12 px-6 text-lg rounded-lg",
+          "[&_svg]:h-5 [&_svg]:w-5",
         ],
         // Icon button - square
         icon: [
-          "h-11 w-11 rounded-lg",
+          "h-10 w-10 rounded-lg",
           "[&_svg]:h-5 [&_svg]:w-5",
         ],
       },

@@ -53,12 +53,12 @@ const HeroSection = () => {
             <div className="flex justify-center pt-8">
               <Button 
                 asChild 
-                size="lg" 
-                className="bg-[#2F89FC] text-white hover:bg-[#1F6ED4] px-8 py-4 text-lg font-semibold rounded-xl hover-lift group transition-colors"
+                size="lg"
+                className="w-full sm:w-auto"
               >
                 <Link to="/company/contact">
                   Talk to an expert
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
             </div>
