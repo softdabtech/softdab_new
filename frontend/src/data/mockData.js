@@ -3,6 +3,90 @@
 // Will be replaced with real API calls during backend integration
 
 export const mockData = {
+  // Case Studies
+  caseStudies: [
+    {
+      id: 'iot-platform',
+      title: 'IoT Platform for Smart Buildings',
+      description: 'Scalable platform for real-time monitoring and control of building systems.',
+      industry: 'Real Estate',
+      technologies: ['IoT', 'Cloud', 'React', 'Python'],
+      duration: '8 months',
+      teamSize: '6 developers',
+      results: {
+        'Energy Savings': '30%',
+        'Maintenance Efficiency': '45%',
+        'System Response Time': '< 100ms'
+      },
+      image: '/case-studies/iot-platform.jpg',
+      href: '/case-studies/iot-platform'
+    },
+    {
+      id: 'legal-doc-processing',
+      title: 'Automated Legal Document Processing',
+      description: 'AI-powered solution for extracting and analyzing legal documents.',
+      industry: 'Legal Tech',
+      technologies: ['AI', 'NLP', 'Python', 'FastAPI'],
+      duration: '6 months',
+      teamSize: '4 developers',
+      results: {
+        'Processing Time': '90% reduction',
+        'Accuracy Rate': '95%',
+        'Cost Savings': '60%'
+      },
+      image: '/case-studies/legal-doc.jpg',
+      href: '/case-studies/legal-doc-processing'
+    },
+    {
+      id: 'developer-portal',
+      title: 'Developer Portal for API Ecosystem',
+      description: 'Unified portal for API management, onboarding, and analytics.',
+      industry: 'Developer Tools',
+      technologies: ['Node.js', 'React', 'API', 'DevOps'],
+      duration: '5 months',
+      teamSize: '5 developers',
+      results: {
+        'API Adoption': '+200%',
+        'Support Tickets': '-65%',
+        'Developer Satisfaction': '92%'
+      },
+      image: '/case-studies/dev-portal.jpg',
+      href: '/case-studies/developer-portal'
+    },
+    {
+      id: 'payment-platform',
+      title: 'Multi-Currency Payment Platform',
+      description: 'Secure and scalable payment processing system with real-time currency conversion.',
+      industry: 'Fintech',
+      technologies: ['Node.js', 'React', 'PostgreSQL'],
+      duration: '12 months',
+      teamSize: '8 developers',
+      results: {
+        'Transaction Volume': '$500M+',
+        'Processing Time': '< 2s',
+        'Success Rate': '99.99%'
+      },
+      image: '/case-studies/payment-platform.jpg',
+      href: '/case-studies/payment-platform'
+    },
+    {
+      id: 'telemedicine-platform',
+      title: 'Telemedicine Platform',
+      description: 'HIPAA-compliant platform for remote medical consultations and patient care.',
+      industry: 'Healthcare',
+      technologies: ['React', 'Node.js', 'WebRTC'],
+      duration: '10 months',
+      teamSize: '7 developers',
+      results: {
+        'Patient Satisfaction': '95%',
+        'Consultation Time': '-40%',
+        'Platform Uptime': '99.9%'
+      },
+      image: '/case-studies/telemedicine.jpg',
+      href: '/case-studies/telemedicine-platform'
+    }
+  ],
+
   // Company Information
   company: {
     name: 'SoftDAB',

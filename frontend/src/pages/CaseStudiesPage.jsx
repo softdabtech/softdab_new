@@ -16,10 +16,11 @@ const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1498050108023-c5249f4df
 
 const industryOptions = [
   { value: 'all', label: 'All Industries' },
+  { value: 'real estate', label: 'Real Estate' },
+  { value: 'legal tech', label: 'Legal Tech' },
+  { value: 'developer tools', label: 'Developer Tools' },
   { value: 'fintech', label: 'Fintech' },
   { value: 'healthcare', label: 'Healthcare' },
-  { value: 'ecommerce', label: 'eCommerce' },
-  { value: 'logistics', label: 'Logistics' },
 ];
 
 // Utility functions
@@ -49,8 +50,9 @@ const getIndustryBadgeClasses = (industry) => {
   const i = normalizeIndustry(industry);
   if (i === 'fintech') return 'bg-blue-100 text-blue-800';
   if (i === 'healthcare') return 'bg-red-100 text-red-800';
-  if (i === 'ecommerce') return 'bg-green-100 text-green-800';
-  if (i === 'logistics') return 'bg-amber-100 text-amber-800';
+  if (i === 'real estate') return 'bg-green-100 text-green-800';
+  if (i === 'legal tech') return 'bg-purple-100 text-purple-800';
+  if (i === 'developer tools') return 'bg-amber-100 text-amber-800';
   return 'bg-gray-100 text-gray-800';
 };
 

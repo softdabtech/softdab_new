@@ -17,7 +17,9 @@ import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 const NAVIGATION = {
   services: [
     { name: 'Custom Development', href: '/services/custom-development', description: 'End-to-end software project delivery.' },
-    { name: 'Dedicated Team', href: '/services/dedicated-team', description: 'Seamless extension of your in-house team.' },
+    { name: 'Dedicated Teams', href: '/services/dedicated-teams', description: 'Seamless extension of your in-house team.' },
+    { name: 'Discovery & PoC', href: '/services/discovery', description: 'Validate ideas and reduce risks.' },
+    { name: 'Support & Maintenance', href: '/services/support', description: 'Keep your software running smoothly.' },
   ],
   industries: [
     { name: 'Fintech', href: '/industries/fintech', description: 'Financial technology solutions.' },

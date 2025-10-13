@@ -30,6 +30,9 @@ const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
 const CaseDetailPage = React.lazy(() => import('./pages/CaseDetailPage'));
 const PaymentPlatformPage = React.lazy(() => import('./pages/case-studies/PaymentPlatformPage'));
 const TelemedicinePlatformPage = React.lazy(() => import('./pages/case-studies/TelemedicinePlatformPage'));
+const IoTPlatformPage = React.lazy(() => import('./pages/case-studies/IoTPlatformPage'));
+const LegalDocProcessingPage = React.lazy(() => import('./pages/case-studies/LegalDocProcessingPage'));
+const DeveloperPortalPage = React.lazy(() => import('./pages/case-studies/DeveloperPortalPage'));
 
 // Legal pages
 const PrivacyPage = React.lazy(() => import('./pages/legal/PrivacyPage'));
@@ -49,6 +52,9 @@ export const AppRoutes = () => {
         <Route path="/case-studies" element={<CaseStudiesPage />} />
         <Route path="/case-studies/payment-platform" element={<PaymentPlatformPage />} />
         <Route path="/case-studies/telemedicine-platform" element={<TelemedicinePlatformPage />} />
+        <Route path="/case-studies/iot-platform" element={<IoTPlatformPage />} />
+        <Route path="/case-studies/legal-doc-processing" element={<LegalDocProcessingPage />} />
+        <Route path="/case-studies/developer-portal" element={<DeveloperPortalPage />} />
         <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
         
         {/* Company */}
@@ -59,7 +65,7 @@ export const AppRoutes = () => {
         {/* Services */}
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/custom-development" element={<CustomDevelopmentPage />} />
-        <Route path="/services/dedicated-team" element={<DedicatedTeamsPage />} />
+        <Route path="/services/dedicated-teams" element={<DedicatedTeamsPage />} />
         <Route path="/services/outsourcing" element={<OutsourcingPage />} />
         <Route path="/services/discovery" element={<DiscoveryPage />} />
         <Route path="/services/support" element={<SupportPage />} />
