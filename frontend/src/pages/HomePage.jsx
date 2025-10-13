@@ -95,7 +95,7 @@ const SectionLoader = () => (
 
 const HomePage = () => {
   return (
-    <main className="min-h-screen">
+    <>
       <Helmet>
         <title>{PAGE_TITLE}</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
