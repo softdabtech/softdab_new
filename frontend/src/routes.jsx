@@ -21,6 +21,7 @@ const IndustriesPage = React.lazy(() => import('./pages/industries/IndustriesPag
 const FintechPage = React.lazy(() => import('./pages/industries/FintechPage'));
 const HealthcarePage = React.lazy(() => import('./pages/industries/HealthcarePage'));
 const EcommercePage = React.lazy(() => import('./pages/industries/ecommercePage'));
+const LogisticsPage = React.lazy(() => import('./pages/industries/logisticsPage'));
 
 // Case Studies
 const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
@@ -64,6 +65,7 @@ export const AppRoutes = () => {
         <Route path="/industries/fintech" element={<FintechPage />} />
         <Route path="/industries/healthcare" element={<HealthcarePage />} />
         <Route path="/industries/ecommerce" element={<EcommercePage />} />
+        <Route path="/industries/logistics" element={<LogisticsPage />} />
         
         {/* Legal */}
         <Route path="/legal/privacy" element={<PrivacyPage />} />
