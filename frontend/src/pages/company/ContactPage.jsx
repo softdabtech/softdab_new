@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Mail, Clock, Send, CheckCircle } from 'lucide-react';
+import { MapPin, Mail, Clock, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
@@ -7,11 +7,12 @@ import { Textarea } from '../../components/ui/textarea';
 import { Label } from '../../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { FormContainer, FormField, SubmitButton, showToast } from '../../components/ui/form-animations';
-import Skeleton from 'react-loading-skeleton';
+import { Alert, AlertDescription } from '../../components/ui/alert';
+import { Checkbox } from '../../components/ui/checkbox';
 import { validateForm } from '../../lib/validation';
 import { addCSRFToken } from '../../lib/csrf';
 import { useRateLimit } from '../../hooks/use-rate-limit';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const initialForm = {
   name: '',
