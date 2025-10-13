@@ -18,34 +18,34 @@ const HeroSection = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-8 fade-in">
             {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full text-sm text-gray-700 font-medium">
-              <span className="mr-2">🚀</span>
-              Trusted by 20+ World Wide companies
+            <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full text-xs sm:text-sm text-gray-700 font-medium">
+              <span className="mr-1 sm:mr-2">🚀</span>
+              <span className="line-clamp-1">Trusted by 20+ World Wide companies</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 text-balance leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-900 text-balance leading-tight px-4 sm:px-0">
               Custom software that solves real business problems
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-balance leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-balance leading-relaxed px-4 sm:px-6">
               We design, build, and support reliable, scalable solutions tailored to your processes and goals — from discovery to launch and beyond.
             </p>
 
             {/* Value Props */}
-            <div className="flex flex-wrap justify-center gap-6 text-gray-600">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-gray-600 px-6">
               <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Middle/Senior engineers</span>
+                <CheckCircle className="h-4 sm:h-5 w-4 sm:w-5 text-green-500 flex-shrink-0" />
+                <span className="text-sm sm:text-base">Middle/Senior engineers</span>
               </div>
               <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Discovery-first engagement</span>
+                <CheckCircle className="h-4 sm:h-5 w-4 sm:w-5 text-green-500 flex-shrink-0" />
+                <span className="text-sm sm:text-base">Discovery-first engagement</span>
               </div>
               <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Transparent pricing</span>
+                <CheckCircle className="h-4 sm:h-5 w-4 sm:w-5 text-green-500 flex-shrink-0" />
+                <span className="text-sm sm:text-base">Transparent pricing</span>
               </div>
             </div>
 

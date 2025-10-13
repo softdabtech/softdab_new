@@ -28,48 +28,48 @@ const BENEFITS = [
 const CTASection = () => {
   const benefits = useMemo(() => BENEFITS, []);
   return (
-    <section className="section-padding bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden" aria-label="Call to action">
+    <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden" aria-label="Call to action">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10" aria-hidden="true">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent rounded-full mix-blend-multiply filter blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-primary rounded-full mix-blend-multiply filter blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-accent rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-gray-100">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-balance text-gray-100 tracking-tight">
             Build software that drives measurable outcomes
           </h2>
-          <p className="text-xl md:text-2xl text-gray-200 mb-12 text-balance max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-8 sm:mb-12 text-balance max-w-3xl mx-auto leading-relaxed">
             Senior engineering teams that design, build, and support scalable solutions tailored to your business goals.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
             {benefits.map((benefit, index) => {
               const IconComponent = benefit.icon;
               return (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center">
-                    <IconComponent className="h-8 w-8 text-cyan-400" aria-hidden="true" />
+                <div key={index} className="text-center p-4 sm:p-6 rounded-2xl hover:bg-white/5 transition-colors">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                    <IconComponent className="h-7 w-7 sm:h-8 sm:w-8 text-cyan-400" aria-hidden="true" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2 text-gray-100">{benefit.title}</h3>
-                  <p className="text-gray-200 text-sm">{benefit.description}</p>
+                  <h3 className="text-base sm:text-lg font-bold mb-1 sm:mb-2 text-gray-100">{benefit.title}</h3>
+                  <p className="text-gray-200 text-sm sm:text-base">{benefit.description}</p>
                 </div>
               );
             })}
           </div>
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-6 sm:mb-8">
             <Button 
               asChild 
               size="lg" 
-              className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-xl hover-lift group"
+              className="bg-white text-gray-900 hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-xl hover-lift group w-full sm:w-auto mx-4 sm:mx-0"
               aria-label="Contact SoftDAB"
             >
               <Link to="/company/contact">
                 Talk to an expert
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
             </Button>
           </div>
-          <div className="text-sm text-gray-300">
+          <div className="text-xs sm:text-sm text-gray-300 px-4 sm:px-0">
             <p>✓ Transparent pricing • ✓ Direct communication • ✓ Flexible scaling •</p>
           </div>
         </div>

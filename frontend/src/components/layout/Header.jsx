@@ -136,13 +136,75 @@ const Header = () => {
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="grid gap-6 text-lg font-medium mt-6">
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`hover:text-foreground ${pathname === '/' ? 'text-foreground' : 'text-muted-foreground'}`}>Home</Link>
-                <Link to="/case-studies" onClick={() => setIsMobileMenuOpen(false)} className={`hover:text-foreground ${pathname === '/case-studies' ? 'text-foreground' : 'text-muted-foreground'}`}>Case Studies</Link>
-                <Link to="/company/about" onClick={() => setIsMobileMenuOpen(false)} className={`hover:text-foreground ${pathname === '/company/about' ? 'text-foreground' : 'text-muted-foreground'}`}>About</Link>
-                <Link to="/company/contact" onClick={() => setIsMobileMenuOpen(false)} className={`hover:text-foreground ${pathname === '/company/contact' ? 'text-foreground' : 'text-muted-foreground'}`}>Contact</Link>
+                <Link to="/" onClick={() => setIsMobileMenuOpen(false)} 
+                  className={`hover:text-foreground ${pathname === '/' ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  Home
+                </Link>
+
+                {/* Services Submenu */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-primary">Services</h4>
+                  <div className="grid gap-2 pl-4">
+                    {NAVIGATION.services.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`text-base hover:text-foreground ${pathname === item.href ? 'text-foreground' : 'text-muted-foreground'}`}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Industries Submenu */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-primary">Industries</h4>
+                  <div className="grid gap-2 pl-4">
+                    {NAVIGATION.industries.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`text-base hover:text-foreground ${pathname === item.href ? 'text-foreground' : 'text-muted-foreground'}`}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <Link 
+                  to="/case-studies" 
+                  onClick={() => setIsMobileMenuOpen(false)} 
+                  className={`hover:text-foreground ${pathname === '/case-studies' ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  Case Studies
+                </Link>
+                <Link 
+                  to="/company/about" 
+                  onClick={() => setIsMobileMenuOpen(false)} 
+                  className={`hover:text-foreground ${pathname === '/company/about' ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  About
+                </Link>
+                <Link 
+                  to="/company/contact" 
+                  onClick={() => setIsMobileMenuOpen(false)} 
+                  className={`hover:text-foreground ${pathname === '/company/contact' ? 'text-foreground' : 'text-muted-foreground'}`}>
+                  Contact
+                </Link>
               </nav>
+
+              {/* Mobile CTA Button */}
+              <div className="mt-8 border-t pt-6">
+                <Button asChild className="w-full">
+                  <Link to="/company/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                    Talk to an expert
+                  </Link>
+                </Button>
+              </div>
             </SheetContent>
           </Sheet>
         </div>
