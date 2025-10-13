@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Loader2 } from 'lucide-react';
+import { Send, Loader2, ArrowRight } from 'lucide-react';
 import { Button } from '../ui/button';
 import { FormField } from '../ui/form-animations';
 import { Input } from '../ui/input';
@@ -8,11 +8,19 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 import { Checkbox } from '../ui/checkbox';
+import { Card } from '../ui/card';
 
 const FormSection = ({ children, className = '' }) => (
-  <div className={`space-y-2 ${className}`}>
+  <div className={`space-y-2 w-full ${className}`}>
     {children}
   </div>
+);
+
+const FormLabel = ({ children, required }) => (
+  <Label className="text-sm font-medium text-gray-700">
+    {children}
+    {required && <span className="text-red-500 ml-1">*</span>}
+  </Label>
 );
 
 const ErrorMessage = ({ message }) => (
@@ -48,240 +56,259 @@ const ContactForm = ({
   });
 
   return (
-    <motion.form 
-      onSubmit={handleSubmit} 
-      className="space-y-6"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      {/* Базовая информация */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <FormSection>
-          <Label htmlFor="name">Name</Label>
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            value={formData.name}
-            onChange={(e) => handleInputChange('name', e.target.value)}
-            className={errors.name ? 'border-red-500' : ''}
-            disabled={isSubmitting || isBlocked}
-            aria-describedby={errors.name ? "name-error" : undefined}
-            required
-          />
-          <ErrorMessage message={errors.name} />
-        </FormSection>
+    <Card className="p-6 bg-white/80 backdrop-blur-sm border-2 shadow-xl">
+      <motion.form 
+        onSubmit={handleSubmit} 
+        className="space-y-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Базовая информация */}
+        <div className="space-y-6">
+          <h3 className="text-lg font-semibold text-gray-900">Personal Information</h3>
+          <div className="grid gap-6 md:grid-cols-2">
+            <FormSection>
+              <FormLabel required>Name</FormLabel>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
+                className={`h-11 text-base ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-gray-200 hover:border-primary/50 focus:border-primary'}`}
+                disabled={isSubmitting || isBlocked}
+                aria-describedby={errors.name ? "name-error" : undefined}
+                required
+              />
+              <ErrorMessage message={errors.name} />
+            </FormSection>
 
-        <FormSection>
-          <Label htmlFor="email">Work Email</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
-            className={errors.email ? 'border-red-500' : ''}
-            disabled={isSubmitting || isBlocked}
-            aria-describedby={errors.email ? "email-error" : undefined}
-            required
-          />
-          <ErrorMessage message={errors.email} />
-        </FormSection>
-      </div>
+            <FormSection>
+              <FormLabel required>Work Email</FormLabel>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                className={`h-11 text-base ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-gray-200 hover:border-primary/50 focus:border-primary'}`}
+                disabled={isSubmitting || isBlocked}
+                aria-describedby={errors.email ? "email-error" : undefined}
+                required
+              />
+              <ErrorMessage message={errors.email} />
+            </FormSection>
+          </div>
+        </div>
 
-      {/* Информация о компании */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <FormSection>
-          <Label htmlFor="company">Company</Label>
-          <Input
-            id="company"
-            name="company"
-            type="text"
-            value={formData.company}
-            onChange={(e) => handleInputChange('company', e.target.value)}
-            className={errors.company ? 'border-red-500' : ''}
-            disabled={isSubmitting || isBlocked}
-            aria-describedby={errors.company ? "company-error" : undefined}
-            required
-          />
-          <ErrorMessage message={errors.company} />
-        </FormSection>
+        {/* Информация о компании */}
+        <div className="space-y-6">
+          <h3 className="text-lg font-semibold text-gray-900">Company Information</h3>
+          <div className="grid gap-6 md:grid-cols-2">
+            <FormSection>
+              <FormLabel required>Company</FormLabel>
+              <Input
+                id="company"
+                name="company"
+                type="text"
+                value={formData.company}
+                onChange={(e) => handleInputChange('company', e.target.value)}
+                className={`h-11 text-base ${errors.company ? 'border-red-500 focus:border-red-500' : 'border-gray-200 hover:border-primary/50 focus:border-primary'}`}
+                disabled={isSubmitting || isBlocked}
+                aria-describedby={errors.company ? "company-error" : undefined}
+                required
+              />
+              <ErrorMessage message={errors.company} />
+            </FormSection>
 
-        <FormSection>
-          <Label htmlFor="role">Role</Label>
-          <Input
-            id="role"
-            name="role"
-            type="text"
-            value={formData.role}
-            onChange={(e) => handleInputChange('role', e.target.value)}
-            className={errors.role ? 'border-red-500' : ''}
-            disabled={isSubmitting || isBlocked}
-            aria-describedby={errors.role ? "role-error" : undefined}
-            required
-          />
-          <ErrorMessage message={errors.role} />
-        </FormSection>
-      </div>
+            <FormSection>
+              <FormLabel required>Role</FormLabel>
+              <Input
+                id="role"
+                name="role"
+                type="text"
+                value={formData.role}
+                onChange={(e) => handleInputChange('role', e.target.value)}
+                className={`h-11 text-base ${errors.role ? 'border-red-500 focus:border-red-500' : 'border-gray-200 hover:border-primary/50 focus:border-primary'}`}
+                disabled={isSubmitting || isBlocked}
+                aria-describedby={errors.role ? "role-error" : undefined}
+                required
+              />
+              <ErrorMessage message={errors.role} />
+            </FormSection>
+          </div>
+        </div>
 
       {/* Параметры проекта */}
-      <div className="grid gap-6 md:grid-cols-3">
-        <FormSection>
-          <Label htmlFor="service">Service</Label>
-          <Select
-            value={formData.service}
-            onValueChange={(value) => handleInputChange('service', value)}
-            disabled={isSubmitting || isBlocked}
-          >
-            <SelectTrigger 
-              className={errors.service ? 'border-red-500' : ''}
-              aria-describedby={errors.service ? "service-error" : undefined}
-            >
-              <SelectValue placeholder="Select service" />
-            </SelectTrigger>
-            <SelectContent>
-              {services.map((service) => (
-                <SelectItem key={service} value={service}>
-                  {service}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <ErrorMessage message={errors.service} />
-        </FormSection>
+        <div className="space-y-6">
+          <h3 className="text-lg font-semibold text-gray-900">Project Details</h3>
+          <div className="grid gap-6 md:grid-cols-3">
+            <FormSection>
+              <FormLabel required>Service</FormLabel>
+              <Select
+                value={formData.service}
+                onValueChange={(value) => handleInputChange('service', value)}
+                disabled={isSubmitting || isBlocked}
+              >
+                <SelectTrigger 
+                  className={`h-11 text-base ${errors.service ? 'border-red-500' : 'border-gray-200 hover:border-primary/50'}`}
+                  aria-describedby={errors.service ? "service-error" : undefined}
+                >
+                  <SelectValue placeholder="Select service" />
+                </SelectTrigger>
+                <SelectContent>
+                  {services.map((service) => (
+                    <SelectItem key={service} value={service} className="text-base">
+                      {service}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <ErrorMessage message={errors.service} />
+            </FormSection>
 
-        <FormSection>
-          <Label htmlFor="timeline">Timeline</Label>
-          <Select
-            value={formData.timeline}
-            onValueChange={(value) => handleInputChange('timeline', value)}
-            disabled={isSubmitting || isBlocked}
-          >
-            <SelectTrigger 
-              className={errors.timeline ? 'border-red-500' : ''}
-              aria-describedby={errors.timeline ? "timeline-error" : undefined}
-            >
-              <SelectValue placeholder="Select timeline" />
-            </SelectTrigger>
-            <SelectContent>
-              {timelines.map((timeline) => (
-                <SelectItem key={timeline} value={timeline}>
-                  {timeline}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <ErrorMessage message={errors.timeline} />
-        </FormSection>
+            <FormSection>
+              <FormLabel required>Timeline</FormLabel>
+              <Select
+                value={formData.timeline}
+                onValueChange={(value) => handleInputChange('timeline', value)}
+                disabled={isSubmitting || isBlocked}
+              >
+                <SelectTrigger 
+                  className={`h-11 text-base ${errors.timeline ? 'border-red-500' : 'border-gray-200 hover:border-primary/50'}`}
+                  aria-describedby={errors.timeline ? "timeline-error" : undefined}
+                >
+                  <SelectValue placeholder="Select timeline" />
+                </SelectTrigger>
+                <SelectContent>
+                  {timelines.map((timeline) => (
+                    <SelectItem key={timeline} value={timeline} className="text-base">
+                      {timeline}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <ErrorMessage message={errors.timeline} />
+            </FormSection>
 
-        <FormSection>
-          <Label htmlFor="budget">Budget</Label>
-          <Select
-            value={formData.budget}
-            onValueChange={(value) => handleInputChange('budget', value)}
-            disabled={isSubmitting || isBlocked}
-          >
-            <SelectTrigger 
-              className={errors.budget ? 'border-red-500' : ''}
-              aria-describedby={errors.budget ? "budget-error" : undefined}
-            >
-              <SelectValue placeholder="Select budget" />
-            </SelectTrigger>
-            <SelectContent>
-              {budgets.map((budget) => (
-                <SelectItem key={budget} value={budget}>
-                  {budget}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <ErrorMessage message={errors.budget} />
-        </FormSection>
-      </div>
+            <FormSection>
+              <FormLabel required>Budget</FormLabel>
+              <Select
+                value={formData.budget}
+                onValueChange={(value) => handleInputChange('budget', value)}
+                disabled={isSubmitting || isBlocked}
+              >
+                <SelectTrigger 
+                  className={`h-11 text-base ${errors.budget ? 'border-red-500' : 'border-gray-200 hover:border-primary/50'}`}
+                  aria-describedby={errors.budget ? "budget-error" : undefined}
+                >
+                  <SelectValue placeholder="Select budget" />
+                </SelectTrigger>
+                <SelectContent>
+                  {budgets.map((budget) => (
+                    <SelectItem key={budget} value={budget} className="text-base">
+                      {budget}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <ErrorMessage message={errors.budget} />
+            </FormSection>
+          </div>
+        </div>
 
-      {/* Сообщение */}
-      <FormSection>
-        <Label htmlFor="message">Project Details</Label>
-        <Textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={(e) => handleInputChange('message', e.target.value)}
-          className={`min-h-[150px] resize-y ${errors.message ? 'border-red-500' : ''}`}
+        {/* Сообщение */}
+        <div className="space-y-6">
+          <h3 className="text-lg font-semibold text-gray-900">Additional Information</h3>
+          <FormSection>
+            <FormLabel required>Project Details</FormLabel>
+            <Textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={(e) => handleInputChange('message', e.target.value)}
+              className={`min-h-[150px] resize-y text-base ${errors.message ? 'border-red-500' : 'border-gray-200 hover:border-primary/50'}`}
+              disabled={isSubmitting || isBlocked}
+              aria-describedby="message-hint message-error"
+              required
+              rows={6}
+            />
+            <p id="message-hint" className="text-sm text-gray-500 mt-2">
+              Please include scope, target platforms, current status (idea/PoC/MVP/scale), and any constraints.
+            </p>
+            <ErrorMessage message={errors.message} />
+          </FormSection>
+        </div>
+
+        {/* Согласие */}
+        <div className="space-y-6">
+          <h3 className="text-lg font-semibold text-gray-900">Consent</h3>
+          <div className="space-y-4">
+            <div className="flex items-start space-x-3">
+              <Checkbox
+                id="gdprConsent"
+                checked={formData.gdprConsent}
+                onCheckedChange={(checked) => handleInputChange('gdprConsent', checked)}
+                disabled={isSubmitting || isBlocked}
+                aria-describedby="gdpr-error"
+                className="mt-1"
+              />
+              <Label htmlFor="gdprConsent" className="text-sm leading-tight">
+                I agree to the <a href="/privacy" className="text-primary hover:underline font-medium">Privacy Policy</a> and consent to the processing of my personal data
+              </Label>
+            </div>
+            <ErrorMessage message={errors.gdprConsent} />
+
+            <div className="flex items-start space-x-3">
+              <Checkbox
+                id="marketingConsent"
+                checked={formData.marketingConsent}
+                onCheckedChange={(checked) => handleInputChange('marketingConsent', checked)}
+                disabled={isSubmitting || isBlocked}
+                className="mt-1"
+              />
+              <Label htmlFor="marketingConsent" className="text-sm leading-tight text-gray-600">
+                I would like to receive updates about relevant services, industry insights, and event invitations (optional)
+              </Label>
+            </div>
+          </div>
+        </div>
+
+        {/* honeypot */}
+        <div style={getHoneypotStyle()}>
+          <Label htmlFor="website">Website</Label>
+          <Input
+            id="website"
+            name="website"
+            type="text"
+            value={formData.website}
+            onChange={(e) => handleInputChange('website', e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
+        <Button
+          type="submit"
+          size="lg"
+          className="w-full group bg-gradient-to-r from-primary to-primary/90 hover:to-primary text-white h-12 text-base font-medium"
           disabled={isSubmitting || isBlocked}
-          aria-describedby="message-hint message-error"
-          required
-          rows={6}
-        />
-        <p id="message-hint" className="text-xs text-gray-500 mt-1">
-          Please include scope, target platforms, current status (idea/PoC/MVP/scale), and any constraints.
-        </p>
-        <ErrorMessage message={errors.message} />
-      </FormSection>
-
-      {/* Согласие */}
-      <div className="space-y-4">
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="gdprConsent"
-            checked={formData.gdprConsent}
-            onCheckedChange={(checked) => handleInputChange('gdprConsent', checked)}
-            disabled={isSubmitting || isBlocked}
-            aria-describedby="gdpr-error"
-          />
-          <Label htmlFor="gdprConsent" className="text-sm">
-            I agree to the <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a>
-          </Label>
-        </div>
-        <ErrorMessage message={errors.gdprConsent} />
-
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="marketingConsent"
-            checked={formData.marketingConsent}
-            onCheckedChange={(checked) => handleInputChange('marketingConsent', checked)}
-            disabled={isSubmitting || isBlocked}
-          />
-          <Label htmlFor="marketingConsent" className="text-sm text-gray-600">
-            I would like to receive updates about relevant services and industry insights (optional)
-          </Label>
-        </div>
-      </div>
-
-      {/* honeypot */}
-      <div style={getHoneypotStyle()}>
-        <Label htmlFor="website">Website</Label>
-        <Input
-          id="website"
-          name="website"
-          type="text"
-          value={formData.website}
-          onChange={(e) => handleInputChange('website', e.target.value)}
-          tabIndex={-1}
-          autoComplete="off"
-        />
-      </div>
-
-      <Button
-        type="submit"
-        size="lg"
-        className="w-full group"
-        disabled={isSubmitting || isBlocked}
-      >
-        {isSubmitting ? (
-          <span className="inline-flex items-center">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Sending...
-          </span>
-        ) : (
-          <span className="inline-flex items-center">
-            Send Message
-            <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </span>
-        )}
-      </Button>
-    </motion.form>
+        >
+          {isSubmitting ? (
+            <span className="inline-flex items-center">
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Sending...
+            </span>
+          ) : (
+            <span className="inline-flex items-center">
+              Send Message
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </span>
+          )}
+        </Button>
+      </motion.form>
+    </Card>
   );
 };
 
