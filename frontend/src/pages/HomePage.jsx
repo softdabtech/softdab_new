@@ -1,3 +1,4 @@
+// frontend/src/pages/HomePage.jsx 
 import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -8,7 +9,7 @@ import HowWeWorkSection from '../components/sections/HowWeWorkSection';
 import CaseStudiesSection from '../components/sections/CaseStudiesSection';
 import IndustriesSection from '../components/sections/IndustriesSection';
 import CTASection from '../components/sections/CTASection';
-import { mockData } from '../data/mockData';
+// import { mockData } from '../data/mockData'; 
 
 // Constants for SEO
 const PAGE_TITLE = 'SoftDAB | Custom Software Development & Dedicated Teams';
@@ -95,6 +96,7 @@ const SectionLoader = () => (
 
 const HomePage = () => {
   return (
+    // 👇 ИСПРАВЛЕН ОТКРЫВАЮЩИЙ ТЕГ
     <>
       <Helmet>
         <title>{PAGE_TITLE}</title>
@@ -179,7 +181,7 @@ const HomePage = () => {
           </section>
         </Suspense>
       </ErrorBoundary>
-    </main>
+    </> 
   );
 };
 
