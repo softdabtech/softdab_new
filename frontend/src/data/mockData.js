@@ -24,6 +24,70 @@ export const mockData = {
 
   // Services
   services: {
+    support: {
+      title: 'Support & Maintenance',
+      subtitle: '24/7 Professional Support',
+      description: 'Keep your software running at peak performance with our comprehensive support and maintenance services.',
+      benefits: [
+        'Proactive system monitoring',
+        'Quick issue resolution',
+        'Performance optimization',
+        'Security updates',
+        'Regular maintenance',
+        'Continuous improvements'
+      ],
+      features: [
+        '24/7 system monitoring',
+        'Bug fixing & troubleshooting',
+        'Performance optimization',
+        'Security updates',
+        'Feature enhancements',
+        'Technical documentation',
+        'User support',
+        'Regular maintenance'
+      ],
+      plans: [
+        {
+          name: 'Basic Support',
+          price: '$2,000/month',
+          description: 'Essential support for small applications',
+          features: [
+            'Email support',
+            'Bug fixes',
+            'Security updates',
+            'Monthly reports',
+            'Basic monitoring'
+          ]
+        },
+        {
+          name: 'Business Support',
+          price: '$5,000/month',
+          description: 'Advanced support for growing businesses',
+          features: [
+            'Priority email & phone support',
+            'Bug fixes & enhancements',
+            'Security & performance updates',
+            'Weekly reports',
+            'Advanced monitoring',
+            'Dedicated support manager'
+          ]
+        },
+        {
+          name: 'Enterprise Support',
+          price: 'Custom pricing',
+          description: 'Full coverage for mission-critical systems',
+          features: [
+            '24/7 phone & email support',
+            'Priority bug fixes & features',
+            'All updates & optimizations',
+            'Real-time reporting',
+            'Comprehensive monitoring',
+            'Dedicated team',
+            'SLA guarantee'
+          ]
+        }
+      ]
+    },
     discovery: {
       title: 'Discovery & PoC',
       subtitle: 'Technical Validation Services',
