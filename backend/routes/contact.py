@@ -6,6 +6,8 @@ from ..models.contact import ContactForm
 from ..middlewares.csrf import validate_csrf_token
 from ..middlewares.rate_limit import rate_limiter
 from ..middlewares.security import sanitize_input
+from ..utils.retry import with_retry
+from ..utils.logger import contact_logger
 import aiosmtplib
 from email.message import EmailMessage
 import os
@@ -14,11 +16,13 @@ from datetime import datetime
 
 router = APIRouter()
 
+@with_retry(max_attempts=3, delay=1.0, exceptions=(aiosmtplib.SMTPException,))
 async def send_notification_email(form_data: ContactForm):
     """Отправка уведомления о новой заявке"""
     try:
-        msg = EmailMessage()
-        msg.set_content(f"""
+        # Email для команды
+        team_msg = EmailMessage()
+        team_msg.set_content(f"""
         New contact form submission:
         
         Name: {form_data.name}
@@ -29,6 +33,7 @@ async def send_notification_email(form_data: ContactForm):
         Timeline: {form_data.timeline}
         Budget: {form_data.budget}
         Message: {form_data.message}
+        Marketing Consent: {"Yes" if form_data.marketingConsent else "No"}
         
         Page: {form_data.page}
         Referrer: {form_data.referrer}
@@ -36,19 +41,50 @@ async def send_notification_email(form_data: ContactForm):
         Timestamp: {form_data.timestamp}
         """)
 
-        msg['Subject'] = f'New Contact Form: {form_data.name} from {form_data.company}'
-        msg['From'] = os.getenv('SMTP_FROM', 'noreply@softdab.tech')
-        msg['To'] = os.getenv('NOTIFICATION_EMAIL', 'info@softdab.tech')
+        team_msg['Subject'] = f'New Contact Form: {form_data.name} from {form_data.company}'
+        team_msg['From'] = os.getenv('SMTP_FROM', 'noreply@softdab.tech')
+        team_msg['To'] = os.getenv('NOTIFICATION_EMAIL', 'info@softdab.tech')
+
+        # Email для клиента
+        client_msg = EmailMessage()
+        client_msg.set_content(f"""
+        Dear {form_data.name},
+
+        Thank you for contacting SoftDAB! We have received your message and our team will review it shortly.
+        
+        Here's a copy of your submission:
+        
+        Name: {form_data.name}
+        Company: {form_data.company}
+        Role: {form_data.role}
+        Service: {form_data.service}
+        Timeline: {form_data.timeline}
+        Budget: {form_data.budget}
+        Message: {form_data.message}
+        
+        We will get back to you within 24 hours.
+        
+        Best regards,
+        SoftDAB Team
+        """)
+
+        client_msg['Subject'] = 'Thank you for contacting SoftDAB!'
+        client_msg['From'] = os.getenv('SMTP_FROM', 'noreply@softdab.tech')
+        client_msg['To'] = form_data.email
 
         # Асинхронная отправка email
-        await aiosmtplib.send(
-            msg,
-            hostname=os.getenv('SMTP_HOST'),
-            port=int(os.getenv('SMTP_PORT', 587)),
-            username=os.getenv('SMTP_USER'),
-            password=os.getenv('SMTP_PASS'),
-            use_tls=True
-        )
+        smtp_config = {
+            'hostname': os.getenv('SMTP_HOST'),
+            'port': int(os.getenv('SMTP_PORT', 587)),
+            'username': os.getenv('SMTP_USER'),
+            'password': os.getenv('SMTP_PASS'),
+            'use_tls': True
+        }
+
+        # Отправка обоих писем
+        async with aiosmtplib.SMTP(**smtp_config) as server:
+            await server.send_message(team_msg)
+            await server.send_message(client_msg)
         return True
     except Exception as e:
         print(f"Failed to send email: {str(e)}")
@@ -91,6 +127,8 @@ async def submit_contact_form(
     Обработка отправки контактной формы
     """
     try:
+        contact_logger.info(f"New contact form submission from {form_data.email}")
+        
         # Очистка входящих данных
         cleaned_data = sanitize_input(form_data.dict())
         form_data = ContactForm(**cleaned_data)
