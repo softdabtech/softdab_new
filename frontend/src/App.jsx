@@ -5,12 +5,13 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import { Toaster } from './components/ui/sonner';
 import AppRoutes from './routes';
+import ScrollToTop from './components/layout/ScrollToTop';
 import CookieConsentBanner from './components/cookies/CookieConsentBanner';
 
 function App() {
   return (
     <div className="App">
-      {/* <ScrollToTop /> УБИРАЕМ ЭТОТ КОМПОНЕНТ */}
+      <ScrollToTop />
       <Header />
       <main className="min-h-screen">
         <AppRoutes />

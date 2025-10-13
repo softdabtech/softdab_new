@@ -3,8 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 
 // Lazy-loaded components
 const HomePage = React.lazy(() => import('./pages/HomePage'));
-const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
-const CaseDetailPage = React.lazy(() => import('./pages/CaseDetailPage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 // Company pages
@@ -16,9 +14,24 @@ const CareersPage = React.lazy(() => import('./pages/company/CareersPage'));
 const ServicesPage = React.lazy(() => import('./pages/services/ServicesPage'));
 const CustomDevelopmentPage = React.lazy(() => import('./pages/services/CustomDevelopmentPage'));
 const DedicatedTeamPage = React.lazy(() => import('./pages/services/DedicatedTeamPage'));
+const OutsourcingPage = React.lazy(() => import('./pages/services/OutsourcingPage'));
 
 // Industries pages
 const IndustriesPage = React.lazy(() => import('./pages/industries/IndustriesPage'));
+const FintechPage = React.lazy(() => import('./pages/industries/FintechPage'));
+const HealthcarePage = React.lazy(() => import('./pages/industries/HealthcarePage'));
+const EcommercePage = React.lazy(() => import('./pages/industries/EcommercePage'));
+
+// Case Studies
+const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
+const CaseDetailPage = React.lazy(() => import('./pages/CaseDetailPage'));
+const PaymentPlatformPage = React.lazy(() => import('./pages/case-studies/PaymentPlatformPage'));
+const TelemedicinePlatformPage = React.lazy(() => import('./pages/case-studies/TelemedicinePlatformPage'));
+
+// Legal pages
+const PrivacyPage = React.lazy(() => import('./pages/legal/PrivacyPage'));
+const CookiesPolicyPage = React.lazy(() => import('./pages/legal/CookiesPolicy'));
+const DPAPage = React.lazy(() => import('./pages/legal/DPAPage'));
 
 // Импорт компонента загрузки
 import { LoadingSkeleton } from './components/ui/loading';
@@ -31,6 +44,8 @@ export const AppRoutes = () => {
         
         {/* Case Studies */}
         <Route path="/case-studies" element={<CaseStudiesPage />} />
+        <Route path="/case-studies/payment-platform" element={<PaymentPlatformPage />} />
+        <Route path="/case-studies/telemedicine-platform" element={<TelemedicinePlatformPage />} />
         <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
         
         {/* Company */}
@@ -42,9 +57,18 @@ export const AppRoutes = () => {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/custom-development" element={<CustomDevelopmentPage />} />
         <Route path="/services/dedicated-team" element={<DedicatedTeamPage />} />
+        <Route path="/services/outsourcing" element={<OutsourcingPage />} />
         
         {/* Industries */}
         <Route path="/industries" element={<IndustriesPage />} />
+        <Route path="/industries/fintech" element={<FintechPage />} />
+        <Route path="/industries/healthcare" element={<HealthcarePage />} />
+        <Route path="/industries/ecommerce" element={<EcommercePage />} />
+        
+        {/* Legal */}
+        <Route path="/legal/privacy" element={<PrivacyPage />} />
+        <Route path="/legal/cookies" element={<CookiesPolicyPage />} />
+        <Route path="/legal/dpa" element={<DPAPage />} />
         
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
