@@ -1,128 +1,101 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Code, Shield, Zap, Users } from 'lucide-react';
-import { Button } from '../../components/ui/button';
+import { Code, ArrowRight, Shield, Zap, Users } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
-import { Badge } from '../../components/ui/badge';
+import { Button } from '../../components/ui/button';
 
 const CustomDevelopmentPage = () => {
-  useEffect(() => {
-    document.title = 'Custom Software Development Services | End-to-End Solutions | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'End-to-end custom software development services from an experienced partner. From discovery to deployment and support, we deliver scalable solutions that solve real business problems.';
-    }
-  }, []);
-
   const features = [
     {
       icon: Code,
-      title: 'Full-Cycle Development',
-      description: 'End-to-end software delivery from requirements analysis to deployment and support.'
-    },
-    {
-      icon: Shield,
-      title: 'Quality Assurance',
-      description: 'Comprehensive testing and QA processes to ensure reliable, bug-free software.'
+      title: 'End-to-end Delivery',
+      description: 'From discovery to launch and support, we handle the complete development lifecycle.',
+      list: ['Requirements analysis', 'Architecture design', 'Development & QA', 'Deployment support']
     },
     {
       icon: Zap,
       title: 'Agile Development',
-      description: 'Flexible, iterative approach with regular deliveries and feedback loops.'
+      description: 'Iterative approach with regular releases and continuous feedback integration.',
+      list: ['2-week sprints', 'Regular demos', 'Flexible planning', 'Continuous delivery']
+    },
+    {
+      icon: Shield,
+      title: 'Quality & Security',
+      description: 'Comprehensive testing and security measures throughout development.',
+      list: ['Automated testing', 'Security audits', 'Code reviews', 'Performance checks']
     },
     {
       icon: Users,
-      title: 'Dedicated Teams',
-      description: 'Experienced developers fully committed to your projects success.'
+      title: 'Expert Team',
+      description: 'Senior developers with deep expertise in modern technologies.',
+      list: ['Solution architects', 'Senior developers', 'QA engineers', 'DevOps specialists']
     }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Custom Software Development
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
-            Transform your business ideas into powerful software solutions. 
-            We deliver end-to-end custom development services tailored to your needs.
-          </p>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Button asChild size="lg">
-              <Link to="/contact">Start Your Project</Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link to="/case-studies">View Case Studies</Link>
-            </Button>
+    <Card className="group hover:shadow-xl transition-all duration-300 hover-lift border-0 bg-white p-6">
+      <CardHeader className="pb-4">
+        <div className="flex items-start space-x-4">
+          <div className="p-3 rounded-xl bg-blue-500 text-white">
+            <Code className="h-6 w-6" />
+          </div>
+          <div className="flex-1">
+            <CardTitle className="text-xl font-bold text-gray-900 mb-1">
+              Custom Development
+            </CardTitle>
+            <CardDescription className="text-gray-600 font-medium">
+              End-to-end Software Development
+            </CardDescription>
           </div>
         </div>
-      </section>
+      </CardHeader>
 
-      {/* Features Grid */}
-      <section className="py-16 px-4 bg-muted/50">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Our Development Services
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <Card key={feature.title} className="transition-all hover:shadow-lg">
-                  <CardHeader>
-                    <div className="mb-4">
-                      <Icon className="w-12 h-12 text-primary" />
-                    </div>
-                    <CardTitle className="text-2xl">{feature.title}</CardTitle>
-                    <CardDescription>{feature.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              );
-            })}
-          </div>
+      <CardContent className="pt-0">
+        <p className="text-gray-600 mb-6 leading-relaxed">
+          End‑to‑end delivery of reliable, scalable applications — from discovery to launch and support.
+          We take full ownership of your project to deliver value faster.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {features.map((feature, index) => (
+            <Card key={index} className="bg-white border border-gray-100">
+              <CardHeader className="p-6 pb-4">
+                <div className="flex items-start space-x-4">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    {React.createElement(feature.icon, { className: "h-5 w-5 text-primary" })}
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg font-semibold mb-2">{feature.title}</CardTitle>
+                    <CardDescription className="text-sm text-gray-600">
+                      {feature.description}
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6 pt-0">
+                <ul className="space-y-2">
+                  {feature.list.map((item, itemIndex) => (
+                    <li key={itemIndex} className="flex items-center text-sm text-gray-600">
+                      <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </section>
 
-      {/* Process Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Our Development Process
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { number: '01', title: 'Discovery', description: 'Understanding your needs and goals' },
-              { number: '02', title: 'Planning', description: 'Creating detailed roadmap and architecture' },
-              { number: '03', title: 'Development', description: 'Agile implementation with regular updates' },
-              { number: '04', title: 'Delivery', description: 'Testing, deployment and ongoing support' }
-            ].map((step) => (
-              <div key={step.number} className="text-center">
-                <div className="text-4xl font-bold text-primary mb-4">{step.number}</div>
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-muted-foreground">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 px-4 bg-primary text-primary-foreground">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            Ready to Start Your Project?
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Let's discuss how our custom development services can help transform your business.
-          </p>
-          <Button size="lg" variant="secondary" asChild>
-            <Link to="/contact">Schedule Consultation</Link>
+        <div className="flex justify-end">
+          <Button asChild variant="outline" className="group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+            <Link to="/contact">
+              Start Your Project
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Button>
         </div>
-      </section>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
