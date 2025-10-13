@@ -20,10 +20,10 @@ const NAVIGATION = {
     { name: 'Dedicated Team', href: '/services/dedicated-team', description: 'Seamless extension of your in-house team.' },
   ],
   industries: [
-    { name: 'Fintech', href: '/industries#fintech', description: 'Financial technology solutions.' },
-    { name: 'Healthcare', href: '/industries#healthcare', description: 'Healthcare & medical software.' },
-    { name: 'eCommerce', href: '/industries#ecommerce', description: 'Online retail & marketplace solutions.' },
-    { name: 'Logistics', href: '/industries#logistics', description: 'Supply chain & fleet management.' },
+    { name: 'Fintech', href: '/industries/fintech', description: 'Financial technology solutions.' },
+    { name: 'Healthcare', href: '/industries/healthcare', description: 'Healthcare & medical software.' },
+    { name: 'eCommerce', href: '/industries/ecommerce', description: 'Online retail & marketplace solutions.' },
+    { name: 'Logistics', href: '/industries/logistics', description: 'Supply chain & fleet management.' },
   ],
 };
 
