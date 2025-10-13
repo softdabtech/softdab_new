@@ -3,7 +3,6 @@ import { useToast } from '../hooks/use-toast';
 import { useRateLimit } from '../hooks/use-rate-limit';
 import { z } from 'zod';
 import ContactForm from '../components/forms/ContactForm';
-import { getZohoToken, sendZohoMail } from '../lib/zoho-mail';
 
 const services = [
   'Web Development',
@@ -98,45 +97,54 @@ const ContactPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
 
-    // Don't submit if rate limited
+    // Проверка rate limit
     if (isBlocked) {
       toast({
-        title: "Too many attempts",
-        description: "Please try again later",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Don't submit if honeypot is filled
-    if (formData.website) {
-      toast({
         title: "Error",
-        description: "Form submission failed",
+        description: "Too many attempts. Please try again later.",
         variant: "destructive"
       });
       return;
     }
 
-    // Validate form
-    if (!validateForm()) {
+    // Проверка honeypot
+    if (formData.website) {
+      setFormData(initialFormData);
       toast({
-        title: "Validation Error",
-        description: "Please check the form for errors",
-        variant: "destructive"
+        title: "Success",
+        description: "Thank you! We'll get back to you soon.",
+        variant: "default"
       });
       return;
     }
-
-    setIsSubmitting(true);
-    incrementCounter();
 
     try {
-      // Send emails using Zoho Mail API
-      await sendZohoMail(formData);
+      // Валидация формы
+      const validatedData = contactSchema.parse(formData);
+      setErrors({});
 
-      // Reset form on success
+      setIsSubmitting(true);
+      toast({
+        title: "Sending",
+        description: "Please wait while we process your request...",
+      });
+
+      // Отправляем форму через Netlify функцию
+      const response = await fetch('/.netlify/functions/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(validatedData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      incrementCounter();
       setFormData(initialFormData);
       toast({
         title: "Success",
@@ -144,12 +152,25 @@ const ContactPage = () => {
         variant: "default"
       });
     } catch (error) {
-      console.error('Submit error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again later.",
-        variant: "destructive"
-      });
+      if (error instanceof z.ZodError) {
+        const newErrors = {};
+        error.errors.forEach((err) => {
+          newErrors[err.path[0]] = err.message;
+        });
+        setErrors(newErrors);
+        toast({
+          title: "Validation Error",
+          description: "Please check the form for errors",
+          variant: "destructive"
+        });
+      } else {
+        console.error('Submit error:', error);
+        toast({
+          title: "Error",
+          description: "Failed to send message. Please try again later.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }

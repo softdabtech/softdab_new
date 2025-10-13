@@ -2,10 +2,10 @@
 API endpoints для обработки контактной формы
 """
 from fastapi import APIRouter, HTTPException, Request, Depends
-from ..models.contact import ContactForm
-from ..middlewares.csrf import validate_csrf_token
-from ..middlewares.rate_limit import rate_limiter
-from ..middlewares.security import sanitize_input
+from models.contact import ContactForm
+from middlewares.csrf import validate_csrf_token
+from middlewares.rate_limit import rate_limiter
+from middlewares.security import sanitize_input
 from ..utils.retry import with_retry
 from ..utils.logger import contact_logger
 import aiosmtplib

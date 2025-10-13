@@ -16,10 +16,15 @@ from datetime import datetime
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+# MongoDB connection (optional)
+mongo_url = os.environ.get('MONGO_URL')
+db = None
+if mongo_url:
+    try:
+        client = AsyncIOMotorClient(mongo_url)
+        db = client[os.environ.get('DB_NAME', 'softdab')]
+    except Exception as e:
+        logging.warning(f"Failed to connect to MongoDB: {e}")
 
 # Create the main app without a prefix
 app = FastAPI(
@@ -39,12 +44,8 @@ api_router = APIRouter(prefix="/api")
 async def health_check():
     return {"status": "healthy", "timestamp": datetime.utcnow()}
 
-@api_router.post("/contact", response_model=ContactForm)
-async def submit_contact(contact: ContactForm):
-    contact_dict = contact.model_dump()
-    result = await db.contacts.insert_one(contact_dict)
-    contact_dict['id'] = str(result.inserted_id)
-    return contact_dict
+from routes.contact import router as contact_router
+api_router.include_router(contact_router)
 
 # Include the router in the main app
 app.include_router(api_router)
