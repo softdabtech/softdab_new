@@ -38,7 +38,7 @@ async def send_notification_email(form_data: ContactForm):
 
         msg['Subject'] = f'New Contact Form: {form_data.name} from {form_data.company}'
         msg['From'] = os.getenv('SMTP_FROM', 'noreply@softdab.tech')
-        msg['To'] = os.getenv('NOTIFICATION_EMAIL', 'hello@softdab.tech')
+        msg['To'] = os.getenv('NOTIFICATION_EMAIL', 'info@softdab.tech')
 
         # Асинхронная отправка email
         await aiosmtplib.send(
