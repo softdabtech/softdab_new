@@ -3,6 +3,7 @@ import { useToast } from '../hooks/use-toast';
 import { useRateLimit } from '../hooks/use-rate-limit';
 import { z } from 'zod';
 import ContactForm from '../components/forms/ContactForm';
+import { getZohoToken, sendZohoMail } from '../lib/zoho-mail';
 
 const services = [
   'Web Development',
@@ -132,18 +133,11 @@ const ContactPage = () => {
     incrementCounter();
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': document.cookie.match('(^|;)\\s*csrfToken\\s*=\\s*([^;]+)')?.pop() || ''
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      // Get Zoho access token
+      const token = await getZohoToken();
+      
+      // Send emails using Zoho Mail API
+      await sendZohoMail(formData, token);
 
       // Reset form on success
       setFormData(initialFormData);
