@@ -143,8 +143,27 @@ export const mockData = {
       { title: "Global Reach", description: "Projects delivered for clients in US, EU, and worldwide." }
     ],
     team: [
-      { name: "Oleksii", role: "CEO" },
-      { name: "Anna", role: "CTO" }
+      { 
+        name: "Oleksii Pronichev", 
+        role: "CEO & Founder",
+        bio: "8+ years in software development. Leads business strategy and client relationships. Passionate about building scalable solutions that drive real business value.",
+        image: "/images/team/oleksii.jpg",
+        linkedin: "https://linkedin.com/in/oleksii-pronichev"
+      },
+      { 
+        name: "Anna Kolesnik", 
+        role: "CTO & Co-Founder",
+        bio: "Technical leader with expertise in full-stack development and system architecture. Ensures our delivery standards and guides technology decisions.",
+        image: "/images/team/anna.jpg",
+        linkedin: "https://linkedin.com/in/anna-kolesnik"
+      },
+      { 
+        name: "Sergey Petrov", 
+        role: "Lead Developer",
+        bio: "Senior full-stack engineer specializing in React, Node.js, and cloud architecture. Mentors our development teams and drives technical excellence.",
+        image: "/images/team/sergey.jpg",
+        linkedin: "https://linkedin.com/in/sergey-petrov"
+      }
     ]
   },
   customDevelopment: {

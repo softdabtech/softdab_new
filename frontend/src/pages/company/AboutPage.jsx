@@ -178,32 +178,38 @@ const AboutPage = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {mockData.team.map((member, index) => (
+              {mockData.about?.team?.map((member, index) => (
                 <Card key={index} className="bg-white border-0 shadow-lg hover:shadow-xl transition-all hover-lift">
                   <CardContent className="p-6 text-center">
                     <div className="w-24 h-24 mx-auto mb-4 bg-gray-200 rounded-full overflow-hidden">
                       <img 
-                        src={member.image} 
+                        src={member.image || '/images/team/placeholder.jpg'} 
                         alt={member.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                    <p className="text-primary font-medium mb-3">{member.position}</p>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-4">{member.bio}</p>
-                    <Button 
-                      asChild 
-                      variant="ghost" 
-                      size="sm"
-                      className="hover:scale-100"
-                    >
-                      <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
-                        LinkedIn
-                      </a>
-                    </Button>
+                    <p className="text-primary font-medium mb-3">{member.role}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed mb-4">{member.bio || `${member.role} at SoftDAB`}</p>
+                    {member.linkedin && (
+                      <Button 
+                        asChild 
+                        variant="ghost" 
+                        size="sm"
+                        className="hover:scale-100"
+                      >
+                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                          LinkedIn
+                        </a>
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
-              ))}
+              )) || (
+                <div className="col-span-full text-center text-gray-500">
+                  Team information will be available soon.
+                </div>
+              )}
             </div>
           </div>
         </div>
