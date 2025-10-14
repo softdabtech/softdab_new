@@ -1,7 +1,7 @@
 // frontend/src/pages/HomePage.jsx 
 import React, { Suspense } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { ErrorBoundary } from 'react-error-boundary';
+import PageSEO from '../components/seo/PageSEO';
 import HeroSection from '../components/sections/HeroSection';
 import TrustSection from '../components/sections/TrustSection';
 import ServicesSection from '../components/sections/ServicesSection';
@@ -96,8 +96,13 @@ const SectionLoader = () => (
 
 const HomePage = () => {
   return (
-    // 👇 ИСПРАВЛЕН ОТКРЫВАЮЩИЙ ТЕГ
     <>
+      <PageSEO
+        title="SoftDAB | Custom Software Development & Dedicated Teams"
+        description="Custom software development and dedicated teams from a partner with 8 years in IT. Serving US and EU businesses. Start in ~2 weeks with a risk-free trial."
+        image="/og-image.jpg"
+        schema={[organizationSchema, websiteSchema]}
+      />
       <Helmet>
         <title>{PAGE_TITLE}</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
