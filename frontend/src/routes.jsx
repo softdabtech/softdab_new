@@ -27,12 +27,7 @@ const LogisticsPage = React.lazy(() => import('./pages/industries/LogisticsPage'
 
 // Case Studies
 const CaseStudiesPage = React.lazy(() => import('./pages/CaseStudiesPage'));
-const CaseDetailPage = React.lazy(() => import('./pages/CaseDetailPage'));
-const PaymentPlatformPage = React.lazy(() => import('./pages/case-studies/PaymentPlatformPage'));
-const TelemedicinePlatformPage = React.lazy(() => import('./pages/case-studies/TelemedicinePlatformPage'));
-const IoTPlatformPage = React.lazy(() => import('./pages/case-studies/IoTPlatformPage'));
-const LegalDocProcessingPage = React.lazy(() => import('./pages/case-studies/LegalDocProcessingPage'));
-const DeveloperPortalPage = React.lazy(() => import('./pages/case-studies/DeveloperPortalPage'));
+const CaseStudyDetailPage = React.lazy(() => import('./pages/case-studies/CaseStudyDetailPage'));
 
 // Legal pages
 const PrivacyPage = React.lazy(() => import('./pages/legal/PrivacyPage'));
@@ -50,7 +45,7 @@ export const AppRoutes = () => {
         
         {/* Case Studies */}
         <Route path="/case-studies" element={<CaseStudiesPage />} />
-        <Route path="/case-studies/:slug" element={<CaseDetailPage />} />
+        <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
         
         {/* Company */}
         <Route path="/company/about" element={<AboutPage />} />
