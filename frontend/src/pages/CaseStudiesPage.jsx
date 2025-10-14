@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Filter, Search, TrendingUp, Clock, Users } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Input } from '../components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { mockData } from '../data/mockData';
 
 // Constants
@@ -14,83 +12,12 @@ const PAGE_TITLE = 'Case Studies - Software Development Success Stories | SoftDA
 const PAGE_DESCRIPTION = 'Explore our software development case studies from a partner with 8 years in IT. Real results from fintech, healthcare, eCommerce and logistics with measurable business outcomes.';
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80';
 
-const industryOptions = [
-  { value: 'all', label: 'All Industries' },
-  { value: 'real estate', label: 'Real Estate' },
-  { value: 'legal tech', label: 'Legal Tech' },
-  { value: 'developer tools', label: 'Developer Tools' },
-  { value: 'fintech', label: 'Fintech' },
-  { value: 'healthcare', label: 'Healthcare' },
-];
-
-// Utility functions
-const normalizeIndustry = (s) => (s || '').toString().trim().toLowerCase();
-
-const extractMainMetric = (val) => {
-  if (typeof val !== 'string') return String(val || '');
-  const trimmed = val.trim();
-  const match = trimmed.match(/^([\$]?\d+(\.\d+)?%?|[\d\.]+x)\b/i);
-  if (match) return match[0];
-  return trimmed.split(' ')[0] || trimmed;
-};
-
-const getFirstResultEntry = (resultsObj) => {
-  if (!resultsObj || typeof resultsObj !== 'object') return ['Result', ''];
-  const entries = Object.entries(resultsObj);
-  if (entries.length === 0) return ['Result', ''];
-  return entries[0];
-};
-
-const formatTeamSize = (teamSize) => {
-  if (!teamSize) return '—';
-  return String(teamSize).split('(')[0].trim();
-};
-
-const getIndustryBadgeClasses = (industry) => {
-  const i = normalizeIndustry(industry);
-  if (i === 'fintech') return 'bg-blue-100 text-blue-800';
-  if (i === 'healthcare') return 'bg-red-100 text-red-800';
-  if (i === 'real estate') return 'bg-green-100 text-green-800';
-  if (i === 'legal tech') return 'bg-purple-100 text-purple-800';
-  if (i === 'developer tools') return 'bg-amber-100 text-amber-800';
-  return 'bg-gray-100 text-gray-800';
-};
-
 const CaseStudiesPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedIndustry, setSelectedIndustry] = useState('all');
-  const [allCases, setAllCases] = useState([]);
-  const [filteredCases, setFilteredCases] = useState([]);
+  const [caseStudies, setCaseStudies] = useState([]);
 
   useEffect(() => {
-    const cases = mockData.caseStudies || [];
-    setAllCases(cases);
-    setFilteredCases(cases);
+    setCaseStudies(mockData.caseStudies || []);
   }, []);
-
-  useEffect(() => {
-    let filtered = allCases;
-
-    if (selectedIndustry !== 'all') {
-      filtered = filtered.filter(cs => normalizeIndustry(cs.industry) === normalizeIndustry(selectedIndustry));
-    }
-
-    if (searchTerm.trim()) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(cs =>
-        (cs.title || '').toLowerCase().includes(term) ||
-        (cs.description || '').toLowerCase().includes(term) ||
-        (cs.industry || '').toLowerCase().includes(term)
-      );
-    }
-
-    setFilteredCases(filtered);
-  }, [searchTerm, selectedIndustry, allCases]);
-
-  const resetFilters = () => {
-    setSearchTerm('');
-    setSelectedIndustry('all');
-  };
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -166,84 +93,33 @@ const CaseStudiesPage = () => {
         </div>
       </section>
 
-      <section className="py-8 bg-gray-50 border-y border-gray-200">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-center gap-4">
-              <div className="relative flex-1">
-                <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Search case studies..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 h-10"
-                />
-              </div>
-
-              <div className="w-full md:w-56">
-                <Select value={selectedIndustry} onValueChange={setSelectedIndustry}>
-                  <SelectTrigger className="w-full h-10">
-                    <Filter className="mr-2 h-4 w-4 shrink-0 text-gray-500" />
-                    <SelectValue placeholder="Filter by industry" />
-                  </SelectTrigger>
-                  <SelectContent align="end">
-                    {industryOptions.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="w-full md:w-auto">
-                <Button variant="outline" className="w-full md:w-auto h-10" onClick={resetFilters}>
-                  Clear
-                </Button>
-              </div>
-            </div>
-
-            <div className="mt-4 text-sm text-gray-600">
-              Showing {filteredCases.length} of {allCases.length} case studies
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="section-padding bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
-            {filteredCases.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-gray-500 mb-4">No case studies found matching your criteria.</p>
-                <Button onClick={resetFilters} variant="outline">Clear Filters</Button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {filteredCases.map((study) => (
-                  <Card key={study.id} className="p-6 flex flex-col items-center text-center hover-lift transition-shadow">
-                    <img src={study.image || DEFAULT_IMAGE} alt="" className="w-16 h-16 mb-4" aria-hidden="true" />
-                    <h3 className="text-lg font-bold mb-2">{study.title}</h3>
-                    <p className="text-gray-700 mb-4 text-sm">{study.description}</p>
-                    <div className="flex flex-wrap gap-2 justify-center mb-4">
-                      {study.technologies && study.technologies.map((tech, i) => (
-                        <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">{tech}</span>
-                      ))}
-                    </div>
-                    <Button 
-                      asChild 
-                      size="sm" 
-                      className="mt-auto group"
-                    >
-                      <Link to={`/case-studies/${study.slug || study.id}`} aria-label={`Read more about ${study.title}`}>
-                        Read More
-                        <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                      </Link>
-                    </Button>
-                  </Card>
-                ))}
-              </div>
-            )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {caseStudies.map((study) => (
+                <Card key={study.id} className="p-6 flex flex-col items-center text-center hover-lift transition-shadow">
+                  <img src={study.image || DEFAULT_IMAGE} alt="" className="w-16 h-16 mb-4" aria-hidden="true" />
+                  <h3 className="text-lg font-bold mb-2">{study.title}</h3>
+                  <p className="text-gray-700 mb-4 text-sm">{study.description}</p>
+                  <div className="flex flex-wrap gap-2 justify-center mb-4">
+                    {study.technologies && study.technologies.map((tech, i) => (
+                      <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">{tech}</span>
+                    ))}
+                  </div>
+                  <Button 
+                    asChild 
+                    size="sm" 
+                    className="mt-auto group"
+                  >
+                    <Link to={`/case-studies/${study.slug || study.id}`} aria-label={`Read more about ${study.title}`}>
+                      Read More
+                      <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                    </Link>
+                  </Button>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
