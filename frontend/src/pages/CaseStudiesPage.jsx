@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Code, Cpu, Database, FileCode, Globe, Layers } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -98,25 +98,82 @@ const CaseStudiesPage = () => {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {caseStudies.map((study) => (
-                <Card key={study.id} className="p-6 flex flex-col items-center text-center hover-lift transition-shadow">
-                  <img src={study.image || DEFAULT_IMAGE} alt="" className="w-16 h-16 mb-4" aria-hidden="true" />
-                  <h3 className="text-lg font-bold mb-2">{study.title}</h3>
-                  <p className="text-gray-700 mb-4 text-sm">{study.description}</p>
-                  <div className="flex flex-wrap gap-2 justify-center mb-4">
-                    {study.technologies && study.technologies.map((tech, i) => (
-                      <span key={i} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs font-medium">{tech}</span>
-                    ))}
+                <Card key={study.id} className="group relative overflow-hidden hover:shadow-lg transition-all duration-300">
+                  {/* Top Banner with Industry and Timeline */}
+                  <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary/10 to-primary/5 py-2 px-4 flex justify-between items-center text-xs text-gray-600">
+                    <span className="flex items-center gap-1">
+                      <Badge variant="secondary" className="bg-white/80">
+                        {study.industry}
+                      </Badge>
+                    </span>
+                    <span className="flex items-center gap-1">
+                      {study.timeline}
+                    </span>
                   </div>
-                  <Button 
-                    asChild 
-                    size="sm" 
-                    className="mt-auto group"
-                  >
-                    <Link to={"/case-studies/" + (study.slug || study.id)} aria-label={"Read more about " + study.title}>
-                      Read More
-                      <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                    </Link>
-                  </Button>
+
+                  {/* Main Content */}
+                  <div className="pt-12 p-6">
+                    {/* Project Icon */}
+                    <div className="mb-6 flex justify-center">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center shadow-sm">
+                        {study.id === "skycodec" && (
+                          <FileCode className="w-8 h-8 text-primary" />
+                        )}
+                        {study.id === "dab" && (
+                          <Database className="w-8 h-8 text-primary" />
+                        )}
+                        {study.id === "carlight" && (
+                          <Cpu className="w-8 h-8 text-primary" />
+                        )}
+                        {study.id === "softpokerpro" && (
+                          <Code className="w-8 h-8 text-primary" />
+                        )}
+                        {study.id === "rosco" && (
+                          <Globe className="w-8 h-8 text-primary" />
+                        )}
+                        {study.id === "gstcloud" && (
+                          <Layers className="w-8 h-8 text-primary" />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Title and Description */}
+                    <h3 className="text-xl font-bold mb-3 text-gray-900">{study.title}</h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3 text-sm">{study.description}</p>
+
+                    {/* Key Metric */}
+                    <div className="bg-gray-50 p-3 rounded-lg mb-4">
+                      <div className="text-xs text-gray-500 mb-1">Key Achievement</div>
+                      <div className="text-sm font-medium text-gray-900">{study.keyMetric}</div>
+                    </div>
+
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {study.technologies && study.technologies.map((tech, i) => (
+                        <Badge key={i} variant="outline" className="bg-white border-gray-200">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    {/* Call to Action */}
+                    <div className="pt-4 border-t border-gray-100">
+                      <Button 
+                        asChild 
+                        variant="ghost"
+                        className="w-full group"
+                      >
+                        <Link 
+                          to={"/case-studies/" + (study.slug || study.id)} 
+                          aria-label={"Read more about " + study.title}
+                          className="flex items-center justify-between"
+                        >
+                          <span>View Case Study</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
                 </Card>
               ))}
             </div>
