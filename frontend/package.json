@@ -63,7 +63,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "vite"
+    "start": "vite",
+    "deploy:ftp": "node deploy-ftp.js",
+    "deploy:prod": "npm run build && npm run deploy:ftp"
   },
   "browserslist": {
     "production": [
@@ -90,6 +92,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.2",
+    "ftp-deploy": "^2.4.7",
     "globals": "^15.15.0",
     "jsdom": "^27.0.0",
     "path": "^0.12.7",
