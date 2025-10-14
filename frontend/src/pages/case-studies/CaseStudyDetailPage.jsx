@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -61,20 +60,6 @@ const CaseStudyDetailPage = () => {
 
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>{title + " | SoftDAB Case Study"}</title>
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title + " | SoftDAB Case Study"} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content="article" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title + " | SoftDAB Case Study"} />
-        <meta name="twitter:description" content={description} />
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
-        </script>
-      </Helmet>
-
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
