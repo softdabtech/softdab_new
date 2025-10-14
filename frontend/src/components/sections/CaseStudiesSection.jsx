@@ -10,6 +10,22 @@ import { mockData } from '../../data/mockData';
 const CaseStudiesCarousel = ({ cases }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [slidesPerView, setSlidesPerView] = useState(3); // default desktop
+
+  // Responsive logic: 1 slide on small screens, 3 on md+
+  useEffect(() => {
+    const updateSlides = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setSlidesPerView(1);
+      } else {
+        setSlidesPerView(3);
+      }
+    };
+    updateSlides();
+    window.addEventListener('resize', updateSlides);
+    return () => window.removeEventListener('resize', updateSlides);
+  }, []);
 
   const nextSlide = () => {
     if (isAnimating) return;
@@ -25,15 +41,25 @@ const CaseStudiesCarousel = ({ cases }) => {
     setTimeout(() => setIsAnimating(false), 500);
   };
 
+  // For infinite feel, duplicate needed number of slides (slidesPerView)
+  const extendedCases = cases.concat(cases.slice(0, slidesPerView));
+  const translatePercent = currentIndex * (100 / slidesPerView);
+
   return (
-    <div className="relative">
+    <div className="relative" aria-live="polite">
       <div className="overflow-hidden">
-        <div 
-          className="flex transition-transform duration-500 ease-in-out" 
-          style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${translatePercent}%)` }}
         >
-          {cases.concat(cases.slice(0, 2)).map((study, idx) => (
-            <div key={idx} className="w-1/3 flex-shrink-0 px-4 pb-2">
+          {extendedCases.map((study, idx) => (
+            <div
+              key={idx}
+              className={
+                // base full width, md 1/3
+                `flex-shrink-0 px-4 pb-2 ${slidesPerView === 1 ? 'w-full' : 'w-1/3 md:w-1/3'} w-full md:w-1/3`
+              }
+            >
               <Card className="group relative overflow-hidden hover:shadow-lg transition-all duration-300 h-[540px] flex flex-col">
                 {/* Top Banner with industry-specific gradients */}
                 <div className={`absolute top-0 left-0 right-0 py-2 px-4 flex justify-between items-center text-xs text-gray-600
@@ -134,15 +160,15 @@ const CaseStudiesCarousel = ({ cases }) => {
 
       <button
         onClick={prevSlide}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors"
+        className="absolute left-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
         aria-label="Previous case study"
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
-      
+
       <button
         onClick={nextSlide}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors"
+        className="absolute right-2 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
         aria-label="Next case study"
       >
         <ChevronRight className="h-6 w-6" />
