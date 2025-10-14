@@ -112,7 +112,7 @@ const CaseStudiesPage = () => {
                     size="sm" 
                     className="mt-auto group"
                   >
-                    <Link to={`/case-studies/${study.slug || study.id}`} aria-label={`Read more about ${study.title}`}>
+                    <Link to={"/case-studies/" + (study.slug || study.id)} aria-label={"Read more about " + study.title}>
                       Read More
                       <ArrowRight className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     </Link>

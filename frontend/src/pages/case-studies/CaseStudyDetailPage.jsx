@@ -54,7 +54,7 @@ const CaseStudyDetailPage = () => {
         "@type": "ListItem",
         "position": 3,
         "name": title,
-        "item": \`https://www.softdab.tech/case-studies/\${slug}\`
+        "item": "https://www.softdab.tech/case-studies/" + slug
       }
     ]
   };
@@ -62,13 +62,13 @@ const CaseStudyDetailPage = () => {
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>{`${title} | SoftDAB Case Study`}</title>
+        <title>{title + " | SoftDAB Case Study"}</title>
         <meta name="description" content={description} />
-        <meta property="og:title" content={`${title} | SoftDAB Case Study`} />
+        <meta property="og:title" content={title + " | SoftDAB Case Study"} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="article" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${title} | SoftDAB Case Study`} />
+        <meta name="twitter:title" content={title + " | SoftDAB Case Study"} />
         <meta name="twitter:description" content={description} />
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
