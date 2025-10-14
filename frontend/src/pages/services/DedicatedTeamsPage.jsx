@@ -36,7 +36,7 @@ const DedicatedTeamsPage = () => {
     };
   }, []);
 
-  const service = mockData.services.dedicatedTeams;
+  const service = mockData.dedicatedTeams;
 
   const whyChoose = [
     {

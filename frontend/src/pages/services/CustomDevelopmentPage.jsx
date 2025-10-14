@@ -73,7 +73,7 @@ const CustomDevelopmentPage = () => {
     };
   }, []);
 
-  const service = mockData.services.customDevelopment;
+  const service = mockData.customDevelopment;
   
   const processSteps = [
     {
