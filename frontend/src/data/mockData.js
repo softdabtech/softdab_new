@@ -4,6 +4,47 @@
 
 export const mockData = {
   caseStudies: [
+  about: {
+    title: "About SoftDAB",
+    description: "We are a custom software development company with 8+ years of experience, specializing in dedicated teams for US/EU businesses.",
+    values: [
+      { title: "Client Success First", description: "Your success is our success." },
+      { title: "Quality Excellence", description: "Highest standards in code and communication." },
+      { title: "Global Reach", description: "Projects delivered for clients in US, EU, and worldwide." }
+    ],
+    team: [
+      { name: "Oleksii", role: "CEO" },
+      { name: "Anna", role: "CTO" }
+    ],
+  },
+  customDevelopment: {
+    title: "Custom Software Development",
+    description: "End-to-end custom software development services. From discovery to deployment, we deliver reliable and scalable solutions tailored to your business needs.",
+    features: [
+      "Discovery & Requirements",
+      "Architecture & Design",
+      "Development & QA",
+      "Deployment & Support"
+    ],
+    projects: [
+      { name: "SkyCodec", summary: "Lossless Data Compression Core" },
+      { name: "DAB", summary: "Digital Alternative Banking (Fintech SaaS)" }
+    ]
+  },
+  dedicatedTeams: {
+    title: "Dedicated Teams",
+    description: "Dedicated development teams with seamless integration, predictable delivery, and flexible scaling. Senior engineers aligned to your processes.",
+    benefits: [
+      "Seamless integration",
+      "Predictable delivery",
+      "Flexible scaling",
+      "Senior engineers"
+    ],
+    clients: [
+      { name: "BMW", project: "Embedded Vision" },
+      { name: "Rosco Group", project: "Agri-Sector E‑Commerce Platform" }
+    ]
+  },
     {
       id: "skycodec",
       slug: "skycodec-lossless-compression",
@@ -133,5 +174,88 @@ export const mockData = {
         "Deployment: CI/CD for mobile builds, cloud infra provisioning, and monitoring."
       ]
     }
-  ]
+  ],
+  ],
+  about: {
+    title: "About SoftDAB",
+    description: "We are a custom software development company with 8+ years of experience, specializing in dedicated teams for US/EU businesses.",
+    values: [
+      { title: "Client Success First", description: "Your success is our success." },
+      { title: "Quality Excellence", description: "Highest standards in code and communication." },
+      { title: "Global Reach", description: "Projects delivered for clients in US, EU, and worldwide." }
+    ],
+    team: [
+      { name: "Oleksii", role: "CEO" },
+      { name: "Anna", role: "CTO" }
+    ]
+  },
+  customDevelopment: {
+    title: "Custom Software Development",
+    description: "End-to-end custom software development services. From discovery to deployment, we deliver reliable and scalable solutions tailored to your business needs.",
+    features: [
+      "Discovery & Requirements",
+      "Architecture & Design",
+      "Development & QA",
+      "Deployment & Support"
+    ],
+    projects: [
+      { name: "SkyCodec", summary: "Lossless Data Compression Core" },
+      { name: "DAB", summary: "Digital Alternative Banking (Fintech SaaS)" }
+    ]
+  },
+  dedicatedTeams: {
+    title: "Dedicated Teams",
+    description: "Dedicated development teams with seamless integration, predictable delivery, and flexible scaling. Senior engineers aligned to your processes.",
+    benefits: [
+      "Seamless integration",
+      "Predictable delivery",
+      "Flexible scaling",
+      "Senior engineers"
+    ],
+    clients: [
+      { name: "BMW", project: "Embedded Vision" },
+      { name: "Rosco Group", project: "Agri-Sector E‑Commerce Platform" }
+    ]
+  }
+  about: {
+    title: "About SoftDAB",
+    description: "We are a custom software development company with 8+ years of experience, specializing in dedicated teams for US/EU businesses.",
+    values: [
+      { title: "Client Success First", description: "Your success is our success." },
+      { title: "Quality Excellence", description: "Highest standards in code and communication." },
+      { title: "Global Reach", description: "Projects delivered for clients in US, EU, and worldwide." }
+    ],
+    team: [
+      { name: "Oleksii", role: "CEO" },
+      { name: "Anna", role: "CTO" }
+    ]
+  },
+  customDevelopment: {
+    title: "Custom Software Development",
+    description: "End-to-end custom software development services. From discovery to deployment, we deliver reliable and scalable solutions tailored to your business needs.",
+    features: [
+      "Discovery & Requirements",
+      "Architecture & Design",
+      "Development & QA",
+      "Deployment & Support"
+    ],
+    projects: [
+      { name: "SkyCodec", summary: "Lossless Data Compression Core" },
+      { name: "DAB", summary: "Digital Alternative Banking (Fintech SaaS)" }
+    ]
+  },
+  dedicatedTeams: {
+    title: "Dedicated Teams",
+    description: "Dedicated development teams with seamless integration, predictable delivery, and flexible scaling. Senior engineers aligned to your processes.",
+    benefits: [
+      "Seamless integration",
+      "Predictable delivery",
+      "Flexible scaling",
+      "Senior engineers"
+    ],
+    clients: [
+      { name: "BMW", project: "Embedded Vision" },
+      { name: "Rosco Group", project: "Agri-Sector E‑Commerce Platform" }
+    ]
+  }
 };
