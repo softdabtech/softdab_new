@@ -1,8 +1,7 @@
-// frontend/src/main.jsx (ФИНАЛЬНОЕ ИСПРАВЛЕНИЕ)
+// frontend/src/main.jsx (ИСПРАВЛЕННАЯ ВЕРСИЯ БЕЗ HELMET)
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async'; // <-- ШАГ 1: ИМПОРТИРУЕМ ПРОВАЙДЕР
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import App from './App.jsx';
@@ -19,12 +18,10 @@ if (posthogKey) {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <HelmetProvider> {/* <-- ШАГ 2: ОБОРАЧИВАЕМ ПРИЛОЖЕНИЕ */}
-      <PostHogProvider client={posthog}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PostHogProvider>
-    </HelmetProvider> {/* <-- ШАГ 2: ЗАКРЫВАЕМ ОБОРОТКУ */}
+    <PostHogProvider client={posthog}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PostHogProvider>
   </React.StrictMode>
 );
