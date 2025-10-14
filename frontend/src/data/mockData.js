@@ -192,6 +192,29 @@ export const mockData = {
     clients: [
       { name: "BMW", project: "Embedded Vision" },
       { name: "Rosco Group", project: "Agri-Sector E‑Commerce Platform" }
+    ],
+    teamSizes: [
+      {
+        size: "Small Team",
+        monthlyRate: "$8,000",
+        bestFor: "MVPs and small projects",
+        developers: "2-3 developers",
+        includes: ["Frontend Developer", "Backend Developer", "Project Manager"]
+      },
+      {
+        size: "Medium Team",
+        monthlyRate: "$15,000",
+        bestFor: "Full-scale product development",
+        developers: "4-6 developers",
+        includes: ["Full-stack Developers", "UI/UX Designer", "DevOps Engineer", "QA Engineer", "Project Manager"]
+      },
+      {
+        size: "Large Team", 
+        monthlyRate: "$25,000",
+        bestFor: "Enterprise solutions",
+        developers: "7+ developers",
+        includes: ["Senior Architects", "Full Development Team", "DevOps Team", "QA Team", "Technical Lead", "Project Manager"]
+      }
     ]
   }
 };
