@@ -14,7 +14,7 @@ const buttonVariants = cva(
         default: [
           "text-white",
           "bg-[#2F89FC]",
-          "hover:scale-[1.02] hover:underline underline-offset-2",
+          "hover:scale-[1.02] hover:underline hover:text-white underline-offset-2",
           "focus-visible:ring-2 focus-visible:ring-[#2F89FC] focus-visible:ring-offset-2",
           "disabled:bg-[#94C7FF] disabled:text-white disabled:no-underline disabled:transform-none",
         ],
