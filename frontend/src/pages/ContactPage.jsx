@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useToast } from '../hooks/use-toast';
+import { useToast, toast } from '../hooks/use-toast';
 import { useRateLimit } from '../hooks/use-rate-limit';
 import { z } from 'zod';
 import ContactForm from '../components/forms/ContactForm';
@@ -62,7 +62,6 @@ const initialFormData = {
 };
 
 const ContactPage = () => {
-  const toast = useToast().toast;
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
