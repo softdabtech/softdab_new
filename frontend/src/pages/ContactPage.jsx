@@ -62,7 +62,7 @@ const initialFormData = {
 };
 
 const ContactPage = () => {
-  const { toast } = useToast();
+  const toast = useToast().toast;
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
