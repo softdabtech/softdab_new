@@ -1,3 +1,74 @@
+import smtplib
+from email.mime.text import MIMEText
+from flask import Flask, request, jsonify
+import os
+
+app = Flask(__name__)
+
+# Настройки Zoho SMTP
+SMTP_HOST = 'smtp.zoho.com'
+SMTP_PORT = 587
+SMTP_USER = os.environ.get('ZOHO_SMTP_USER', 'noreply@softdab.tech')
+SMTP_PASS = os.environ.get('ZOHO_SMTP_PASS', '')
+
+def send_email(to_address, subject, content, from_address=SMTP_USER):
+    msg = MIMEText(content)
+    msg['Subject'] = subject
+    msg['From'] = from_address
+    msg['To'] = to_address
+    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+        server.starttls()
+        server.login(SMTP_USER, SMTP_PASS)
+        server.sendmail(from_address, [to_address], msg.as_string())
+
+@app.route('/api/contact', methods=['POST'])
+def contact():
+    data = request.json
+    # Honeypot
+    if data.get('website'):
+        return jsonify({'status': 'success'})
+
+    # Письмо команде
+    team_subject = f"New Contact Form: {data.get('name')} from {data.get('company')}"
+    team_content = f"""
+New contact form submission:
+
+Name: {data.get('name')}
+Email: {data.get('email')}
+Company: {data.get('company')}
+Role: {data.get('role')}
+Service: {data.get('service')}
+Timeline: {data.get('timeline')}
+Budget: {data.get('budget')}
+Message: {data.get('message')}
+Marketing Consent: {'Yes' if data.get('marketingConsent') else 'No'}
+"""
+    send_email('info@softdab.tech', team_subject, team_content)
+
+    # Письмо клиенту
+    client_subject = 'Thank you for contacting SoftDAB!'
+    client_content = f"""
+Dear {data.get('name')},
+
+Thank you for contacting SoftDAB! We have received your message and our team will review it shortly.
+
+Here's a copy of your submission:
+Name: {data.get('name')}
+Company: {data.get('company')}
+Role: {data.get('role')}
+Service: {data.get('service')}
+Timeline: {data.get('timeline')}
+Budget: {data.get('budget')}
+Message: {data.get('message')}
+
+We will get back to you within 24 hours.
+
+Best regards,
+SoftDAB Team
+"""
+    send_email(data.get('email'), client_subject, client_content)
+
+    return jsonify({'status': 'success'})
 from fastapi import FastAPI, APIRouter, Request, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware

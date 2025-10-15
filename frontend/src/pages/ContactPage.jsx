@@ -132,7 +132,7 @@ const ContactPage = () => {
       });
 
       // Отправляем форму через Netlify функцию
-      const response = await fetch('/.netlify/functions/submit-form', {
+  const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
