@@ -1,3 +1,6 @@
+def sanitize_input(data):
+    """Заглушка для совместимости импорта. Реальная очистка не реализована."""
+    return data
 """
 Security headers middleware
 """

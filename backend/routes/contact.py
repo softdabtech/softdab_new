@@ -4,10 +4,10 @@ API endpoints для обработки контактной формы
 from fastapi import APIRouter, HTTPException, Request, Depends
 from models.contact import ContactForm
 from middlewares.csrf import validate_csrf_token
-from middlewares.rate_limit import rate_limiter
+from middlewares.rate_limit import RateLimitMiddleware
 from middlewares.security import sanitize_input
-from ..utils.retry import with_retry
-from ..utils.logger import contact_logger
+from utils.retry import with_retry
+from utils.logger import contact_logger
 import aiosmtplib
 from email.message import EmailMessage
 import os
@@ -121,7 +121,7 @@ async def submit_contact_form(
     request: Request,
     form_data: ContactForm,
     csrf_valid: bool = Depends(validate_csrf_token),
-    rate_limit: bool = Depends(rate_limiter)
+    rate_limit: bool = Depends(RateLimitMiddleware)
 ):
     """
     Обработка отправки контактной формы

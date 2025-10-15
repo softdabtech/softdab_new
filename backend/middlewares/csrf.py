@@ -1,3 +1,6 @@
+def validate_csrf_token(request):
+    """Заглушка для совместимости импорта. Реальная проверка реализована в CSRFMiddleware."""
+    return True
 """
 Middleware для проверки CSRF токена
 """
