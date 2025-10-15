@@ -1,10 +1,14 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2, ArrowRight } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import toast from 'react-hot-toast';
 import { Button } from '../ui/button';
 import { FormField } from '../ui/form-animations';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
+import { contactFormSchema, submitContactForm } from '../../lib/contact-form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 import { Checkbox } from '../ui/checkbox';
@@ -38,17 +42,39 @@ const ErrorMessage = ({ message }) => (
   </AnimatePresence>
 );
 
-const ContactForm = ({
-  formData,
-  errors,
-  isSubmitting,
-  isBlocked,
-  handleInputChange,
-  handleSubmit,
-  services,
-  timelines,
-  budgets
-}) => {
+const ContactForm = ({ services, timelines, budgets }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset
+  } = useForm({
+    resolver: yupResolver(contactFormSchema),
+    defaultValues: {
+      marketingConsent: false,
+      page: window.location.pathname,
+      referrer: document.referrer,
+      userAgent: navigator.userAgent
+    }
+  });
+
+  const onSubmit = async (data) => {
+    const submitPromise = submitContactForm(data)
+      .then(() => {
+        reset();
+        return 'Thank you! We will contact you soon.';
+      })
+      .catch((error) => {
+        throw new Error(error.message || 'Failed to submit form');
+      });
+
+    toast.promise(submitPromise, {
+      loading: 'Submitting...',
+      success: (message) => message,
+      error: (err) => err.message
+    });
+  };
+
   const getHoneypotStyle = () => ({
     position: 'absolute',
     left: '-9999px',
@@ -71,15 +97,11 @@ const ContactForm = ({
             <FormSection>
               <FormLabel required>Name</FormLabel>
               <Input
-                id="name"
-                name="name"
+                {...register('name')}
                 type="text"
-                value={formData.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
                 className={`h-11 text-base ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-gray-200 hover:border-primary/50 focus:border-primary'}`}
-                disabled={isSubmitting || isBlocked}
+                disabled={isSubmitting}
                 aria-describedby={errors.name ? "name-error" : undefined}
-                required
               />
               <ErrorMessage message={errors.name} />
             </FormSection>

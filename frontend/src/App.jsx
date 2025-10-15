@@ -3,7 +3,7 @@ import React from 'react';
 import './App.css';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import { Toaster } from './components/ui/sonner';
+import { Toaster } from 'react-hot-toast';
 import AppRoutes from './routes';
 import ScrollToTop from './components/layout/ScrollToTop';
 import CookieConsentBanner from './components/cookies/CookieConsentBanner';
@@ -17,7 +17,9 @@ function App() {
         <AppRoutes />
       </main>
       <Footer />
-      <CookieConsentBanner />
+            <CookieConsentBanner />
+      <Toaster position="top-right" />
+```
       <Toaster />
     </div>
   );
