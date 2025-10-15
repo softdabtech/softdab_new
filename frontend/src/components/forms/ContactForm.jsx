@@ -124,17 +124,29 @@ const ContactForm = ({
 
             <FormSection>
               <FormLabel required>Role</FormLabel>
-              <Input
+              <select
                 id="role"
                 name="role"
-                type="text"
                 value={formData.role}
                 onChange={(e) => handleInputChange('role', e.target.value)}
-                className={`h-11 text-base ${errors.role ? 'border-red-500 focus:border-red-500' : 'border-gray-200 hover:border-primary/50 focus:border-primary'}`}
+                className={`h-11 text-base w-full rounded-md border ${errors.role ? 'border-red-500 focus:border-red-500' : 'border-gray-200 hover:border-primary/50 focus:border-primary'}`}
                 disabled={isSubmitting || isBlocked}
                 aria-describedby={errors.role ? "role-error" : undefined}
                 required
-              />
+              >
+                <option value="">Select your role</option>
+                <option value="CEO">CEO</option>
+                <option value="CTO">CTO</option>
+                <option value="Product Manager">Product Manager</option>
+                <option value="Project Manager">Project Manager</option>
+                <option value="Lead Developer">Lead Developer</option>
+                <option value="Software Engineer">Software Engineer</option>
+                <option value="Business Analyst">Business Analyst</option>
+                <option value="Marketing Director">Marketing Director</option>
+                <option value="Operations Manager">Operations Manager</option>
+                <option value="Founder">Founder</option>
+                <option value="Other">Other</option>
+              </select>
               <ErrorMessage message={errors.role} />
             </FormSection>
           </div>
