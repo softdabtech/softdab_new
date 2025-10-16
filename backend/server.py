@@ -1,23 +1,48 @@
-import smtplib
-from email.mime.text import MIMEText
-from flask import Flask, request, jsonify
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from routes.contact import router as contact_router
 import os
 
-app = Flask(__name__)
+app = FastAPI(
+    title="SoftDAB API",
+    description="API for SoftDAB website",
+    version="1.0.0",
+)
 
-# Настройки Zoho SMTP
-SMTP_HOST = 'smtp.zoho.com'
-SMTP_PORT = 587
-SMTP_USER = os.environ.get('ZOHO_SMTP_USER', 'noreply@softdab.tech')
-SMTP_PASS = os.environ.get('ZOHO_SMTP_PASS', '')
+# Настройка CORS
+allowed_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:5175').split(',')
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-def send_email(to_address, subject, content, from_address=SMTP_USER):
+# Подключаем роутер для контактной формы
+app.include_router(contact_router, prefix="/api")
+
+if __name__ == '__main__':
+    import uvicorn
+    port = int(os.environ.get('PORT', 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port, reload=True)
+    to_address: EmailStr
+    subject: str
+    content: str
+    from_address: EmailStr = SMTP_USER
+
+def send_email(to_address: str, subject: str, content: str, from_address: str = SMTP_USER):
     msg = MIMEText(content)
     msg['Subject'] = subject
     msg['From'] = from_address
     msg['To'] = to_address
-    with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-        server.starttls()
+    try:
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASS)
+            server.send_message(msg)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to send email: {str(e)}")
         server.login(SMTP_USER, SMTP_PASS)
         server.sendmail(from_address, [to_address], msg.as_string())
 
