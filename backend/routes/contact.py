@@ -1,163 +1,172 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, EmailStr
+"""
+Contact form routes with SQLite integration and email notifications
+"""
+from fastapi import APIRouter, HTTPException, Request
+from models.contact import ContactForm
+from database import save_contact
+from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import os
+import logging
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
-# Настройки Zoho SMTP
-SMTP_HOST = 'smtp.zoho.com'
-SMTP_PORT = 587
-SMTP_USER = os.environ.get('ZOHO_SMTP_USER', 'noreply@softdab.tech')
-SMTP_PASS = os.environ.get('ZOHO_SMTP_PASS', '')
+# SMTP Configuration (Zoho)
+SMTP_HOST = os.environ.get('SMTP_HOST', 'smtp.zoho.eu')
+SMTP_PORT = int(os.environ.get('SMTP_PORT', 587))
+SMTP_FROM_EMAIL = os.environ.get('SMTP_FROM_EMAIL', 'noreply@softdab.tech')
+SMTP_FROM_NAME = os.environ.get('SMTP_FROM_NAME', 'SoftDAB Contact Form')
+ZOHO_SMTP_USER = os.environ.get('ZOHO_SMTP_USER')
+ZOHO_SMTP_PASS = os.environ.get('ZOHO_SMTP_PASS')
 
-class ContactForm(BaseModel):
-    name: str
-    email: EmailStr
-    company: str
-    role: str
-    service: str
-    timeline: str
-    budget: str
-    message: str
-    gdprConsent: bool
-    marketingConsent: bool = False
-
-async def send_email(to_address: str, subject: str, content: str, from_address: str = SMTP_USER):
-    msg = MIMEText(content)
+async def send_email(to_address: str, subject: str, content: str, from_address: str = None):
+    """Send email via Zoho SMTP with SSL on port 465"""
+    if from_address is None:
+        from_address = SMTP_FROM_EMAIL
+    
+    if not ZOHO_SMTP_USER or not ZOHO_SMTP_PASS:
+        logger.warning("SMTP credentials not configured, skipping email")
+        return
+    
+    msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
-    msg['From'] = from_address
+    msg['From'] = f"{SMTP_FROM_NAME} <{from_address}>"
     msg['To'] = to_address
+    
+    # Add plain text part
+    text_part = MIMEText(content, 'plain', 'utf-8')
+    msg.attach(text_part)
+    
     try:
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-            server.starttls()
-            server.login(SMTP_USER, SMTP_PASS)
+        # Use Zoho SMTP with SSL on port 465
+        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=30) as server:
+            server.login(ZOHO_SMTP_USER, ZOHO_SMTP_PASS)
             server.send_message(msg)
+            logger.info(f"Email sent successfully to {to_address} via {SMTP_HOST}:{SMTP_PORT}")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to send email: {str(e)}")
+        logger.error(f"Failed to send email to {to_address}: {e}")
+        raise
 
 @router.post("/contact")
-async def handle_contact(form_data: ContactForm):
-    # Формируем текст письма для команды
-    team_content = f"""
-    New Contact Form Submission
+async def handle_contact(form_data: ContactForm, request: Request):
+    """Handle contact form submission"""
     
-    Name: {form_data.name}
-    Email: {form_data.email}
-    Company: {form_data.company}
-    Role: {form_data.role}
-    Service: {form_data.service}
-    Timeline: {form_data.timeline}
-    Budget: {form_data.budget}
+    # Honeypot check
+    if form_data.website:
+        logger.warning(f"Honeypot triggered from {request.client.host}")
+        return {"status": "success"}  # Return success to fool bots
     
-    Message:
-    {form_data.message}
+    # Check GDPR consent
+    if not form_data.gdprConsent:
+        raise HTTPException(status_code=400, detail="GDPR consent is required")
     
-    GDPR Consent: {'Yes' if form_data.gdprConsent else 'No'}
-    Marketing Consent: {'Yes' if form_data.marketingConsent else 'No'}
-    """
+    # Save to SQLite database
+    contact_data = form_data.dict()
+    contact_data['ip_address'] = request.client.host
+    contact_data['user_agent'] = request.headers.get('user-agent')
+    
+    saved = await save_contact(contact_data)
+    if saved:
+        logger.info(f"Contact form saved to database: {form_data.email}")
+    else:
+        logger.warning(f"Failed to save contact form to database: {form_data.email}")
+        # Continue even if DB save fails
+    
+    # Prepare email content for team (sending to info@softdab.tech)
+    team_content = f"""New Contact Form Submission
 
-    # Формируем текст письма для клиента
-    client_content = f"""
-    Dear {form_data.name},
+Name: {form_data.name}
+Email: {form_data.email}
+Company: {form_data.company}
+Role: {form_data.role}
+Service: {form_data.service}
+Timeline: {form_data.timeline}
+Budget: {form_data.budget}
 
-    Thank you for contacting SoftDAB! We have received your message and our team will review it shortly.
+Message:
+{form_data.message}
 
-    Here's a copy of your submission:
-    Name: {form_data.name}
-    Company: {form_data.company}
-    Role: {form_data.role}
-    Service: {form_data.service}
-    Timeline: {form_data.timeline}
-    Budget: {form_data.budget}
-    Message: {form_data.message}
+GDPR Consent: Yes
+Marketing Consent: {'Yes' if form_data.marketingConsent else 'No'}
 
-    We will get back to you within 24 hours.
+IP Address: {request.client.host}
+User Agent: {request.headers.get('user-agent', 'N/A')}
+Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
+"""
 
-    Best regards,
-    SoftDAB Team
-    """
+    # Prepare email content for client
+    client_content = f"""Dear {form_data.name},
 
+Thank you for contacting SoftDAB! We have received your message and our team will review it shortly.
+
+Here's a copy of your submission:
+
+Name: {form_data.name}
+Company: {form_data.company}
+Role: {form_data.role}
+Service: {form_data.service}
+Timeline: {form_data.timeline}
+Budget: {form_data.budget}
+
+Message:
+{form_data.message}
+
+We will get back to you within 24 hours.
+
+Best regards,
+The SoftDAB Team
+https://softdab.tech
+"""
+
+    # Send emails
+    email_sent_count = 0
+    
+    # Send notification to info@softdab.tech about new form submission
     try:
-        # Отправляем письмо команде
-        await send_email('info@softdab.tech', f'New Contact Form: {form_data.name} from {form_data.company}', team_content)
-        # Отправляем письмо клиенту
-        await send_email(form_data.email, 'Thank you for contacting SoftDAB!', client_content)
-        return {"status": "success"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    """Отправка уведомления о новой заявке"""
+        await send_email(
+            to_address='info@softdab.tech',
+            subject=f'🔔 New Contact Form: {form_data.name} from {form_data.company}',
+            content=team_content
+        )
+        logger.info("Notification email sent to info@softdab.tech")
+        email_sent_count += 1
+    except Exception as email_error:
+        logger.error(f"Failed to send notification email to info@softdab.tech: {email_error}")
+    
+    # Send confirmation email to client
     try:
-        # Email для команды
-        team_msg = EmailMessage()
-        team_msg.set_content(f"""
-        New contact form submission:
-        
-        Name: {form_data.name}
-        Email: {form_data.email}
-        Company: {form_data.company}
-        Role: {form_data.role}
-        Service: {form_data.service}
-        Timeline: {form_data.timeline}
-        Budget: {form_data.budget}
-        Message: {form_data.message}
-        Marketing Consent: {"Yes" if form_data.marketingConsent else "No"}
-        
-        Page: {form_data.page}
-        Referrer: {form_data.referrer}
-        User Agent: {form_data.userAgent}
-        Timestamp: {form_data.timestamp}
-        """)
-
-        team_msg['Subject'] = f'New Contact Form: {form_data.name} from {form_data.company}'
-        team_msg['From'] = os.getenv('SMTP_FROM', 'noreply@softdab.tech')
-        team_msg['To'] = os.getenv('NOTIFICATION_EMAIL', 'info@softdab.tech')
-
-        # Email для клиента
-        client_msg = EmailMessage()
-        client_msg.set_content(f"""
-        Dear {form_data.name},
-
-        Thank you for contacting SoftDAB! We have received your message and our team will review it shortly.
-        
-        Here's a copy of your submission:
-        
-        Name: {form_data.name}
-        Company: {form_data.company}
-        Role: {form_data.role}
-        Service: {form_data.service}
-        Timeline: {form_data.timeline}
-        Budget: {form_data.budget}
-        Message: {form_data.message}
-        
-        We will get back to you within 24 hours.
-        
-        Best regards,
-        SoftDAB Team
-        """)
-
-        client_msg['Subject'] = 'Thank you for contacting SoftDAB!'
-        client_msg['From'] = os.getenv('SMTP_FROM', 'noreply@softdab.tech')
-        client_msg['To'] = form_data.email
-
-        # Асинхронная отправка email
-        smtp_config = {
-            'hostname': os.getenv('SMTP_HOST'),
-            'port': int(os.getenv('SMTP_PORT', 587)),
-            'username': os.getenv('SMTP_USER'),
-            'password': os.getenv('SMTP_PASS'),
-            'use_tls': True
-        }
-
-        # Отправка обоих писем
-        async with aiosmtplib.SMTP(**smtp_config) as server:
-            await server.send_message(team_msg)
-            await server.send_message(client_msg)
-        return True
-    except Exception as e:
-        print(f"Failed to send email: {str(e)}")
-        return False
+        await send_email(
+            to_address=form_data.email,
+            subject='Thank you for contacting SoftDAB!',
+            content=client_content
+        )
+        logger.info(f"Confirmation email sent to client: {form_data.email}")
+        email_sent_count += 1
+    except Exception as email_error:
+        logger.error(f"Failed to send confirmation email to {form_data.email}: {email_error}")
+    
+    # Return appropriate response
+    if saved:
+        if email_sent_count == 2:
+            return {
+                "status": "success",
+                "message": "Your message has been received successfully. We'll get back to you soon!"
+            }
+        elif email_sent_count > 0:
+            return {
+                "status": "success",
+                "message": "Your message has been received. Some email notifications may be delayed."
+            }
+        else:
+            return {
+                "status": "success",
+                "message": "Your message has been saved. We'll contact you shortly."
+            }
+    else:
+        raise HTTPException(status_code=500, detail="Failed to process your request. Please try again later.")
 
 
 
