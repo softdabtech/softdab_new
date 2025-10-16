@@ -50,6 +50,7 @@ export const AppRoutes = () => {
         {/* Company */}
         <Route path="/company/about" element={<AboutPage />} />
         <Route path="/company/contact" element={<ContactPage />} />
+        <Route path="/contact" element={<ContactPage />} /> {/* Дополнительный прямой путь */}
         <Route path="/company/careers" element={<CareersPage />} />
         
         {/* Services */}

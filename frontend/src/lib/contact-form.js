@@ -15,15 +15,19 @@ export const contactFormSchema = yup.object().shape({
   userAgent: yup.string()
 });
 
-export const submitContactForm = async (formData) => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/contact`, {
+export const submitContactForm = async (data) => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content
     },
     credentials: 'include',
-    body: JSON.stringify(formData)
+    body: JSON.stringify({
+      ...data,
+      page: window.location.pathname,
+      referrer: document.referrer,
+      userAgent: navigator.userAgent
+    })
   });
 
   if (!response.ok) {

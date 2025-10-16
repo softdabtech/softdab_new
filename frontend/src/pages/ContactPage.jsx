@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { useToast, toast } from '../hooks/use-toast';
+import React from 'react';
+import toast from 'react-hot-toast';
 import { useRateLimit } from '../hooks/use-rate-limit';
-import { z } from 'zod';
 import ContactForm from '../components/forms/ContactForm';
 
 const services = [
@@ -29,155 +28,20 @@ const budgets = [
   'Not sure yet'
 ];
 
-const contactSchema = z.object({
-  name: z.string().min(2, 'Name is too short').max(100, 'Name is too long'),
-  email: z.string().email('Invalid email address'),
-  company: z.string().min(2, 'Company name is too short').max(100, 'Company name is too long'),
-  role: z.string().min(2, 'Role is too short').max(100, 'Role is too long'),
-  service: z.string().min(1, 'Please select a service'),
-  timeline: z.string().min(1, 'Please select a timeline'),
-  budget: z.string().min(1, 'Please select a budget'),
-  message: z.string()
-    .min(50, 'Please provide more details (minimum 50 characters)')
-    .max(5000, 'Message is too long'),
-  gdprConsent: z.boolean().refine(val => val === true, {
-    message: 'You must accept the Privacy Policy to continue'
-  }),
-  marketingConsent: z.boolean(),
-  website: z.string() // honeypot
-});
-
-const initialFormData = {
-  name: '',
-  email: '',
-  company: '',
-  role: '',
-  service: '',
-  timeline: '',
-  budget: '',
-  message: '',
-  gdprConsent: false,
-  marketingConsent: false,
-  website: '' // honeypot
-};
-
 const ContactPage = () => {
-  const [formData, setFormData] = useState(initialFormData);
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { isBlocked, incrementCounter } = useRateLimit('contact-form', 5, 3600); // 5 attempts per hour
 
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when field is edited
-    if (errors[field]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
+  const onSubmitSuccess = () => {
+    incrementCounter();
+    toast.success('Thank you! We will contact you soon.');
   };
 
-  const validateForm = () => {
-    try {
-      contactSchema.parse(formData);
-      setErrors({});
-      return true;
-    } catch (error) {
-      const newErrors = {};
-      error.errors.forEach((err) => {
-        newErrors[err.path[0]] = err.message;
-      });
-      setErrors(newErrors);
-      return false;
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-
-    // Проверка rate limit
-    if (isBlocked) {
-      toast({
-        title: "Error",
-        description: "Too many attempts. Please try again later.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Проверка honeypot
-    if (formData.website) {
-      setFormData(initialFormData);
-      toast({
-        title: "Success",
-        description: "Thank you! We'll get back to you soon.",
-        variant: "default"
-      });
-      return;
-    }
-
-    try {
-      // Валидация формы
-      const validatedData = contactSchema.parse(formData);
-      setErrors({});
-
-      setIsSubmitting(true);
-      toast({
-        title: "Sending",
-        description: "Please wait while we process your request...",
-      });
-
-      // Отправляем форму через Netlify функцию
-  const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(validatedData)
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
-      }
-
-      incrementCounter();
-      setFormData(initialFormData);
-      toast({
-        title: "Success",
-        description: "Your message has been sent. We'll get back to you soon!",
-        variant: "default"
-      });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const newErrors = {};
-        error.errors.forEach((err) => {
-          newErrors[err.path[0]] = err.message;
-        });
-        setErrors(newErrors);
-        toast({
-          title: "Validation Error",
-          description: "Please check the form for errors",
-          variant: "destructive"
-        });
-      } else {
-        console.error('Submit error:', error);
-        toast({
-          title: "Error",
-          description: "Failed to send message. Please try again later.",
-          variant: "destructive"
-        });
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
+  const onSubmitError = (error) => {
+    toast.error(error.message || 'Failed to submit form');
   };
 
   return (
     <div className="relative isolate">
-      {/* Background градиент */}
       <div
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -203,20 +67,16 @@ const ContactPage = () => {
           </div>
 
           <ContactForm 
-            formData={formData}
-            errors={errors}
-            isSubmitting={isSubmitting}
-            isBlocked={isBlocked}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
             services={services}
             timelines={timelines}
             budgets={budgets}
+            onSuccess={onSubmitSuccess}
+            onError={onSubmitError}
+            isBlocked={isBlocked}
           />
         </div>
       </div>
 
-      {/* Background градиент */}
       <div
         className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
         aria-hidden="true"
