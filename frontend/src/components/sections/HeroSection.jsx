@@ -1,10 +1,13 @@
 // frontend/src/components/sections/HeroSection.jsx (ФИНАЛЬНАЯ ЧИСТАЯ ВЕРСИЯ)
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle } from 'lucide-react'; // Убрали неиспользуемый Play
 import { Button } from '../ui/button';
+import ExpertConsultationForm from '../forms/ExpertConsultationForm';
+import { useExpertConsultation } from '../../hooks/use-expert-consultation';
 
 const HeroSection = () => {
+  const { isOpen, openModal, closeModal } = useExpertConsultation();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-subtle overflow-hidden">
       {/* Background Pattern */}
@@ -49,17 +52,15 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* CTAs - ИСПРАВЛЕННАЯ КНОПКА */}
+            {/* CTAs - КНОПКА С МОДАЛЬНЫМ ОКНОМ */}
             <div className="flex justify-center pt-8">
               <Button 
-                asChild 
+                onClick={openModal}
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto group"
               >
-                <Link to="/company/contact">
-                  Talk to an expert
-                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                Talk to an expert
+                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
 
@@ -77,6 +78,9 @@ const HeroSection = () => {
           <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
+
+      {/* Expert Consultation Modal */}
+      <ExpertConsultationForm isOpen={isOpen} onClose={closeModal} />
     </section>
   );
 };

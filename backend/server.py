@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes.contact import router as contact_router
+from routes.expert_consultation import router as expert_consultation_router
 from database import init_database, close_database
 import os
 import logging
@@ -41,8 +42,9 @@ async def shutdown_event():
     await close_database()
     logger.info("Application shutdown")
 
-# Подключаем роутер для контактной формы
+# Подключаем роутеры
 app.include_router(contact_router, prefix="/api")
+app.include_router(expert_consultation_router, prefix="/api")
 
 @app.get("/")
 async def root():
