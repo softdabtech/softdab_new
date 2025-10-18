@@ -397,3 +397,50 @@ async def submit_expert_consultation(
     except Exception as e:
         logger.error(f"Failed to submit expert consultation: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
+
+
+@router.get("")
+async def get_expert_consultations():
+    """Get all expert consultation requests"""
+    try:
+        from database import get_db_connection
+        
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Get all expert consultations ordered by date descending
+        cursor.execute("""
+            SELECT id, name, email, company, client_type, priority, 
+                   details, submitted_at, status
+            FROM expert_consultations 
+            ORDER BY submitted_at DESC
+        """)
+        
+        consultations = []
+        for row in cursor.fetchall():
+            # Parse JSON details if available
+            details = {}
+            try:
+                if row[6]:  # details column
+                    details = json.loads(row[6])
+            except json.JSONDecodeError:
+                logger.warning(f"Invalid JSON in consultation {row[0]} details")
+            
+            consultations.append({
+                "id": row[0],
+                "name": row[1],
+                "email": row[2],
+                "company": row[3],
+                "client_type": row[4],
+                "priority": row[5],
+                "details": details,
+                "date": row[7],
+                "status": row[8] or "new"
+            })
+        
+        conn.close()
+        return consultations
+        
+    except Exception as e:
+        logger.error(f"Error fetching expert consultations: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch expert consultations")

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <title>SoftDAB</title>
+  <desc>SoftDAB Logo - Text Only</desc>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#FFFFFF"/>
+  
+  <!-- Main Text -->
+  <text x="200" y="220" 
+        font-family="Arial, Helvetica, sans-serif" 
+        font-size="48" 
+        font-weight="700" 
+        fill="#2D3748" 
+        text-anchor="middle"
+        dominant-baseline="middle">
+    SoftDAB
+  </text>
+</svg>

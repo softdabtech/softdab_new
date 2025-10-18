@@ -2,6 +2,7 @@
 SQLite database configuration and connection
 """
 import aiosqlite
+import sqlite3
 import os
 import logging
 from pathlib import Path
@@ -220,3 +221,7 @@ async def update_expert_consultation_status(consultation_id: int, status: str):
 def get_database():
     """Get database instance"""
     return database.connection
+
+def get_db_connection():
+    """Get synchronous database connection for admin endpoints"""
+    return sqlite3.connect(str(DB_FILE))

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <title>SoftDAB</title>
+  <desc>SoftDAB BIMI Logo - Auto Scaling Text</desc>
+  
+  <!-- Blue Background -->
+  <rect width="400" height="400" fill="#2F89FC" rx="20"/>
+  
+  <!-- Text Container with padding -->
+  <g transform="translate(40,40)">
+    <!-- Text fits within 320x320 area (400-80 padding) -->
+    <text x="160" y="180" 
+          font-family="Arial, Helvetica, sans-serif" 
+          font-size="72" 
+          font-weight="700" 
+          fill="#FFFFFF" 
+          text-anchor="middle"
+          dominant-baseline="middle"
+          textLength="280"
+          lengthAdjust="spacingAndGlyphs">
+      SoftDAB
+    </text>
+  </g>
+</svg>

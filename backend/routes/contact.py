@@ -3,11 +3,12 @@ Contact form routes with SQLite integration and Resend email API
 """
 from fastapi import APIRouter, HTTPException, Request
 from models.contact import ContactForm
-from database import save_contact
+from database import save_contact, get_db_connection
 from datetime import datetime
 import os
 import logging
 import httpx
+import sqlite3
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -175,6 +176,45 @@ https://softdab.tech
             }
     else:
         raise HTTPException(status_code=500, detail="Failed to process your request. Please try again later.")
+
+
+@router.get("")
+async def get_contacts():
+    """Get all contact form submissions"""
+    try:
+        conn = get_db_connection()
+        conn.row_factory = sqlite3.Row  # Enable dict-like access
+        cursor = conn.cursor()
+        
+        # Get all contacts ordered by date descending
+        cursor.execute("""
+            SELECT id, name, email, company, message, submitted_at, status 
+            FROM contacts 
+            ORDER BY submitted_at DESC
+        """)
+        
+        contacts = []
+        rows = cursor.fetchall()
+        logger.info(f"Found {len(rows)} contacts in database")
+        
+        for row in rows:
+            contacts.append({
+                "id": row[0],
+                "name": row[1],
+                "email": row[2],
+                "company": row[3],
+                "message": row[4][:100] + "..." if len(row[4]) > 100 else row[4],  # Truncate long messages
+                "date": row[5],
+                "status": row[6] or "new"
+            })
+        
+        conn.close()
+        logger.info(f"Returning {len(contacts)} contacts")
+        return contacts
+        
+    except Exception as e:
+        logger.error(f"Error fetching contacts: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch contacts: {str(e)}")
 
 
 

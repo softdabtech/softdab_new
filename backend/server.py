@@ -43,8 +43,8 @@ async def shutdown_event():
     logger.info("Application shutdown")
 
 # Подключаем роутеры
-app.include_router(contact_router, prefix="/api")
-app.include_router(expert_consultation_router, prefix="/api")
+app.include_router(contact_router, prefix="/api/contact")
+app.include_router(expert_consultation_router, prefix="/api/expert-consultation")
 
 @app.get("/")
 async def root():
