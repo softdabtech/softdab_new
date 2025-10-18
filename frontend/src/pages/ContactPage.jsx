@@ -12,6 +12,19 @@ const services = [
   'Consulting'
 ];
 
+const roles = [
+  'CEO/Founder',
+  'CTO/Technical Director',
+  'Product Manager',
+  'Project Manager',
+  'Development Team Lead',
+  'Business Analyst',
+  'Marketing Director',
+  'Operations Manager',
+  'Startup Founder',
+  'Other'
+];
+
 const timelines = [
   'ASAP',
   '1-3 months',
@@ -68,6 +81,7 @@ const ContactPage = () => {
 
           <ContactForm 
             services={services}
+            roles={roles}
             timelines={timelines}
             budgets={budgets}
             onSuccess={onSubmitSuccess}

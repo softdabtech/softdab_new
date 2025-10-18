@@ -154,7 +154,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
         submission.outstaff_details = formData.outstaff;
       }
 
-      const response = await fetch('/api/expert-consultation', {
+      const response = await fetch('/api/expert-consultation/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submission)
@@ -758,7 +758,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
                 {renderTypeSpecificFields()}
 
                 <div className="border-t pt-8">
-                  <div className="flex items-start space-x-3">
+                  <div className="flex items-start space-x-3 mb-6">
                     <Checkbox
                       id="consent"
                       checked={formData.consent}
@@ -772,6 +772,15 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
                       {' '}and consent to SoftDAB processing my data for the purpose of this inquiry. *
                     </Label>
                   </div>
+                  
+                  {/* Submit Button */}
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || !formData.consent}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold disabled:opacity-50"
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                  </Button>
                 </div>
               </div>
             )}
@@ -780,7 +789,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
 
         {/* Footer */}
         <div className="border-t p-6 bg-gray-50">
-          {step === 1 ? (
+          {step === 1 && (
             <Button
               type="button"
               onClick={handleContinue}
@@ -789,17 +798,6 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
               Continue
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-          ) : (
-            <div className="flex gap-4">
-              <Button
-                type="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold disabled:opacity-50"
-              >
-                {isSubmitting ? 'Submitting...' : 'Submit Request'}
-              </Button>
-            </div>
           )}
         </div>
       </div>

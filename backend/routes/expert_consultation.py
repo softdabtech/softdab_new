@@ -318,7 +318,7 @@ This is an automated confirmation. Please do not reply to this email.
         logger.error(f"Error sending confirmation email: {e}")
         return False
 
-@router.post("/expert-consultation")
+@router.post("")
 async def submit_expert_consultation(
     request: ExpertConsultationRequest,
     http_request: Request

@@ -76,7 +76,7 @@ const ErrorMessage = ({ message }) => (
   </AnimatePresence>
 );
 
-const ContactForm = ({ services, timelines, budgets, onSuccess, onError, isBlocked }) => {
+const ContactForm = ({ services, roles, timelines, budgets, onSuccess, onError, isBlocked }) => {
   const {
     register,
     handleSubmit,
@@ -107,7 +107,7 @@ const ContactForm = ({ services, timelines, budgets, onSuccess, onError, isBlock
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -173,11 +173,21 @@ const ContactForm = ({ services, timelines, budgets, onSuccess, onError, isBlock
 
             <FormSection>
               <FormLabel required>Role</FormLabel>
-              <Input
-                {...register('role')}
-                className={errors.role ? 'border-red-500' : ''}
+              <Select
+                onValueChange={handleSelectChange('role')}
                 disabled={isSubmitting || isBlocked}
-              />
+              >
+                <SelectTrigger className={errors.role ? 'border-red-500' : ''}>
+                  <SelectValue placeholder="Select your role" />
+                </SelectTrigger>
+                <SelectContent>
+                  {roles.map((role) => (
+                    <SelectItem key={role} value={role}>
+                      {role}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <ErrorMessage message={errors.role?.message} />
             </FormSection>
           </div>
