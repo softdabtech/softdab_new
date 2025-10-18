@@ -1,7 +1,7 @@
 // frontend/src/components/layout/Header.jsx (ФИНАЛЬНАЯ РАБОЧАЯ ВЕРСИЯ)
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu } from 'lucide-react';
+// Hamburger menu icon implemented with CSS
 import { Button } from '../ui/button';
 import {
   NavigationMenu,
@@ -140,9 +140,13 @@ const Header = () => {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="lg:hidden hover:scale-100"
+                className="lg:hidden hover:scale-100 p-2"
               >
-                <Menu className="h-5 w-5" />
+                <div className="flex flex-col justify-center items-center space-y-1">
+                  <span className="block w-5 h-0.5 bg-current"></span>
+                  <span className="block w-5 h-0.5 bg-current"></span>
+                  <span className="block w-5 h-0.5 bg-current"></span>
+                </div>
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
