@@ -60,15 +60,27 @@ const ListItem = React.forwardRef(({ title, children, href, ...props }, ref) => 
 ListItem.displayName = 'ListItem';
 
 const Header = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { pathname } = useLocation();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+
+    // Инициализация
+    handleResize();
+
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
     window.scrollTo(0, 0);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, [pathname]);
 
   return (
@@ -137,18 +149,20 @@ const Header = () => {
 
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="lg:hidden hover:scale-100 p-2"
-              >
+              {isMobile && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="hover:scale-100 p-2"
+                >
                 <div className="flex flex-col justify-center items-center space-y-1">
                   <span className="block w-5 h-0.5 bg-current"></span>
                   <span className="block w-5 h-0.5 bg-current"></span>
                   <span className="block w-5 h-0.5 bg-current"></span>
                 </div>
                 <span className="sr-only">Toggle Menu</span>
-              </Button>
+                </Button>
+              )}
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="grid gap-6 text-lg font-medium mt-6">
