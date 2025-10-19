@@ -5,6 +5,10 @@ from routes.expert_consultation import router as expert_consultation_router
 from database import init_database, close_database
 import os
 import logging
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(
@@ -19,13 +23,15 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Настройка CORS
-allowed_origins = os.environ.get('CORS_ORIGINS', 'http://localhost:5175').split(',')
+# Настройка CORS - читаем из .env файла
+cors_origins = os.getenv('CORS_ORIGINS', 'https://www.softdab.tech,https://softdab.tech').split(',')
+logger.info(f"CORS origins: {cors_origins}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=cors_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
