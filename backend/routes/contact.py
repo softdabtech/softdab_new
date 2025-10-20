@@ -16,6 +16,8 @@ router = APIRouter()
 
 FROM_EMAIL = os.environ.get('FROM_EMAIL', 'info@softdab.tech')
 FROM_NAME = os.environ.get('FROM_NAME', 'SoftDAB')
+# Allow multiple notification recipients via env (comma‑separated)
+NOTIFY_EMAILS = [e.strip() for e in os.environ.get('CONTACT_NOTIFICATION_EMAILS', 'info@softdab.tech').split(',') if e.strip()]
 
 @router.post("")
 async def handle_contact(form_data: ContactForm, request: Request):
@@ -93,18 +95,23 @@ https://softdab.tech
     
     # Send notification to info@softdab.tech about new form submission
     try:
-        sent = await send_email(
-            to_address='info@softdab.tech',
-            subject=f'🔔 New Contact Form: {form_data.name} from {form_data.company}',
-            content=team_content
-        )
-        if sent:
-            logger.info("Notification email sent to info@softdab.tech")
+        # Send to each configured recipient; count as success if at least one succeeds
+        notify_results = []
+        for addr in NOTIFY_EMAILS:
+            sent = await send_email(
+                to_address=addr,
+                subject=f'🔔 New Contact Form: {form_data.name} from {form_data.company}',
+                content=team_content
+            )
+            notify_results.append((addr, sent))
+        successes = sum(1 for _, ok in notify_results if ok)
+        if successes > 0:
+            logger.info(f"Notification email sent to {successes}/{len(notify_results)} recipients: {[a for a, ok in notify_results if ok]}")
             email_sent_count += 1
         else:
-            logger.warning("Notification email NOT sent (provider returned False)")
+            logger.warning(f"Notification emails NOT sent to any recipient: {notify_results}")
     except Exception as email_error:
-        logger.error(f"Failed to send notification email to info@softdab.tech: {email_error}")
+        logger.error(f"Failed to send notification emails: {email_error}")
     
     # Send confirmation email to client
     try:

@@ -84,6 +84,8 @@ code {
   html, body {
     @apply bg-background text-foreground;
     overflow-x: hidden;
+    /* Prevent horizontal jitter when vertical scrollbar appears/disappears */
+    scrollbar-gutter: stable both-edges;
   }
   #root {
     overflow-x: hidden;
