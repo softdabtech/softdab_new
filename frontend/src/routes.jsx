@@ -33,6 +33,7 @@ const CaseStudyDetailPage = React.lazy(() => import('./pages/case-studies/CaseSt
 const PrivacyPage = React.lazy(() => import('./pages/legal/PrivacyPage'));
 const CookiesPolicyPage = React.lazy(() => import('./pages/legal/CookiesPolicy'));
 const DPAPage = React.lazy(() => import('./pages/legal/DPAPage'));
+const AdminPage = React.lazy(() => import('./pages/AdminPage'));
 
 // Импорт компонента загрузки
 import { LoadingSkeleton } from './components/ui/loading';
@@ -59,6 +60,8 @@ export const AppRoutes = () => {
         <Route path="/services/dedicated-teams" element={<DedicatedTeamsPage />} />
         <Route path="/services/outsourcing" element={<OutsourcingPage />} />
         <Route path="/services/discovery" element={<DiscoveryPage />} />
+  {/* Admin */}
+  <Route path="/admin" element={<AdminPage />} />
         <Route path="/services/support" element={<SupportPage />} />
         
         {/* Industries */}
