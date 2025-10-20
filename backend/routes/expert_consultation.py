@@ -199,7 +199,7 @@ async def send_expert_consultation_notification(consultation_data: dict, routing
         subject = f"[EXPERT CONSULTATION] {consultation_data['client_type'].upper()} — {consultation_data.get('company', consultation_data['name'])} — Priority {consultation_data['priority']}/10"
         
         email_body = f"""
-🎯 NEW EXPERT CONSULTATION REQUEST
+NEW EXPERT CONSULTATION REQUEST
 
 === BASIC INFO ===
 Type: {consultation_data['client_type'].upper()}
@@ -216,30 +216,8 @@ Priority: {consultation_data['priority']}/10
 Assigned To: {', '.join(routing_info['assigned_to'])}
 SLA: {routing_info['sla_hours']} hours
 Tags: {', '.join(routing_info['tags'])}
-    try:
-        # Формируем копию формы
-        details = json.loads(consultation_data.get('details', '{}')) if consultation_data.get('details') else {}
-        details_text = ""
-        if details:
-            details_text = "\n\n=== ADDITIONAL DETAILS ===\n"
-            for key, value in details.items():
-                if value:
-                    formatted_key = key.replace('_', ' ').title()
-                    details_text += f"{formatted_key}: {value}\n"
-        subject = f"Expert Consultation: {consultation_data['name']} from {consultation_data.get('company', consultation_data['name'])}"
-        email_body = f"""
-Expert Consultation Submission
-Type: {consultation_data['client_type'].upper()}
-Name: {consultation_data['name']}
-Email: {consultation_data['email']}
-Company: {consultation_data.get('company', 'Not provided')}
-Phone: {consultation_data.get('phone', 'Not provided')}
-Brief Message: {consultation_data['brief_message']}
-Priority: {consultation_data['priority']}/10
-Assigned To: {', '.join(routing_info['assigned_to'])}
-SLA: {routing_info['sla_hours']} hours
-Tags: {', '.join(routing_info['tags'])}
-{details_text}
+{details_text}{utm_info}
+
 Consultation ID: {consultation_id}
 IP Address: {consultation_data.get('ip_address', 'Unknown')}
 User Agent: {consultation_data.get('user_agent', 'Unknown')}
@@ -257,12 +235,6 @@ Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
             return True
         logger.error(f"Expert consultation copy NOT sent to info@softdab.tech")
         return False
-            logger.info(f"Confirmation email sent to {consultation_data['email']}")
-            return True
-        else:
-            logger.error("Failed to send confirmation email via configured providers")
-            return False
-                
     except Exception as e:
         logger.error(f"Error sending confirmation email: {e}")
         return False
@@ -347,7 +319,8 @@ async def submit_expert_consultation(
         logger.error(f"Failed to submit expert consultation: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
-
+async def send_expert_consultation_confirmation(consultation_data: dict, routing_info: dict) -> bool:
+    """Send confirmation copy of expert consultation to info@softdab.tech from noreply@softdab.tech"""
     try:
         subject = "Expert Consultation Confirmation (copy)"
         email_body = f"""
@@ -358,7 +331,6 @@ Company: {consultation_data.get('company', 'Not provided')}
 Brief Message: {consultation_data['brief_message']}
 Priority: {consultation_data['priority']}/10
 SLA: {routing_info['sla_hours']} hours
-Consultation ID: {consultation_data.get('consultation_id', 'N/A')}
 Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 """
         sent = await send_email(
@@ -368,17 +340,13 @@ Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
             from_address="noreply@softdab.tech"
         )
         if sent:
-            logger.info(f"Expert consultation confirmation copy sent to info@softdab.tech")
+            logger.info("Expert consultation confirmation copy sent to info@softdab.tech")
             return True
-        else:
-            logger.error("Expert consultation confirmation copy NOT sent to info@softdab.tech")
-            return False
+        logger.error("Expert consultation confirmation copy NOT sent to info@softdab.tech")
+        return False
     except Exception as e:
         logger.error(f"Error sending expert consultation confirmation copy: {e}")
         return False
-    except Exception as e:
-        logger.error(f"Error fetching expert consultations: {e}")
-        raise HTTPException(status_code=500, detail="Failed to fetch expert consultations")
 
 
 @router.get("/{consultation_id}")

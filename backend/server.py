@@ -1,14 +1,18 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes.contact import router as contact_router
-from routes.expert_consultation import router as expert_consultation_router
-from database import init_database, close_database
 import os
 import logging
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables BEFORE importing database and routes
 load_dotenv()
+
+# Now import modules that rely on env vars
+from database import init_database, close_database
+from routes.contact import router as contact_router
+from routes.expert_consultation import router as expert_consultation_router
+
+# Env already loaded above
 
 # Configure logging
 logging.basicConfig(
