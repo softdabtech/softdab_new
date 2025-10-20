@@ -3,13 +3,14 @@ Expert consultation route handler
 """
 import json
 import logging
-import httpx
 import os
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, Dict, Any
-from database import save_expert_consultation
+from database import save_expert_consultation, get_db_connection
+from utils.emailer import send_email
+from utils.timezone import to_local_time_str
 
 def get_client_ip(request: Request) -> str:
     """Get client IP from request"""
@@ -21,8 +22,6 @@ def get_client_ip(request: Request) -> str:
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-# Resend API configuration
-RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 FROM_EMAIL = os.getenv("FROM_EMAIL", "info@softdab.tech")
 
 # Pydantic models for validation
@@ -169,10 +168,6 @@ def get_routing_info(client_type: str, priority: int) -> Dict[str, Any]:
 
 async def send_expert_consultation_notification(consultation_data: dict, routing_info: dict, consultation_id: int):
     """Send email notification about new expert consultation"""
-    if not RESEND_API_KEY:
-        logger.warning("RESEND_API_KEY not configured - email notification skipped")
-        return False
-    
     try:
         # Format details for email
         details = json.loads(consultation_data.get('details', '{}')) if consultation_data.get('details') else {}
@@ -231,28 +226,18 @@ Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 Reply to this consultation at: https://softdab.tech/admin
 """
 
-        # Send notification email
-        async with httpx.AsyncClient() as client:
-            response = await client.post(
-                "https://api.resend.com/emails",
-                headers={
-                    "Authorization": f"Bearer {RESEND_API_KEY}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "from": FROM_EMAIL,
-                    "to": ["bombela@softdab.tech"],
-                    "subject": subject,
-                    "text": email_body
-                }
-            )
-            
-            if response.status_code == 200:
-                logger.info(f"Notification email sent for consultation {consultation_id}")
-                return True
-            else:
-                logger.error(f"Failed to send notification email: {response.status_code} - {response.text}")
-                return False
+        sent = await send_email(
+            to_address="bombela@softdab.tech",
+            subject=subject,
+            content=email_body,
+            from_address=FROM_EMAIL,
+        )
+        if sent:
+            logger.info(f"Notification email sent for consultation {consultation_id}")
+            return True
+        else:
+            logger.error("Failed to send notification email via configured providers")
+            return False
                 
     except Exception as e:
         logger.error(f"Error sending notification email: {e}")
@@ -260,10 +245,6 @@ Reply to this consultation at: https://softdab.tech/admin
 
 async def send_expert_consultation_confirmation(consultation_data: dict, routing_info: dict):
     """Send confirmation email to the user"""
-    if not RESEND_API_KEY:
-        logger.warning("RESEND_API_KEY not configured - confirmation email skipped")
-        return False
-    
     try:
         subject = "Thanks for reaching out to SoftDAB — We received your expert consultation request"
         
@@ -291,28 +272,18 @@ The SoftDAB Team
 This is an automated confirmation. Please do not reply to this email.
 """
 
-        # Send confirmation email
-        async with httpx.AsyncClient() as client:
-            response = await client.post(
-                "https://api.resend.com/emails",
-                headers={
-                    "Authorization": f"Bearer {RESEND_API_KEY}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "from": FROM_EMAIL,
-                    "to": [consultation_data['email']],
-                    "subject": subject,
-                    "text": email_body
-                }
-            )
-            
-            if response.status_code == 200:
-                logger.info(f"Confirmation email sent to {consultation_data['email']}")
-                return True
-            else:
-                logger.error(f"Failed to send confirmation email: {response.status_code} - {response.text}")
-                return False
+        sent = await send_email(
+            to_address=consultation_data['email'],
+            subject=subject,
+            content=email_body,
+            from_address=FROM_EMAIL,
+        )
+        if sent:
+            logger.info(f"Confirmation email sent to {consultation_data['email']}")
+            return True
+        else:
+            logger.error("Failed to send confirmation email via configured providers")
+            return False
                 
     except Exception as e:
         logger.error(f"Error sending confirmation email: {e}")
@@ -403,8 +374,6 @@ async def submit_expert_consultation(
 async def get_expert_consultations():
     """Get all expert consultation requests"""
     try:
-        from database import get_db_connection
-        
         conn = get_db_connection()
         cursor = conn.cursor()
         
@@ -434,7 +403,7 @@ async def get_expert_consultations():
                 "client_type": row[4],
                 "priority": row[5],
                 "details": details,
-                "date": row[7],
+                "date": to_local_time_str(row[7]),
                 "status": row[8] or "new"
             })
         
@@ -444,3 +413,33 @@ async def get_expert_consultations():
     except Exception as e:
         logger.error(f"Error fetching expert consultations: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch expert consultations")
+
+
+@router.get("/{consultation_id}")
+async def get_expert_consultation_detail(consultation_id: int):
+    """Get full expert consultation details by ID for admin modal"""
+    try:
+        conn = get_db_connection()
+        conn.row_factory = __import__('sqlite3').Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM expert_consultations WHERE id = ?", (consultation_id,))
+        row = cursor.fetchone()
+        columns = [description[0] for description in cursor.description]
+        conn.close()
+        if not row:
+            raise HTTPException(status_code=404, detail="Consultation not found")
+        data = dict(zip(columns, row))
+        # Parse details blob to dict if present
+        try:
+            if data.get('details'):
+                data['details'] = json.loads(data['details'])
+        except Exception:
+            pass
+        if data.get('submitted_at'):
+            data['submitted_at'] = to_local_time_str(data['submitted_at'])
+        return data
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching expert consultation {consultation_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch consultation detail")

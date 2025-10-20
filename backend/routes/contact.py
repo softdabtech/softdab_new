@@ -1,93 +1,21 @@
 """
-Contact form routes with SQLite integration and Resend email API
+Contact form routes with SQLite integration and email notifications
 """
 from fastapi import APIRouter, HTTPException, Request
 from models.contact import ContactForm
 from database import save_contact, get_db_connection
 from datetime import datetime
-import os
-import smtplib
-from email.mime.text import MIMEText
 import logging
-import httpx
 import sqlite3
+import os
+from utils.emailer import send_email
+from utils.timezone import to_local_time_str
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-# Resend API Configuration
-RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
-RESEND_API_URL = 'https://api.resend.com/emails'
 FROM_EMAIL = os.environ.get('FROM_EMAIL', 'info@softdab.tech')
 FROM_NAME = os.environ.get('FROM_NAME', 'SoftDAB')
-
-async def send_email(to_address: str, subject: str, content: str, from_address: str = None):
-    """Send email via Resend API"""
-    if not RESEND_API_KEY:
-        logger.warning("Resend API key not configured, attempting SMTP fallback")
-        # SMTP fallback using local MTA or configured relay
-        try:
-            msg = MIMEText(content)
-            msg['Subject'] = subject
-            msg['From'] = from_address or f"{FROM_NAME} <{FROM_EMAIL}>"
-            msg['To'] = to_address
-
-            # Use localhost SMTP relay; if you have creds, configure via env
-            smtp_host = os.environ.get('SMTP_HOST', 'localhost')
-            smtp_port = int(os.environ.get('SMTP_PORT', '25'))
-            smtp_user = os.environ.get('SMTP_USER')
-            smtp_pass = os.environ.get('SMTP_PASS')
-            use_tls = os.environ.get('SMTP_TLS', 'false').lower() == 'true'
-
-            server = smtplib.SMTP(smtp_host, smtp_port, timeout=10)
-            try:
-                if use_tls:
-                    server.starttls()
-                if smtp_user and smtp_pass:
-                    server.login(smtp_user, smtp_pass)
-                server.sendmail(msg['From'], [to_address], msg.as_string())
-            finally:
-                server.quit()
-
-            logger.info(f"✅ Email sent via SMTP to {to_address}")
-            return True
-        except Exception as e:
-            logger.error(f"❌ SMTP fallback failed: {e}")
-            return False
-    
-    if from_address is None:
-        from_address = f"{FROM_NAME} <{FROM_EMAIL}>"
-    
-    headers = {
-        'Authorization': f'Bearer {RESEND_API_KEY}',
-        'Content-Type': 'application/json'
-    }
-    
-    payload = {
-        "from": from_address,
-        "to": [to_address],
-        "subject": subject,
-        "text": content
-    }
-    
-    try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            response = await client.post(
-                RESEND_API_URL,
-                headers=headers,
-                json=payload
-            )
-            
-            if response.status_code == 200:
-                logger.info(f"✅ Email sent successfully to {to_address} via Resend")
-                return True
-            else:
-                logger.error(f"❌ Resend API error: {response.status_code} - {response.text}")
-                return False
-                
-    except Exception as e:
-        logger.error(f"❌ Failed to send email via Resend: {e}")
-        return False
 
 @router.post("")
 async def handle_contact(form_data: ContactForm, request: Request):
@@ -234,13 +162,14 @@ async def get_contacts():
         logger.info(f"Found {len(rows)} contacts in database")
         
         for row in rows:
+            msg = row[4] or ""
             contacts.append({
                 "id": row[0],
                 "name": row[1],
                 "email": row[2],
                 "company": row[3],
-                "message": row[4][:100] + "..." if len(row[4]) > 100 else row[4],  # Truncate long messages
-                "date": row[5],
+                "message": (msg[:100] + "...") if len(msg) > 100 else msg,  # Truncate long messages
+                "date": to_local_time_str(row[5]),
                 "status": row[6] or "new"
             })
         
@@ -262,11 +191,15 @@ async def get_contact_detail(contact_id: int):
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM contacts WHERE id = ?", (contact_id,))
         row = cursor.fetchone()
+        columns = [description[0] for description in cursor.description]
         conn.close()
         if not row:
             raise HTTPException(status_code=404, detail="Contact not found")
-        columns = [description[0] for description in cursor.description]
-        return dict(zip(columns, row))
+        data = dict(zip(columns, row))
+        # Convert timestamp to local timezone string
+        if data.get('submitted_at'):
+            data['submitted_at'] = to_local_time_str(data['submitted_at'])
+        return data
     except HTTPException:
         raise
     except Exception as e:
