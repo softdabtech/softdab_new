@@ -1,31 +1,20 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'sonner';
+import toast from 'react-hot-toast';
 
 // Toast-уведомления
 export const showToast = (status, message) => {
   switch (status) {
     case 'success':
-      toast.success(message, {
-        duration: 3000,
-        position: 'top-center',
-      });
+      toast.success(message);
       break;
     case 'error':
-      toast.error(message, {
-        duration: 5000,
-        position: 'top-center',
-      });
+      toast.error(message);
       break;
     case 'loading':
-      toast.loading(message, {
-        position: 'top-center',
-      });
+      toast.loading(message);
       break;
     default:
-      toast(message, {
-        duration: 3000,
-        position: 'top-center',
-      });
+      toast(message);
   }
 };
 
