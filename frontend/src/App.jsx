@@ -17,10 +17,8 @@ function App() {
         <AppRoutes />
       </main>
       <Footer />
-            <CookieConsentBanner />
+      <CookieConsentBanner />
       <Toaster position="top-right" />
-```
-      <Toaster />
     </div>
   );
 }

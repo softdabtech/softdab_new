@@ -6,6 +6,8 @@ from models.contact import ContactForm
 from database import save_contact, get_db_connection
 from datetime import datetime
 import os
+import smtplib
+from email.mime.text import MIMEText
 import logging
 import httpx
 import sqlite3
@@ -22,8 +24,36 @@ FROM_NAME = os.environ.get('FROM_NAME', 'SoftDAB')
 async def send_email(to_address: str, subject: str, content: str, from_address: str = None):
     """Send email via Resend API"""
     if not RESEND_API_KEY:
-        logger.warning("Resend API key not configured")
-        return False
+        logger.warning("Resend API key not configured, attempting SMTP fallback")
+        # SMTP fallback using local MTA or configured relay
+        try:
+            msg = MIMEText(content)
+            msg['Subject'] = subject
+            msg['From'] = from_address or f"{FROM_NAME} <{FROM_EMAIL}>"
+            msg['To'] = to_address
+
+            # Use localhost SMTP relay; if you have creds, configure via env
+            smtp_host = os.environ.get('SMTP_HOST', 'localhost')
+            smtp_port = int(os.environ.get('SMTP_PORT', '25'))
+            smtp_user = os.environ.get('SMTP_USER')
+            smtp_pass = os.environ.get('SMTP_PASS')
+            use_tls = os.environ.get('SMTP_TLS', 'false').lower() == 'true'
+
+            server = smtplib.SMTP(smtp_host, smtp_port, timeout=10)
+            try:
+                if use_tls:
+                    server.starttls()
+                if smtp_user and smtp_pass:
+                    server.login(smtp_user, smtp_pass)
+                server.sendmail(msg['From'], [to_address], msg.as_string())
+            finally:
+                server.quit()
+
+            logger.info(f"✅ Email sent via SMTP to {to_address}")
+            return True
+        except Exception as e:
+            logger.error(f"❌ SMTP fallback failed: {e}")
+            return False
     
     if from_address is None:
         from_address = f"{FROM_NAME} <{FROM_EMAIL}>"
@@ -135,25 +165,31 @@ https://softdab.tech
     
     # Send notification to info@softdab.tech about new form submission
     try:
-        await send_email(
+        sent = await send_email(
             to_address='info@softdab.tech',
             subject=f'🔔 New Contact Form: {form_data.name} from {form_data.company}',
             content=team_content
         )
-        logger.info("Notification email sent to info@softdab.tech")
-        email_sent_count += 1
+        if sent:
+            logger.info("Notification email sent to info@softdab.tech")
+            email_sent_count += 1
+        else:
+            logger.warning("Notification email NOT sent (provider returned False)")
     except Exception as email_error:
         logger.error(f"Failed to send notification email to info@softdab.tech: {email_error}")
     
     # Send confirmation email to client
     try:
-        await send_email(
+        sent = await send_email(
             to_address=form_data.email,
             subject='Thank you for contacting SoftDAB!',
             content=client_content
         )
-        logger.info(f"Confirmation email sent to client: {form_data.email}")
-        email_sent_count += 1
+        if sent:
+            logger.info(f"Confirmation email sent to client: {form_data.email}")
+            email_sent_count += 1
+        else:
+            logger.warning(f"Confirmation email to {form_data.email} NOT sent (provider returned False)")
     except Exception as email_error:
         logger.error(f"Failed to send confirmation email to {form_data.email}: {email_error}")
     
@@ -215,6 +251,27 @@ async def get_contacts():
     except Exception as e:
         logger.error(f"Error fetching contacts: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to fetch contacts: {str(e)}")
+
+
+@router.get("/{contact_id}")
+async def get_contact_detail(contact_id: int):
+    """Get full contact details by ID for admin modal"""
+    try:
+        conn = get_db_connection()
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM contacts WHERE id = ?", (contact_id,))
+        row = cursor.fetchone()
+        conn.close()
+        if not row:
+            raise HTTPException(status_code=404, detail="Contact not found")
+        columns = [description[0] for description in cursor.description]
+        return dict(zip(columns, row))
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching contact {contact_id}: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch contact: {str(e)}")
 
 
 

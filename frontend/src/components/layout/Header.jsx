@@ -148,22 +148,22 @@ const Header = () => {
           </Button>
 
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              {isMobile && (
+            {isMobile && (
+              <SheetTrigger asChild>
                 <Button 
                   variant="ghost" 
                   size="icon" 
                   className="hover:scale-100 p-2"
                 >
-                <div className="flex flex-col justify-center items-center space-y-1">
-                  <span className="block w-5 h-0.5 bg-current"></span>
-                  <span className="block w-5 h-0.5 bg-current"></span>
-                  <span className="block w-5 h-0.5 bg-current"></span>
-                </div>
-                <span className="sr-only">Toggle Menu</span>
+                  <div className="flex flex-col justify-center items-center space-y-1">
+                    <span className="block w-5 h-0.5 bg-current"></span>
+                    <span className="block w-5 h-0.5 bg-current"></span>
+                    <span className="block w-5 h-0.5 bg-current"></span>
+                  </div>
+                  <span className="sr-only">Toggle Menu</span>
                 </Button>
-              )}
-            </SheetTrigger>
+              </SheetTrigger>
+            )}
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="grid gap-6 text-lg font-medium mt-6">
                 <Link to="/" onClick={() => setIsMobileMenuOpen(false)} 

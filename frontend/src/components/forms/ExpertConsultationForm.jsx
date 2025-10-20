@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { toast } from 'sonner';
+import toast from 'react-hot-toast';
 import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const ExpertConsultationForm = ({ isOpen, onClose }) => {
@@ -614,7 +614,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden bg-white rounded-2xl shadow-2xl">
+  <div className="relative w-full max-w-2xl max-h-[90vh] overflow-hidden bg-white rounded-2xl shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
           <div>
@@ -777,7 +777,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
                   <Button
                     type="submit"
                     disabled={isSubmitting || !formData.consent}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold disabled:opacity-50"
+                    className="w-auto px-6 bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold disabled:opacity-50"
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit Request'}
                   </Button>
@@ -793,7 +793,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
             <Button
               type="button"
               onClick={handleContinue}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
+              className="w-auto px-6 bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
             >
               Continue
               <ArrowRight className="ml-2 w-5 h-5" />

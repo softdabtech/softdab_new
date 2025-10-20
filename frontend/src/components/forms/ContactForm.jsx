@@ -319,7 +319,7 @@ const ContactForm = ({ services, roles, timelines, budgets, onSuccess, onError, 
 
         <Button
           type="submit"
-          className="w-full"
+          className="w-auto px-6"
           disabled={isSubmitting || isBlocked}
         >
           {isSubmitting ? (

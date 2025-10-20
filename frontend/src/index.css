@@ -77,7 +77,16 @@ code {
 
 
 @layer base {
-  body {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html, body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+  #root {
+    overflow-x: hidden;
+    min-height: 100vh;
   }
 }
