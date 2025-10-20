@@ -52,13 +52,16 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
 
     from_addr = from_address or f"{FROM_NAME_DEFAULT} <{FROM_EMAIL_DEFAULT}>"
     msg = MIMEText(content, _subtype='plain', _charset='utf-8')
-    # Extract just the email for SMTP envelope if formatted with name
-    envelope_from = FROM_EMAIL_DEFAULT
-    if '<' in from_addr and '>' in from_addr:
-        try:
-            envelope_from = from_addr.split('<', 1)[1].split('>', 1)[0]
-        except Exception:
-            envelope_from = FROM_EMAIL_DEFAULT
+    # Envelope sender: prefer SMTP_USER (improves deliverability with many providers like Zoho)
+    envelope_from = user or FROM_EMAIL_DEFAULT
+    if not envelope_from:
+        # Extract just the email for SMTP envelope if formatted with name
+        envelope_from = FROM_EMAIL_DEFAULT
+        if '<' in from_addr and '>' in from_addr:
+            try:
+                envelope_from = from_addr.split('<', 1)[1].split('>', 1)[0]
+            except Exception:
+                envelope_from = FROM_EMAIL_DEFAULT
     msg['From'] = from_addr
     msg['To'] = to_address
     msg['Subject'] = subject
