@@ -62,6 +62,11 @@ async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "database": "SQLite"}
 
+@app.get("/api/health")
+async def api_health_check():
+    """API-prefixed health check for reverse proxy setups"""
+    return {"status": "healthy", "database": "SQLite"}
+
 if __name__ == '__main__':
     import uvicorn
     port = int(os.environ.get('PORT', 8000))

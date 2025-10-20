@@ -23,6 +23,8 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 FROM_EMAIL = os.getenv("FROM_EMAIL", "info@softdab.tech")
+# Allow multiple recipients via env (comma-separated); default to existing address if unset
+EXPERT_NOTIFY_EMAILS = [e.strip() for e in os.getenv("EXPERT_NOTIFICATION_EMAILS", "bombela@softdab.tech").split(',') if e.strip()]
 
 # Pydantic models for validation
 class StartupDetails(BaseModel):
@@ -214,71 +216,47 @@ Priority: {consultation_data['priority']}/10
 Assigned To: {', '.join(routing_info['assigned_to'])}
 SLA: {routing_info['sla_hours']} hours
 Tags: {', '.join(routing_info['tags'])}
-{details_text}{utm_info}
-=== SYSTEM INFO ===
+    try:
+        # Формируем копию формы
+        details = json.loads(consultation_data.get('details', '{}')) if consultation_data.get('details') else {}
+        details_text = ""
+        if details:
+            details_text = "\n\n=== ADDITIONAL DETAILS ===\n"
+            for key, value in details.items():
+                if value:
+                    formatted_key = key.replace('_', ' ').title()
+                    details_text += f"{formatted_key}: {value}\n"
+        subject = f"Expert Consultation: {consultation_data['name']} from {consultation_data.get('company', consultation_data['name'])}"
+        email_body = f"""
+Expert Consultation Submission
+Type: {consultation_data['client_type'].upper()}
+Name: {consultation_data['name']}
+Email: {consultation_data['email']}
+Company: {consultation_data.get('company', 'Not provided')}
+Phone: {consultation_data.get('phone', 'Not provided')}
+Brief Message: {consultation_data['brief_message']}
+Priority: {consultation_data['priority']}/10
+Assigned To: {', '.join(routing_info['assigned_to'])}
+SLA: {routing_info['sla_hours']} hours
+Tags: {', '.join(routing_info['tags'])}
+{details_text}
 Consultation ID: {consultation_id}
 IP Address: {consultation_data.get('ip_address', 'Unknown')}
 User Agent: {consultation_data.get('user_agent', 'Unknown')}
 Page URL: {consultation_data.get('page_url', 'Unknown')}
 Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-
----
-Reply to this consultation at: https://softdab.tech/admin
 """
-
         sent = await send_email(
-            to_address="bombela@softdab.tech",
+            to_address="info@softdab.tech",
             subject=subject,
             content=email_body,
-            from_address=FROM_EMAIL,
+            from_address="noreply@softdab.tech"
         )
         if sent:
-            logger.info(f"Notification email sent for consultation {consultation_id}")
+            logger.info(f"Expert consultation copy sent to info@softdab.tech")
             return True
-        else:
-            logger.error("Failed to send notification email via configured providers")
-            return False
-                
-    except Exception as e:
-        logger.error(f"Error sending notification email: {e}")
+        logger.error(f"Expert consultation copy NOT sent to info@softdab.tech")
         return False
-
-async def send_expert_consultation_confirmation(consultation_data: dict, routing_info: dict):
-    """Send confirmation email to the user"""
-    try:
-        subject = "Thanks for reaching out to SoftDAB — We received your expert consultation request"
-        
-        email_body = f"""
-Hi {consultation_data['name']},
-
-Thank you for reaching out to SoftDAB for expert consultation!
-
-We've successfully received your {consultation_data['client_type']} inquiry and our team is already reviewing it. Based on your requirements, we've assigned this to our {', '.join(routing_info['assigned_to'])} team.
-
-NEXT STEPS:
-• Our experts will review your requirements within {routing_info['sla_hours']} hours
-• You'll receive a detailed response via email
-• We may schedule a discovery call to better understand your needs
-
-YOUR REQUEST SUMMARY:
-{consultation_data['brief_message']}
-
-If you have any urgent questions in the meantime, feel free to reach out to us directly at bombela@softdab.tech.
-
-Best regards,
-The SoftDAB Team
-
----
-This is an automated confirmation. Please do not reply to this email.
-"""
-
-        sent = await send_email(
-            to_address=consultation_data['email'],
-            subject=subject,
-            content=email_body,
-            from_address=FROM_EMAIL,
-        )
-        if sent:
             logger.info(f"Confirmation email sent to {consultation_data['email']}")
             return True
         else:
@@ -370,46 +348,34 @@ async def submit_expert_consultation(
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
-@router.get("")
-async def get_expert_consultations():
-    """Get all expert consultation requests"""
     try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        
-        # Get all expert consultations ordered by date descending
-        cursor.execute("""
-            SELECT id, name, email, company, client_type, priority, 
-                   details, submitted_at, status
-            FROM expert_consultations 
-            ORDER BY submitted_at DESC
-        """)
-        
-        consultations = []
-        for row in cursor.fetchall():
-            # Parse JSON details if available
-            details = {}
-            try:
-                if row[6]:  # details column
-                    details = json.loads(row[6])
-            except json.JSONDecodeError:
-                logger.warning(f"Invalid JSON in consultation {row[0]} details")
-            
-            consultations.append({
-                "id": row[0],
-                "name": row[1],
-                "email": row[2],
-                "company": row[3],
-                "client_type": row[4],
-                "priority": row[5],
-                "details": details,
-                "date": to_local_time_str(row[7]),
-                "status": row[8] or "new"
-            })
-        
-        conn.close()
-        return consultations
-        
+        subject = "Expert Consultation Confirmation (copy)"
+        email_body = f"""
+Expert Consultation Confirmation (copy)
+Name: {consultation_data['name']}
+Email: {consultation_data['email']}
+Company: {consultation_data.get('company', 'Not provided')}
+Brief Message: {consultation_data['brief_message']}
+Priority: {consultation_data['priority']}/10
+SLA: {routing_info['sla_hours']} hours
+Consultation ID: {consultation_data.get('consultation_id', 'N/A')}
+Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+"""
+        sent = await send_email(
+            to_address="info@softdab.tech",
+            subject=subject,
+            content=email_body,
+            from_address="noreply@softdab.tech"
+        )
+        if sent:
+            logger.info(f"Expert consultation confirmation copy sent to info@softdab.tech")
+            return True
+        else:
+            logger.error("Expert consultation confirmation copy NOT sent to info@softdab.tech")
+            return False
+    except Exception as e:
+        logger.error(f"Error sending expert consultation confirmation copy: {e}")
+        return False
     except Exception as e:
         logger.error(f"Error fetching expert consultations: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch expert consultations")

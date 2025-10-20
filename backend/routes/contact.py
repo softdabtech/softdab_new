@@ -44,9 +44,9 @@ async def handle_contact(form_data: ContactForm, request: Request):
         logger.warning(f"Failed to save contact form to database: {form_data.email}")
         # Continue even if DB save fails
     
-    # Prepare email content for team (sending to info@softdab.tech)
-    team_content = f"""New Contact Form Submission
 
+    # Prepare email content (копия формы)
+    form_copy = f"""Contact Form Submission
 Name: {form_data.name}
 Email: {form_data.email}
 Company: {form_data.company}
@@ -54,79 +54,33 @@ Role: {form_data.role}
 Service: {form_data.service}
 Timeline: {form_data.timeline}
 Budget: {form_data.budget}
-
-Message:
-{form_data.message}
-
+Message: {form_data.message}
 GDPR Consent: Yes
 Marketing Consent: {'Yes' if form_data.marketingConsent else 'No'}
-
 IP Address: {request.client.host}
 User Agent: {request.headers.get('user-agent', 'N/A')}
 Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
 """
 
-    # Prepare email content for client
-    client_content = f"""Dear {form_data.name},
-
-Thank you for contacting SoftDAB! We have received your message and our team will review it shortly.
-
-Here's a copy of your submission:
-
-Name: {form_data.name}
-Company: {form_data.company}
-Role: {form_data.role}
-Service: {form_data.service}
-Timeline: {form_data.timeline}
-Budget: {form_data.budget}
-
-Message:
-{form_data.message}
-
-We will get back to you within 24 hours.
-
-Best regards,
-The SoftDAB Team
-https://softdab.tech
-"""
-
     # Send emails
     email_sent_count = 0
     
-    # Send notification to info@softdab.tech about new form submission
-    try:
-        # Send to each configured recipient; count as success if at least one succeeds
-        notify_results = []
-        for addr in NOTIFY_EMAILS:
-            sent = await send_email(
-                to_address=addr,
-                subject=f'🔔 New Contact Form: {form_data.name} from {form_data.company}',
-                content=team_content
-            )
-            notify_results.append((addr, sent))
-        successes = sum(1 for _, ok in notify_results if ok)
-        if successes > 0:
-            logger.info(f"Notification email sent to {successes}/{len(notify_results)} recipients: {[a for a, ok in notify_results if ok]}")
-            email_sent_count += 1
-        else:
-            logger.warning(f"Notification emails NOT sent to any recipient: {notify_results}")
-    except Exception as email_error:
-        logger.error(f"Failed to send notification emails: {email_error}")
-    
-    # Send confirmation email to client
+
+    # Отправляем копию формы только на info@softdab.tech
     try:
         sent = await send_email(
-            to_address=form_data.email,
-            subject='Thank you for contacting SoftDAB!',
-            content=client_content
+            to_address="info@softdab.tech",
+            subject=f'Contact Form: {form_data.name} from {form_data.company}',
+            content=form_copy,
+            from_address="noreply@softdab.tech"
         )
         if sent:
-            logger.info(f"Confirmation email sent to client: {form_data.email}")
+            logger.info(f"Contact form copy sent to info@softdab.tech")
             email_sent_count += 1
         else:
-            logger.warning(f"Confirmation email to {form_data.email} NOT sent (provider returned False)")
+            logger.warning(f"Contact form copy NOT sent to info@softdab.tech")
     except Exception as email_error:
-        logger.error(f"Failed to send confirmation email to {form_data.email}: {email_error}")
+        logger.error(f"Failed to send contact form copy: {email_error}")
     
     # Return appropriate response
     if saved:
