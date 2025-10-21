@@ -51,7 +51,11 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
     use_tls = os.environ.get('SMTP_TLS', 'false').lower() in ('1', 'true', 'yes')
 
     from_addr = from_address or f"{FROM_NAME_DEFAULT} <{FROM_EMAIL_DEFAULT}>"
-    msg = MIMEText(content, _subtype='plain', _charset='utf-8')
+    # Определяем тип письма: plain или html
+    if content.strip().lower().startswith('<html'):
+        msg = MIMEText(content, _subtype='html', _charset='utf-8')
+    else:
+        msg = MIMEText(content, _subtype='plain', _charset='utf-8')
     # Envelope sender: prefer SMTP_USER (improves deliverability with many providers like Zoho)
     envelope_from = user or FROM_EMAIL_DEFAULT
     if not envelope_from:

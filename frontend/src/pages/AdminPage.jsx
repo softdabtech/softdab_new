@@ -44,7 +44,8 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <section>
             <h2 className="text-lg font-semibold mb-3">Contact Forms</h2>
-            <div className="overflow-x-auto border rounded-md">
+            {/* Таблица для десктопа */}
+            <div className="hidden md:block overflow-x-auto border rounded-md">
               <table className="w-full text-sm">
                 <thead className="bg-muted text-left">
                   <tr>
@@ -70,11 +71,33 @@ export default function AdminPage() {
                 </tbody>
               </table>
             </div>
+            {/* Карточки для мобильных */}
+            <div className="md:hidden space-y-3">
+              {contacts.map((r) => (
+                <div
+                  key={r.id}
+                  onClick={() => { setContactId(r.id); setContactOpen(true); }}
+                  className="border rounded-md p-4 bg-white hover:bg-muted/40 cursor-pointer"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="font-semibold text-base">{r.name}</span>
+                    <span className="text-xs text-gray-500">#{r.id}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">{r.email}</p>
+                  <p className="text-sm text-gray-600 mb-1">{r.company}</p>
+                  <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
+                    <span>{r.date}</span>
+                    <span className="px-2 py-1 bg-muted rounded">{r.status}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold mb-3">Expert Consultations</h2>
-            <div className="overflow-x-auto border rounded-md">
+            {/* Таблица для десктопа */}
+            <div className="hidden md:block overflow-x-auto border rounded-md">
               <table className="w-full text-sm">
                 <thead className="bg-muted text-left">
                   <tr>
@@ -103,6 +126,28 @@ export default function AdminPage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+            {/* Карточки для мобильных */}
+            <div className="md:hidden space-y-3">
+              {consultations.map((r) => (
+                <div
+                  key={r.id}
+                  onClick={() => { setConsultationId(r.id); setConsultationOpen(true); }}
+                  className="border rounded-md p-4 bg-white hover:bg-muted/40 cursor-pointer"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="font-semibold text-base">{r.name}</span>
+                    <span className="text-xs text-gray-500">#{r.id}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">{r.email}</p>
+                  <p className="text-sm text-gray-600 mb-1">{r.company}</p>
+                  <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
+                    <span>{r.client_type} | Priority: {r.priority}</span>
+                    <span className="px-2 py-1 bg-muted rounded">{r.status}</span>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">{r.date}</p>
+                </div>
+              ))}
             </div>
           </section>
         </div>

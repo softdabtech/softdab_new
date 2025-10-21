@@ -296,12 +296,50 @@ async def submit_expert_consultation(
         consultation_id = await save_expert_consultation(consultation_data)
         
         # Send email notifications
+        email_sent_count = 0
+        
+        # Email to admin (info@softdab.tech)
         try:
             await send_expert_consultation_notification(consultation_data, routing_info, consultation_id)
-            await send_expert_consultation_confirmation(consultation_data, routing_info)
+            email_sent_count += 1
         except Exception as e:
-            logger.error(f"Failed to send emails for consultation {consultation_id}: {e}")
-            # Don't fail the request if email sending fails
+            logger.error(f"Failed to send admin notification for consultation {consultation_id}: {e}")
+        
+        # Email to client (HTML)
+        try:
+            test_email = os.environ.get('EXPERT_TEST_EMAIL', None)
+            client_to_address = test_email if test_email else consultation_data['email']
+            client_subject = "Спасибо за обращение в SoftDAB!"
+            client_html = f"""<html>
+  <body style='font-family:Arial,sans-serif;background:#f9f9f9;padding:24px;'>
+    <div style='max-width:600px;margin:auto;background:#fff;border-radius:8px;padding:32px;box-shadow:0 2px 8px #eee;'>
+      <h2 style='color:#1a73e8;'>Спасибо за обращение!</h2>
+      <p>Уважаемый(ая) <b>{consultation_data['name']}</b>,<br>
+      Мы получили вашу заявку на экспертную консультацию и свяжемся с вами в ближайшее время.<br><br>
+      <b>Детали заявки:</b></p>
+      <ul>
+        <li><b>Компания:</b> {consultation_data.get('company', '')}</li>
+        <li><b>Телефон:</b> {consultation_data.get('phone', '')}</li>
+        <li><b>Сообщение:</b> {consultation_data['brief_message']}</li>
+      </ul>
+      <p style='color:#888;font-size:13px;'>SoftDAB | noreply@softdab.tech</p>
+    </div>
+  </body>
+</html>"""
+            
+            sent_client = await send_email(
+                to_address=client_to_address,
+                subject=client_subject,
+                content=client_html,
+                from_address="noreply@softdab.tech"
+            )
+            if sent_client:
+                logger.info(f"Expert consultation confirmation sent to client {client_to_address}")
+                email_sent_count += 1
+            else:
+                logger.warning(f"Expert consultation confirmation NOT sent to client {client_to_address}")
+        except Exception as e:
+            logger.error(f"Failed to send expert consultation confirmation to client: {e}")
         
         logger.info(f"Expert consultation submitted: {request.email} (Priority: {priority})")
         
