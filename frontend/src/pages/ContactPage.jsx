@@ -1,7 +1,6 @@
 import React from 'react';
 import toast from 'react-hot-toast';
-import { useRateLimit } from '../hooks/use-rate-limit';
-import ContactForm from '../components/forms/ContactForm';
+import ContactFormLite from '../components/forms/ContactFormLite';
 
 const services = [
   'Web Development',
@@ -42,10 +41,7 @@ const budgets = [
 ];
 
 const ContactPage = () => {
-  const { isBlocked, incrementCounter } = useRateLimit('contact-form', 5, 3600); // 5 attempts per hour
-
   const onSubmitSuccess = () => {
-    incrementCounter();
     toast.success('Thank you! We will contact you soon.');
   };
 
@@ -79,15 +75,7 @@ const ContactPage = () => {
             </p>
           </div>
 
-          <ContactForm 
-            services={services}
-            roles={roles}
-            timelines={timelines}
-            budgets={budgets}
-            onSuccess={onSubmitSuccess}
-            onError={onSubmitError}
-            isBlocked={isBlocked}
-          />
+          <ContactFormLite onSuccess={onSubmitSuccess} onError={onSubmitError} />
         </div>
       </div>
 

@@ -1,6 +1,4 @@
-"""
-Contact form routes with SQLite integration and email notifications
-"""
+"""Simple contact form endpoint: validates input, saves to DB, and sends emails via SMTP only."""
 from fastapi import APIRouter, HTTPException, Request
 from models.contact import ContactForm
 from database import save_contact, get_db_connection
@@ -14,10 +12,9 @@ from utils.timezone import to_local_time_str
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-FROM_EMAIL = os.environ.get('FROM_EMAIL', 'info@softdab.tech')
+FROM_EMAIL = os.environ.get('FROM_EMAIL', 'noreply@softdab.tech')
 FROM_NAME = os.environ.get('FROM_NAME', 'SoftDAB')
-# Allow multiple notification recipients via env (comma‑separated)
-NOTIFY_EMAILS = [e.strip() for e in os.environ.get('CONTACT_NOTIFICATION_EMAILS', 'info@softdab.tech').split(',') if e.strip()]
+ADMIN_EMAILS = [e.strip() for e in os.environ.get('CONTACT_NOTIFICATION_EMAILS', 'info@softdab.tech').split(',') if e.strip()]
 
 @router.post("")
 async def handle_contact(form_data: ContactForm, request: Request):
@@ -45,7 +42,7 @@ async def handle_contact(form_data: ContactForm, request: Request):
         # Continue even if DB save fails
     
 
-    # Prepare email content (копия формы)
+    # Prepare email content
     form_copy = f"""Contact Form Submission
 Name: {form_data.name}
 Email: {form_data.email}
@@ -64,27 +61,39 @@ Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
 
     # Send emails
     email_sent_count = 0
-    
-
-    # Отправляем копию формы только на info@softdab.tech
+    # Send to admins
+    for admin in ADMIN_EMAILS:
+        try:
+            sent = await send_email(
+                to_address=admin,
+                subject=f'Contact Form: {form_data.name} ({form_data.company})',
+                content=form_copy,
+                from_address=f"{FROM_NAME} <{FROM_EMAIL}>"
+            )
+            if sent:
+                email_sent_count += 1
+        except Exception as email_error:
+            logger.error(f"Failed to send to admin {admin}: {email_error}")
+    # Confirmation to user
     try:
-        sent = await send_email(
-            to_address="info@softdab.tech",
-            subject=f'Contact Form: {form_data.name} from {form_data.company}',
-            content=form_copy,
-            from_address="noreply@softdab.tech"
+        confirm = await send_email(
+            to_address=form_data.email,
+            subject="We received your message — SoftDAB",
+            content=(
+                "Hello,\n\n" 
+                "Thanks for reaching out to SoftDAB. We've received your message and will reply within 24 hours.\n\n"
+                "Regards,\nSoftDAB Team"
+            ),
+            from_address=f"{FROM_NAME} <{FROM_EMAIL}>"
         )
-        if sent:
-            logger.info(f"Contact form copy sent to info@softdab.tech")
+        if confirm:
             email_sent_count += 1
-        else:
-            logger.warning(f"Contact form copy NOT sent to info@softdab.tech")
     except Exception as email_error:
-        logger.error(f"Failed to send contact form copy: {email_error}")
+        logger.error(f"Failed to send confirmation to user: {email_error}")
     
     # Return appropriate response
     if saved:
-        if email_sent_count == 2:
+        if email_sent_count >= 2:
             return {
                 "status": "success",
                 "message": "Your message has been received successfully. We'll get back to you soon!"

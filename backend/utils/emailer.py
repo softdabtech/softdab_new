@@ -3,44 +3,11 @@ import asyncio
 import logging
 from email.mime.text import MIMEText
 import smtplib
-import httpx
 
 logger = logging.getLogger(__name__)
 
-RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
-RESEND_API_URL = 'https://api.resend.com/emails'
 FROM_EMAIL_DEFAULT = os.environ.get('FROM_EMAIL', 'info@softdab.tech')
 FROM_NAME_DEFAULT = os.environ.get('FROM_NAME', 'SoftDAB')
-
-
-async def _send_via_resend(to_address: str, subject: str, content: str, from_address: str | None) -> bool:
-    if not RESEND_API_KEY:
-        return False
-    if not from_address:
-        from_address = f"{FROM_NAME_DEFAULT} <{FROM_EMAIL_DEFAULT}>"
-    try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            response = await client.post(
-                RESEND_API_URL,
-                headers={
-                    'Authorization': f'Bearer {RESEND_API_KEY}',
-                    'Content-Type': 'application/json'
-                },
-                json={
-                    'from': from_address,
-                    'to': [to_address],
-                    'subject': subject,
-                    'text': content,
-                }
-            )
-            if response.status_code in (200, 202):
-                logger.info(f"Email sent via Resend to {to_address}")
-                return True
-            logger.error(f"Resend API error: {response.status_code} - {response.text}")
-            return False
-    except Exception as e:
-        logger.error(f"Resend send error: {e}")
-        return False
 
 
 def _smtp_send_blocking(to_address: str, subject: str, content: str, from_address: str | None) -> bool:
@@ -84,13 +51,12 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
 
 
 async def send_email(to_address: str, subject: str, content: str, from_address: str | None = None) -> bool:
-    """Send email using Resend when available, otherwise fallback to SMTP.
+    """Send email via Zoho SMTP (TLS). Async wrapper over blocking smtplib.
+
+    Environment variables expected:
+    - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_TLS
+    - FROM_EMAIL, FROM_NAME
 
     Returns True on success, False otherwise.
     """
-    # Try Resend first
-    sent = await _send_via_resend(to_address, subject, content, from_address)
-    if sent:
-        return True
-    # Fallback to SMTP in a thread to avoid blocking
     return await asyncio.to_thread(_smtp_send_blocking, to_address, subject, content, from_address)
