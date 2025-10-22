@@ -4,16 +4,18 @@ def validate_csrf_token(request):
 """
 Middleware для проверки CSRF токена
 """
-from fastapi import Request, HTTPException
-from typing import Callable
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import JSONResponse
+from fastapi import HTTPException
 import os
 
-class CSRFMiddleware:
-    def __init__(self):
+class CSRFMiddleware(BaseHTTPMiddleware):
+    def __init__(self, app):
+        super().__init__(app)
         self.csrf_token_header = "X-CSRF-Token"
         self.csrf_cookie_name = "csrf_token"
 
-    async def __call__(self, request: Request, call_next: Callable):
+    async def dispatch(self, request, call_next):
         # Пропускаем методы GET, HEAD, OPTIONS
         if request.method in ["GET", "HEAD", "OPTIONS"]:
             return await call_next(request)
@@ -23,7 +25,10 @@ class CSRFMiddleware:
         csrf_token_cookie = request.cookies.get(self.csrf_cookie_name)
 
         if not csrf_token_header or not csrf_token_cookie or csrf_token_header != csrf_token_cookie:
-            raise HTTPException(status_code=403, detail="Invalid CSRF token")
+            return JSONResponse(
+                {"detail": "Invalid CSRF token"},
+                status_code=403
+            )
 
         response = await call_next(request)
         return response

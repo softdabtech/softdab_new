@@ -13,6 +13,11 @@ from database import init_database, close_database
 from routes.contact import router as contact_router
 from routes.expert_consultation import router as expert_consultation_router
 
+# Import security middleware
+from middlewares.security import SecurityHeadersMiddleware
+from middlewares.rate_limit import RateLimitMiddleware
+from middlewares.csrf import CSRFMiddleware
+
 # Env already loaded above
 
 # Configure logging
@@ -39,6 +44,11 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+
+# Add security middleware (order matters!)
+app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(RateLimitMiddleware)
+app.add_middleware(CSRFMiddleware)
 
 # Event handlers
 @app.on_event("startup")
