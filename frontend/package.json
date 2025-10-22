@@ -73,7 +73,8 @@
     "lighthouse:desktop": "lighthouse http://localhost:4173 --preset=desktop --output=json --output-path=./lighthouse-desktop.json",
     "performance:test": "npm run build && npm run preview & sleep 3 && npm run lighthouse:mobile && npm run lighthouse:desktop && echo '📊 Performance tests completed'",
     "deploy:ftp": "node deploy-ftp.js",
-    "deploy:prod": "npm run build:critical && npm run deploy:ftp"
+    "deploy:smart": "node deploy-smart.js",
+    "deploy:prod": "npm run build:critical && npm run deploy:smart"
   },
   "browserslist": {
     "production": [
