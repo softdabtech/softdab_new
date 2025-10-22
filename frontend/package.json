@@ -34,7 +34,6 @@
     "ajv": "^6.12.6",
     "ajv-keywords": "^3.5.2",
     "axios": "^1.8.4",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -65,11 +64,16 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:critical",
+    "build:standard": "vite build",
+    "build:critical": "echo '🚀 Critical LCP build starting...' && vite build && echo '✅ Critical LCP build completed'",
     "preview": "vite preview",
     "start": "vite",
+    "lighthouse:mobile": "lighthouse http://localhost:4173 --form-factor=mobile --output=json --output-path=./lighthouse-mobile.json",
+    "lighthouse:desktop": "lighthouse http://localhost:4173 --preset=desktop --output=json --output-path=./lighthouse-desktop.json",
+    "performance:test": "npm run build && npm run preview & sleep 3 && npm run lighthouse:mobile && npm run lighthouse:desktop && echo '📊 Performance tests completed'",
     "deploy:ftp": "node deploy-ftp.js",
-    "deploy:prod": "npm run build && npm run deploy:ftp"
+    "deploy:prod": "npm run build:critical && npm run deploy:ftp"
   },
   "browserslist": {
     "production": [

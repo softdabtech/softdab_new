@@ -5,45 +5,30 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
 import time
 import gzip
-import json
 from typing import Dict, Any
-import logging
-
-logger = logging.getLogger(__name__)
+import json
 
 class PerformanceMiddleware(BaseHTTPMiddleware):
-    def __init__(self, app):
-        super().__init__(app)
-        self.cache: Dict[str, Any] = {}
-        self.cache_ttl = 300  # 5 minutes
-        
+    """Add performance timing headers"""
+    
     async def dispatch(self, request, call_next):
         start_time = time.time()
         
-        # Add timing header
         response = await call_next(request)
-        process_time = time.time() - start_time
         
-        if hasattr(response, 'headers'):
-            response.headers["X-Process-Time"] = str(process_time)
-            
-            # Add performance headers
-            response.headers["X-Content-Type-Options"] = "nosniff"
-            response.headers["X-Frame-Options"] = "DENY"
-            
-        # Log slow requests
-        if process_time > 1.0:
-            logger.warning(f"Slow request: {request.url.path} took {process_time:.3f}s")
-            
+        process_time = time.time() - start_time
+        response.headers["X-Process-Time"] = str(round(process_time * 1000, 2))  # milliseconds
+        response.headers["X-Response-Time"] = str(round(process_time, 6))  # seconds
+        
         return response
 
 class CompressionMiddleware(BaseHTTPMiddleware):
-    """Gzip compression middleware"""
+    """Handle gzip compression for API responses"""
     
     def __init__(self, app, minimum_size: int = 1024):
         super().__init__(app)
         self.minimum_size = minimum_size
-        
+    
     async def dispatch(self, request, call_next):
         response = await call_next(request)
         
@@ -52,112 +37,90 @@ class CompressionMiddleware(BaseHTTPMiddleware):
         if "gzip" not in accept_encoding.lower():
             return response
             
-        # Check content type
-        content_type = response.headers.get("content-type", "")
-        if not self._should_compress(content_type):
+        # Only compress if response is large enough
+        if hasattr(response, 'body') and len(response.body) < self.minimum_size:
             return response
             
-        # Get response body
-        if hasattr(response, 'body'):
-            body = response.body
-            if len(body) < self.minimum_size:
-                return response
+        # Don't compress if already compressed
+        if response.headers.get("content-encoding"):
+            return response
+            
+        # Compress JSON responses  
+        content_type = response.headers.get("content-type", "")
+        if "application/json" in content_type:
+            try:
+                if hasattr(response, 'body'):
+                    compressed_body = gzip.compress(response.body)
+                    response.headers["content-encoding"] = "gzip"
+                    response.headers["content-length"] = str(len(compressed_body))
+                    response.body = compressed_body
+            except Exception:
+                pass  # If compression fails, return uncompressed
                 
-            # Compress body
-            compressed_body = gzip.compress(body)
-            
-            # Update response
-            response.headers["content-encoding"] = "gzip"
-            response.headers["content-length"] = str(len(compressed_body))
-            response.body = compressed_body
-            
         return response
-        
-    def _should_compress(self, content_type: str) -> bool:
-        compressible_types = [
-            "application/json",
-            "text/html",
-            "text/css",
-            "text/javascript",
-            "application/javascript",
-            "text/xml",
-            "application/xml",
-        ]
-        return any(ct in content_type for ct in compressible_types)
 
 class CacheMiddleware(BaseHTTPMiddleware):
-    """Simple in-memory cache for GET requests"""
+    """Simple in-memory cache for API responses"""
     
-    def __init__(self, app, ttl: int = 300):
+    def __init__(self, app, ttl: int = 300):  # 5 minutes default
         super().__init__(app)
         self.cache: Dict[str, Dict[str, Any]] = {}
         self.ttl = ttl
-        
-    async def dispatch(self, request, call_next):
+    
+    def _get_cache_key(self, request) -> str:
+        """Generate cache key from request"""
+        return f"{request.method}:{request.url.path}:{request.url.query}"
+    
+    def _is_cacheable(self, request, response) -> bool:
+        """Check if request/response should be cached"""
         # Only cache GET requests
         if request.method != "GET":
-            return await call_next(request)
+            return False
             
-        # Generate cache key
-        cache_key = f"{request.url.path}?{request.url.query}"
-        
-        # Check cache
-        if cache_key in self.cache:
-            cached_item = self.cache[cache_key]
-            if time.time() - cached_item["timestamp"] < self.ttl:
-                logger.info(f"Cache hit: {cache_key}")
-                cached_response = cached_item["response"]
-                return Response(
-                    content=cached_response["content"],
-                    status_code=cached_response["status_code"],
-                    headers={**cached_response["headers"], "X-Cache": "HIT"}
-                )
-        
-        # Get response
-        response = await call_next(request)
-        
-        # Cache successful responses
-        if response.status_code == 200 and hasattr(response, 'body'):
-            self.cache[cache_key] = {
-                "timestamp": time.time(),
-                "response": {
-                    "content": response.body,
-                    "status_code": response.status_code,
-                    "headers": dict(response.headers)
-                }
-            }
-            if hasattr(response, 'headers'):
-                response.headers["X-Cache"] = "MISS"
-                
-        # Clean old cache entries
-        self._cleanup_cache()
-        
-        return response
-        
-    def _cleanup_cache(self):
-        """Remove expired cache entries"""
-        current_time = time.time()
-        expired_keys = [
-            key for key, item in self.cache.items()
-            if current_time - item["timestamp"] > self.ttl
-        ]
-        for key in expired_keys:
-            del self.cache[key]
-
-class DatabaseOptimizationMiddleware(BaseHTTPMiddleware):
-    """Database connection and query optimization"""
+        # Only cache successful responses
+        if response.status_code != 200:
+            return False
+            
+        # Don't cache admin routes
+        if "/admin/" in request.url.path:
+            return False
+            
+        return True
     
     async def dispatch(self, request, call_next):
-        # Add database connection timeout
-        start_time = time.time()
-        response = await call_next(request)
-        db_time = time.time() - start_time
+        cache_key = self._get_cache_key(request)
+        current_time = time.time()
         
-        if hasattr(response, 'headers'):
-            response.headers["X-DB-Time"] = str(db_time)
-            
-        # Log slow database queries
-        if db_time > 0.5:
-            logger.warning(f"Slow DB query: {request.url.path} took {db_time:.3f}s")
-            
+        # Check cache first
+        if cache_key in self.cache:
+            cached_entry = self.cache[cache_key]
+            if current_time - cached_entry["timestamp"] < self.ttl:
+                response = Response(
+                    content=cached_entry["content"],
+                    status_code=cached_entry["status_code"],
+                    headers=cached_entry["headers"]
+                )
+                response.headers["X-Cache"] = "HIT"
+                return response
+            else:
+                # Remove expired entry
+                del self.cache[cache_key]
+        
+        # Get fresh response
+        response = await call_next(request)
+        
+        # Cache if appropriate
+        if self._is_cacheable(request, response):
+            try:
+                if hasattr(response, 'body'):
+                    self.cache[cache_key] = {
+                        "content": response.body,
+                        "status_code": response.status_code,
+                        "headers": dict(response.headers),
+                        "timestamp": current_time
+                    }
+                    response.headers["X-Cache"] = "MISS"
+            except Exception:
+                pass  # If caching fails, continue without caching
+        
         return response

@@ -2,11 +2,80 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-  <!-- Using relative base to avoid cross-origin fetch in local dev; production absolute URL not required for SPA routing -->
-  <base href="/" />
+    <!-- Using relative base to avoid cross-origin fetch in local dev; production absolute URL not required for SPA routing -->
+    <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#667eea" />
+
+    <!-- КРИТИЧЕСКИЕ PRELOAD ДИРЕКТИВЫ для LCP < 2.5s (ОПТИМИЗИРОВАННЫЕ) -->
+    <!-- Priority DNS prefetch для критических доменов -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://api.softdab.tech" />
+    <link rel="dns-prefetch" href="https://us-assets.i.posthog.com" />
+    
+    <!-- High priority preconnect для критических ресурсов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- CRITICAL WOFF2 font preload для мгновенного FCP -->
+    <link 
+      rel="preload" 
+      href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin
+      fetchpriority="high"
+    />
+    <link 
+      rel="preload" 
+      href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiJ-Ek-_EeA.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin
+      fetchpriority="high"
+    />
+    
+    <!-- Critical CSS preload (async load) -->
+    <link 
+      rel="preload" 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" 
+      as="style" 
+      onload="this.onload=null;this.rel='stylesheet'"
+      fetchpriority="high"
+    />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" /></noscript>
+    
+    <!-- CRITICAL LCP images preload с разными размерами для mobile/desktop -->
+    <link 
+      rel="preload" 
+      href="/images/hero-bg.webp" 
+      as="image" 
+      type="image/webp" 
+      media="(min-width: 768px)"
+      fetchpriority="high"
+    />
+    <link 
+      rel="preload" 
+      href="/images/hero-mobile.webp" 
+      as="image" 
+      type="image/webp" 
+      media="(max-width: 767px)"
+      fetchpriority="high"
+    />
+    <link 
+      rel="preload" 
+      href="/icons/logo.svg" 
+      as="image" 
+      type="image/svg+xml" 
+      fetchpriority="high"
+    />
+    
+    <!-- Prefetch key pages для navigation speed -->
+    <link rel="prefetch" href="/services" />
+    <link rel="prefetch" href="/about" />
+    <link rel="prefetch" href="/contact" />
 
     <title>SoftDAB | Custom Software Development & Outsourcing Teams</title>
     <meta name="description" content="SoftDAB provides custom software development and outsourcing teams for US/EU companies. Start in 2 weeks with a risk‑free trial and transparent pricing." />
@@ -29,9 +98,67 @@
     <meta name="twitter:image" content="https://www.softdab.tech/og-image.jpg" />
 
     <!-- Icons -->
-  <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
+    
+    <!-- МАКСИМАЛЬНО ОПТИМИЗИРОВАННЫЙ CRITICAL CSS для LCP < 2.5s MOBILE -->
+    <style>
+      /* Ultra-critical base - мгновенный рендеrinг */
+      *{box-sizing:border-box;margin:0;padding:0}
+      html{font-family:system-ui,-apple-system,sans-serif;line-height:1.4;font-display:swap}
+      body{margin:0;background:#fff;color:#111;font-family:inherit;-webkit-font-smoothing:antialiased}
+      
+      /* Critical header - минимальный для LCP */
+      .fixed{position:fixed}.top-0{top:0}.z-50{z-index:50}.w-full{width:100%}
+      .bg-white{background:#fff}.border-b{border-bottom:1px solid #e5e7eb}
+      .h-16{height:4rem}.flex{display:flex}.items-center{align-items:center}
+      .justify-between{justify-content:space-between}.px-4{padding:0 1rem}
+      
+      /* Ultra-critical hero для mobile LCP */
+      .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
+      .hero{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);overflow:hidden}
+      .hero-content{text-align:center;padding:5rem 1rem 2rem;max-width:42rem;margin:0 auto}
+      
+      /* Critical typography - оптимизировано для mobile */
+      .hero-title{font-size:2.5rem;font-weight:700;line-height:1.1;color:#fff;margin-bottom:1rem}
+      .hero-subtitle{font-size:1.125rem;color:rgba(255,255,255,.9);margin-bottom:2rem;line-height:1.5}
+      
+      /* Critical CTA - максимальный приоритет для LCP */
+      .cta-btn{display:inline-flex;align-items:center;justify-content:center;padding:1rem 2rem}
+      .cta-btn{background:#fff;color:#667eea;border-radius:.5rem;font-weight:600;font-size:1.1rem}
+      .cta-btn{text-decoration:none;transition:transform .2s,box-shadow .2s}
+      .cta-btn{box-shadow:0 4px 20px rgba(0,0,0,.1)}
+      .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+      
+      /* Critical responsive - mobile first */
+      @media (min-width:640px){
+        .hero-content{padding:6rem 2rem 3rem}
+        .hero-title{font-size:3rem}
+        .hero-subtitle{font-size:1.25rem}
+      }
+      @media (min-width:768px){
+        .hero-title{font-size:3.5rem}
+        .px-4{padding:0 1.5rem}
+      }
+      @media (min-width:1024px){
+        .hero-content{padding:8rem 2rem 4rem}
+        .hero-title{font-size:4rem}
+        .hero-subtitle{font-size:1.5rem}
+      }
+      
+      /* Critical loading optimization */
+      .loading-skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%)}
+      .loading-skeleton{background-size:200% 100%;animation:loading 1.5s infinite}
+      @keyframes loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
+      
+      /* Critical font loading */
+      @font-face{font-family:'Inter';src:url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2')format('woff2');font-weight:400;font-style:normal;font-display:swap}
+      @font-face{font-family:'Inter';src:url('https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fAZ9hiJ-Ek-_EeA.woff2')format('woff2');font-weight:600;font-style:normal;font-display:swap}
+      
+      /* Above-fold content render blocking prevention */
+      .critical-render{contain:layout style paint}
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

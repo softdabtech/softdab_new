@@ -1,99 +1,214 @@
+// SEOHead.jsx - Полная SEO оптимизация с Schema.org разметкой
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const SEOHead = ({ 
-  title,
-  description, 
-  keywords,
-  canonicalUrl,
-  ogImage = '/og-image.jpg',
-  ogType = 'website',
+const SEOHead = ({
+  title = "SoftDAB | Custom Software Development & Outsourcing Teams",
+  description = "SoftDAB provides custom software development and outsourcing teams for US/EU companies. Start in 2 weeks with a risk‑free trial and transparent pricing.",
+  keywords = "SoftDAB, software development, outsourcing, outstaffing, dedicated teams, web development, mobile development, React, Node.js, Python, C#, C++, JavaScript, IoT, US, EU",
+  image = "https://www.softdab.tech/og-image.jpg",
+  url = "https://www.softdab.tech",
+  type = "website",
   publishedTime,
   modifiedTime,
-  author = 'SoftDAB',
-  noindex = false,
-  children 
+  author = "SoftDAB Team",
+  section = "Technology"
 }) => {
-  const siteTitle = 'SoftDAB | Custom Software Development & Outsourcing Teams';
-  const siteDescription = 'SoftDAB provides custom software development and outsourcing teams for US/EU companies. Start in 2 weeks with a risk‑free trial and transparent pricing.';
-  const siteUrl = 'https://www.softdab.tech';
-  
-  const fullTitle = title ? `${title} | SoftDAB` : siteTitle;
-  const fullDescription = description || siteDescription;
-  const fullCanonicalUrl = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
-  const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
-
-  const structuredData = {
+  // Структурированные данные Schema.org для Organization
+  const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "SoftDAB",
-    "url": siteUrl,
-    "logo": `${siteUrl}/logo.png`,
-    "description": siteDescription,
+    "alternateName": "SoftDAB Software Development",
+    "url": "https://www.softdab.tech",
+    "logo": "https://www.softdab.tech/icons/logo.svg",
+    "description": "Custom software development and outsourcing teams for US/EU companies",
+    "foundingDate": "2020",
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+1-555-123-4567",
-      "contactType": "Customer Service",
-      "email": "hello@softdab.tech"
+      "telephone": "+1-XXX-XXX-XXXX",
+      "contactType": "customer service",
+      "availableLanguage": ["English", "Ukrainian"],
+      "areaServed": ["US", "EU", "Worldwide"]
     },
     "address": {
       "@type": "PostalAddress",
-      "addressCountry": "UA",
-      "addressLocality": "Kyiv"
+      "addressLocality": "Kyiv",
+      "addressCountry": "UA"
     },
     "sameAs": [
       "https://www.linkedin.com/company/softdab",
-      "https://twitter.com/softdab",
-      "https://github.com/softdabtech"
+      "https://github.com/softdab",
+      "https://twitter.com/softdab"
+    ],
+    "service": {
+      "@type": "Service",
+      "name": "Software Development Services",
+      "description": "Custom software development, dedicated teams, and outsourcing services",
+      "provider": {
+        "@type": "Organization",
+        "name": "SoftDAB"
+      },
+      "serviceType": [
+        "Web Development",
+        "Mobile Development", 
+        "Custom Software Development",
+        "Dedicated Development Teams",
+        "IT Outsourcing",
+        "Software Consulting"
+      ],
+      "areaServed": {
+        "@type": "Place",
+        "name": "Worldwide"
+      }
+    }
+  };
+
+  // Структурированные данные для WebSite
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SoftDAB",
+    "url": "https://www.softdab.tech",
+    "description": description,
+    "publisher": {
+      "@type": "Organization",
+      "name": "SoftDAB"
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://www.softdab.tech/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  // Хлебные крошки Schema.org
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.softdab.tech"
+      },
+      {
+        "@type": "ListItem", 
+        "position": 2,
+        "name": "Services",
+        "item": "https://www.softdab.tech/services"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "About",
+        "item": "https://www.softdab.tech/about"
+      }
+    ]
+  };
+
+  // FAQ Schema для главной страницы
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What software development services does SoftDAB provide?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SoftDAB provides custom software development, dedicated development teams, web and mobile development, IT outsourcing, and software consulting services for US and EU companies."
+        }
+      },
+      {
+        "@type": "Question", 
+        "name": "How quickly can we start working with SoftDAB?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We can start your project in as little as 2 weeks with our dedicated teams and transparent onboarding process."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What technologies does SoftDAB specialize in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our team specializes in React, Node.js, Python, C#, C++, JavaScript, mobile development, IoT solutions, and modern web technologies."
+        }
+      }
     ]
   };
 
   return (
     <Helmet>
-      {/* Basic Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={fullDescription} />
-      {keywords && <meta name="keywords" content={keywords} />}
+      {/* Основные SEO теги */}
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
-      
-      {/* Canonical URL */}
-      <link rel="canonical" href={fullCanonicalUrl} />
-      
-      {/* Robots */}
-      <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
-      
-      {/* Open Graph */}
-      <meta property="og:type" content={ogType} />
-      <meta property="og:url" content={fullCanonicalUrl} />
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={fullDescription} />
-      <meta property="og:image" content={fullOgImage} />
+      <link rel="canonical" href={url} />
+
+      {/* Open Graph теги */}
+      <meta property="og:type" content={type} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content={url} />
       <meta property="og:site_name" content="SoftDAB" />
-      
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@softdab" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={fullDescription} />
-      <meta name="twitter:image" content={fullOgImage} />
-      
-      {/* Article specific */}
+      <meta property="og:locale" content="en_US" />
       {publishedTime && <meta property="article:published_time" content={publishedTime} />}
       {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
-      {author && <meta property="article:author" content={author} />}
-      
-      {/* Performance optimizations */}
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link rel="dns-prefetch" href="//www.google-analytics.com" />
-      
-      {/* Structured Data */}
+      {section && <meta property="article:section" content={section} />}
+
+      {/* Twitter Card теги */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:site" content="@softdab" />
+      <meta name="twitter:creator" content="@softdab" />
+
+      {/* Дополнительные SEO теги */}
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="googlebot" content="index, follow" />
+      <meta name="theme-color" content="#667eea" />
+      <meta name="format-detection" content="telephone=no" />
+
+      {/* Языковые альтернативы */}
+      <link rel="alternate" hreflang="en" href="https://www.softdab.tech" />
+      <link rel="alternate" hreflang="x-default" href="https://www.softdab.tech" />
+
+      {/* DNS prefetch для производительности */}
+      <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+      <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+      <link rel="dns-prefetch" href="//api.softdab.tech" />
+
+      {/* Структурированные данные Schema.org */}
       <script type="application/ld+json">
-        {JSON.stringify(structuredData)}
+        {JSON.stringify(organizationSchema)}
       </script>
-      
-      {/* Custom head elements */}
-      {children}
+      <script type="application/ld+json">
+        {JSON.stringify(websiteSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(faqSchema)}
+      </script>
+
+      {/* Дополнительные мета теги для индексации */}
+      <meta name="rating" content="general" />
+      <meta name="distribution" content="global" />
+      <meta name="revisit-after" content="7 days" />
+      <meta name="coverage" content="worldwide" />
+      <meta name="target" content="all" />
+      <meta name="audience" content="all" />
+      <meta name="category" content="technology, software development, outsourcing" />
     </Helmet>
   );
 };

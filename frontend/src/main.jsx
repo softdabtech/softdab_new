@@ -1,4 +1,4 @@
-// frontend/src/main.jsx - Performance & SEO Optimized
+// frontend/src/main.jsx - КРИТИЧЕСКИ ОПТИМИЗИРОВАННАЯ ВЕРСИЯ для LCP < 2.5s
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -7,7 +7,9 @@ import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import App from './App.jsx';
 import './index.css';
-import { initWebVitals, logNavigationTiming, monitorResourceLoading } from './utils/performance.js';
+
+// Критический импорт Web Vitals мониторинга
+import { initWebVitals, logNavigationTiming, monitorResourceLoading } from './utils/performance';
 
 // PostHog Initialization
 const posthogKey = import.meta.env.VITE_POSTHOG_KEY;
@@ -18,19 +20,21 @@ if (posthogKey) {
   });
 }
 
-// Initialize performance monitoring
-if (typeof window !== 'undefined') {
-  // Core Web Vitals monitoring
-  initWebVitals();
-  
-  // Navigation timing logging
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      logNavigationTiming();
-      monitorResourceLoading();
-    }, 100);
-  });
-}
+// Критическая инициализация мониторинга производительности
+console.log('🚀 Инициализация критического мониторинга производительности...');
+
+// Запуск Web Vitals мониторинга
+initWebVitals();
+
+// Мониторинг навигации и ресурсов
+window.addEventListener('load', () => {
+  // Логирование критических метрик после полной загрузки
+  setTimeout(() => {
+    logNavigationTiming();
+    monitorResourceLoading();
+    console.log('✅ Критический мониторинг производительности активен');
+  }, 100);
+});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
