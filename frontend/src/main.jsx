@@ -1,11 +1,13 @@
-// frontend/src/main.jsx (ИСПРАВЛЕННАЯ ВЕРСИЯ БЕЗ HELMET)
+// frontend/src/main.jsx - Performance & SEO Optimized
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import App from './App.jsx';
 import './index.css';
+import { initWebVitals, logNavigationTiming, monitorResourceLoading } from './utils/performance.js';
 
 // PostHog Initialization
 const posthogKey = import.meta.env.VITE_POSTHOG_KEY;
@@ -16,12 +18,28 @@ if (posthogKey) {
   });
 }
 
+// Initialize performance monitoring
+if (typeof window !== 'undefined') {
+  // Core Web Vitals monitoring
+  initWebVitals();
+  
+  // Navigation timing logging
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      logNavigationTiming();
+      monitorResourceLoading();
+    }, 100);
+  });
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <PostHogProvider client={posthog}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PostHogProvider>
+    <HelmetProvider>
+      <PostHogProvider client={posthog}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PostHogProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );

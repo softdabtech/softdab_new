@@ -1,6 +1,7 @@
-// frontend/src/pages/HomePage.jsx 
+// frontend/src/pages/HomePage.jsx - SEO & Performance Optimized
 import React, { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import SEOHead from '../components/seo/SEOHead';
 import HeroSection from '../components/sections/HeroSection';
 import TrustSection from '../components/sections/TrustSection';
 import ServicesSection from '../components/sections/ServicesSection';
@@ -35,6 +36,15 @@ const SectionLoader = () => (
 const HomePage = () => {
   return (
     <>
+      {/* SEO Optimization */}
+      <SEOHead 
+        title="Custom Software Development & Outsourcing Teams"
+        description="SoftDAB provides custom software development and outsourcing teams for US/EU companies. Start in 2 weeks with a risk‑free trial and transparent pricing."
+        keywords="software development, outsourcing, outstaffing, dedicated teams, web development, mobile development, React, Node.js, Python, C#, JavaScript"
+        canonicalUrl="/"
+        ogType="website"
+      />
+      
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Suspense fallback={<SectionLoader />}>
           <HeroSection />

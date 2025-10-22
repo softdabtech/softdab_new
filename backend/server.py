@@ -17,6 +17,7 @@ from routes.expert_consultation import router as expert_consultation_router
 from middlewares.security import SecurityHeadersMiddleware
 from middlewares.rate_limit import RateLimitMiddleware
 from middlewares.csrf import CSRFMiddleware
+from middlewares.performance import PerformanceMiddleware, CompressionMiddleware, CacheMiddleware
 
 # Env already loaded above
 
@@ -45,7 +46,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Add security middleware (order matters!)
+# Add middleware (order matters!)
+app.add_middleware(PerformanceMiddleware)
+app.add_middleware(CompressionMiddleware)
+app.add_middleware(CacheMiddleware, ttl=300)  # 5 minutes cache
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(CSRFMiddleware)
