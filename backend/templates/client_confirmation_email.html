@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thank you for reaching out — SoftDAB</title>
+  <style>
+    /* Общие стили для почтовых клиентов */
+    body { 
+      margin:0; 
+      padding:0; 
+      -webkit-text-size-adjust:100%; 
+      -ms-text-size-adjust:100%; 
+      background-color:#f4f7fb; 
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+      color:#0b1726; 
+      line-height: 1.6;
+    }
+    a { color:#2F89FC; text-decoration:none; }
+    a:hover { color:#1F6ED4; }
+    .wrapper { width:100%; background-color:#f4f7fb; padding:30px 0; }
+    .container { max-width:600px; margin:0 auto; background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 6px 18px rgba(15,23,42,0.06); }
+    .header { background: linear-gradient(90deg,#2F89FC 0%, #1F6ED4 100%); padding:20px; text-align:left; color:#fff; }
+    .header .logo { display:inline-block; vertical-align:middle; }
+    .header h1 { font-size:20px; margin:0 0 0 12px; font-weight:600; line-height:1; display:inline-block; vertical-align:middle; }
+    .body { padding:28px 32px; }
+    .greeting { font-size:18px; margin:0 0 8px; font-weight:600; color:#0b1726; }
+    .intro { font-size:15px; margin:0 0 18px; color:#394b63; line-height:1.5; }
+    .card { background:#f7f9fc; border-radius:8px; padding:16px; margin-bottom:18px; border:1px solid #eef3fb;}
+    .field { font-size:14px; color:#213347; margin:6px 0; }
+    .label { display:block; font-size:12px; color:#6b7a90; margin-bottom:4px; font-weight:600; }
+    .value { color:#213347; font-weight:500; }
+    .cta { text-align:center; margin:20px 0; }
+    .btn { background:#2F89FC; color:#fff !important; display:inline-block; padding:12px 24px; border-radius:8px; font-weight:600; text-decoration:none; box-shadow:0 3px 0 rgba(0,0,0,0.06); transition: all 0.3s ease; }
+    .btn:hover { background:#1F6ED4; transform: translateY(-1px); }
+    .small { font-size:12px; color:#7b8899; }
+    .footer { background:#ffffff; padding:18px 32px; border-top:1px solid #f0f4f9; text-align:center; font-size:13px; color:#7b8899; }
+    .social img { width:28px; height:28px; margin:0 6px; vertical-align:middle; border-radius:4px; }
+    .priority-badge { 
+      display:inline-block; 
+      padding:4px 8px; 
+      border-radius:12px; 
+      font-size:10px; 
+      font-weight:700; 
+      text-transform:uppercase; 
+      letter-spacing:0.5px;
+    }
+    .priority-high { background:#fee2e2; color:#dc2626; }
+    .priority-medium { background:#fef3c7; color:#d97706; }
+    .priority-low { background:#e0f2fe; color:#0891b2; }
+    .divider { border:none; border-top:1px solid #f0f4f9; margin:20px 0; }
+    .highlight-box { 
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%); 
+      border-left:4px solid #2F89FC; 
+      padding:16px; 
+      border-radius:0 8px 8px 0; 
+      margin:16px 0;
+    }
+    
+    @media screen and (max-width:420px){
+      .body { padding:20px; }
+      .header h1 { font-size:16px; }
+      .container { margin:10px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Plain-text fallback for preview -->
+  <div style="display:none; white-space:nowrap; font:15px/1px monospace; color:#ffffff; background:#ffffff;">
+    Thank you! We received your message and will get back to you soon — SoftDAB
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="wrapper">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="container">
+          <!-- Header -->
+          <tr>
+            <td class="header" style="padding:20px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <!-- SVG Logo inline для лучшей совместимости -->
+                    <div style="display:inline-block; vertical-align:middle; width:48px; height:48px; background:#ffffff; border-radius:8px; padding:6px;">
+                      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="36" height="36" rx="8" fill="#2F89FC"/>
+                        <path d="M10 12h16v2H10v-2zm0 5h16v2H10v-2zm0 5h12v2H10v-2z" fill="white"/>
+                      </svg>
+                    </div>
+                    <h1 style="display:inline-block; margin-left:12px; font-size:20px; font-weight:700; line-height:1;">SoftDAB</h1>
+                  </td>
+                  <td style="text-align:right; vertical-align:middle; color:rgba(255,255,255,0.9); font-size:12px;">
+                    <div>Custom Software Development</div>
+                    <div style="font-size:10px; opacity:0.8;">{{form_type_display}}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td class="body" style="padding:28px 32px;">
+              <!-- Greeting -->
+              <p class="greeting">Hello {{name}}!</p>
+              
+              <!-- Intro based on form type -->
+              {% if form_type == 'expert_consultation' %}
+              <p class="intro">
+                Thank you for your expert consultation request! We've received your inquiry and our specialists will contact you within <strong>{{sla_hours}} hours</strong>. 
+                {% if priority >= 8 %}<span class="priority-badge priority-high">High Priority</span>{% elif priority >= 6 %}<span class="priority-badge priority-medium">Medium Priority</span>{% else %}<span class="priority-badge priority-low">Normal Priority</span>{% endif %}
+              </p>
+              
+              <div class="highlight-box">
+                <strong>🎯 Your request is being processed:</strong><br>
+                • Consultation type: {{client_type_display}}<br>
+                • Priority: {{priority}}/10<br>
+                • Response time: within {{sla_hours}} hours<br>
+                • Assigned team: {{assigned_team}}
+              </div>
+              {% else %}
+              <p class="intro">
+                Thank you for reaching out to SoftDAB! We've received your message and will respond shortly (typically within 24 hours). Below is a copy of the information you submitted for your records.
+              </p>
+              {% endif %}
+
+              <!-- Contact Information Card -->
+              <div class="card" style="background:#fbfdff;">
+                <h3 style="margin:0 0 12px 0; color:#2F89FC; font-size:16px;">📋 Submission Details</h3>
+                
+                <div class="field">
+                  <span class="label">Name</span>
+                  <div class="value">{{name}}</div>
+                </div>
+                
+                <div class="field">
+                  <span class="label">Email</span>
+                  <div class="value"><a href="mailto:{{email}}" style="color:#2F89FC;">{{email}}</a></div>
+                </div>
+                
+                {% if company %}
+                <div class="field">
+                  <span class="label">Company</span>
+                  <div class="value">{{company}}</div>
+                </div>
+                {% endif %}
+                
+                {% if phone %}
+                <div class="field">
+                  <span class="label">Phone</span>
+                  <div class="value">{{phone}}</div>
+                </div>
+                {% endif %}
+                
+                {% if role %}
+                <div class="field">
+                  <span class="label">Position</span>
+                  <div class="value">{{role}}</div>
+                </div>
+                {% endif %}
+                
+                <!-- Form-specific fields -->
+                {% if form_type == 'contact_form' %}
+                  {% if service %}
+                  <div class="field">
+                    <span class="label">Service Type</span>
+                    <div class="value">{{service}}</div>
+                  </div>
+                  {% endif %}
+                  
+                  {% if timeline %}
+                  <div class="field">
+                    <span class="label">Timeline</span>
+                    <div class="value">{{timeline}}</div>
+                  </div>
+                  {% endif %}
+                  
+                  {% if budget %}
+                  <div class="field">
+                    <span class="label">Budget</span>
+                    <div class="value">{{budget}}</div>
+                  </div>
+                  {% endif %}
+                {% elif form_type == 'expert_consultation' %}
+                  <div class="field">
+                    <span class="label">Consultation Type</span>
+                    <div class="value">{{client_type_display}}</div>
+                  </div>
+                  
+                  {% if consultation_details %}
+                  <div class="field">
+                    <span class="label">Additional Details</span>
+                    <div class="value" style="font-size:12px; color:#666;">
+                      {% for key, value in consultation_details %}
+                        {% if value %}
+                        <div>• {{key}}: {{value}}</div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% endif %}
+                {% endif %}
+                
+                <!-- Message -->
+                {% if message %}
+                <div class="field" style="margin-top:12px;">
+                  <span class="label">Message</span>
+                  <div style="white-space:pre-wrap; color:#213347; background:#ffffff; padding:12px; border-radius:6px; border:1px solid #eef3fb; font-size:14px; line-height:1.5;">{{message}}</div>
+                </div>
+                {% endif %}
+                
+                <div class="field" style="margin-top:12px;">
+                  <span class="label">Submission Date</span>
+                  <div class="value">{{submission_date}}</div>
+                </div>
+              </div>
+
+              <!-- Call to Action -->
+              <div class="cta">
+                {% if form_type == 'expert_consultation' %}
+                <a href="https://softdab.tech/expert-consultation?utm_source=email&utm_medium=confirmation&utm_campaign=expert_followup" class="btn" target="_blank" rel="noopener">
+                  📅 Schedule Additional Consultation
+                </a>
+                {% else %}
+                <a href="https://softdab.tech/contact?utm_source=email&utm_medium=confirmation&utm_campaign=contact_followup" class="btn" target="_blank" rel="noopener">
+                  💬 Ask Additional Questions
+                </a>
+                {% endif %}
+              </div>
+
+              <hr class="divider">
+
+              <!-- Next Steps -->
+              <div style="background:#f8f9fa; padding:16px; border-radius:8px; margin:16px 0;">
+                <h4 style="margin:0 0 8px 0; color:#2F89FC; font-size:14px;">🚀 What's Next?</h4>
+                <ul style="margin:0; padding-left:16px; font-size:13px; color:#555;">
+                  {% if form_type == 'expert_consultation' %}
+                  <li>Our experts will review your request and identify the optimal solution</li>
+                  <li>We'll contact you within {{sla_hours}} hours to clarify details</li>
+                  <li>We'll conduct a free consultation and propose an action plan</li>
+                  {% else %}
+                  <li>Our team will review your request and prepare a proposal</li>
+                  <li>We'll contact you within 24 hours to discuss the details</li>
+                  <li>If needed, we'll schedule a meeting or video call</li>
+                  {% endif %}
+                </ul>
+              </div>
+
+              <!-- Contact Info -->
+              <p class="small">
+                If you have urgent questions or need to make changes to your request, please email us at 
+                <a href="mailto:info@softdab.tech" style="color:#2F89FC;">info@softdab.tech</a> or call the number on our website.
+              </p>
+
+              <hr class="divider">
+
+              <!-- Company Info -->
+              <p class="small" style="margin:0; text-align:center; color:#666;">
+                <strong>SoftDAB</strong> — Custom Software Development<br>
+                We value your privacy. Your message is processed in accordance with our 
+                <a href="https://softdab.tech/privacy" style="color:#666;">privacy policy</a>.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td class="footer" style="padding:20px 32px;">
+              <!-- Company Links -->
+              <div style="margin-bottom:12px;">
+                <a href="https://softdab.tech?utm_source=email&utm_medium=footer" style="color:#7b8899; text-decoration:none; font-weight:600;">softdab.tech</a>
+                <span style="color:#ccc; margin:0 8px;">•</span>
+                <a href="mailto:info@softdab.tech" style="color:#7b8899; text-decoration:none;">info@softdab.tech</a>
+              </div>
+              
+              <!-- Services Links -->
+              <div style="margin-bottom:12px; font-size:12px;">
+                <a href="https://softdab.tech/services/web-development" style="color:#999; text-decoration:none;">Web Development</a>
+                <span style="color:#ccc; margin:0 6px;">•</span>
+                <a href="https://softdab.tech/services/mobile-development" style="color:#999; text-decoration:none;">Mobile Apps</a>
+                <span style="color:#ccc; margin:0 6px;">•</span>
+                <a href="https://softdab.tech/services/consulting" style="color:#999; text-decoration:none;">Consulting</a>
+              </div>
+              
+              <!-- Social Media -->
+              <div class="social" style="margin:12px 0;">
+                <a href="https://www.linkedin.com/company/softdab" target="_blank" rel="noopener" style="text-decoration:none;">
+                  <img alt="LinkedIn" src="https://softdab.tech/icons/linkedin-icon.png" width="28" height="28" style="border:0;">
+                </a>
+                <a href="https://github.com/softdabtech" target="_blank" rel="noopener" style="text-decoration:none;">
+                  <img alt="GitHub" src="https://softdab.tech/icons/github-icon.png" width="28" height="28" style="border:0;">
+                </a>
+                <a href="https://twitter.com/softdabtech" target="_blank" rel="noopener" style="text-decoration:none;">
+                  <img alt="Twitter" src="https://softdab.tech/icons/twitter-icon.png" width="28" height="28" style="border:0;">
+                </a>
+              </div>
+
+              <!-- Unsubscribe -->
+              <div style="margin-top:16px; font-size:11px; color:#9aa5b8;">
+                {% if unsubscribe_url %}
+                To unsubscribe from notifications, <a href="{{unsubscribe_url}}" style="color:#9aa5b8;">click here</a>.
+                {% else %}
+                This is a service notification about your request. To unsubscribe from marketing emails, please contact us.
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

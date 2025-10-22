@@ -11,6 +11,7 @@ from typing import Optional, Dict, Any
 from database import save_expert_consultation, get_db_connection
 from utils.emailer import send_email
 from utils.timezone import to_local_time_str
+from utils.email_renderer import email_renderer
 
 def get_client_ip(request: Request) -> str:
     """Get client IP from request"""
@@ -305,33 +306,34 @@ async def submit_expert_consultation(
         except Exception as e:
             logger.error(f"Failed to send admin notification for consultation {consultation_id}: {e}")
         
-        # Email to client (HTML)
+        # Email to client - HTML email using template
         try:
             test_email = os.environ.get('EXPERT_TEST_EMAIL', None)
             client_to_address = test_email if test_email else consultation_data['email']
-            client_subject = "Спасибо за обращение в SoftDAB!"
-            client_html = f"""<html>
-  <body style='font-family:Arial,sans-serif;background:#f9f9f9;padding:24px;'>
-    <div style='max-width:600px;margin:auto;background:#fff;border-radius:8px;padding:32px;box-shadow:0 2px 8px #eee;'>
-      <h2 style='color:#1a73e8;'>Спасибо за обращение!</h2>
-      <p>Уважаемый(ая) <b>{consultation_data['name']}</b>,<br>
-      Мы получили вашу заявку на экспертную консультацию и свяжемся с вами в ближайшее время.<br><br>
-      <b>Детали заявки:</b></p>
-      <ul>
-        <li><b>Компания:</b> {consultation_data.get('company', '')}</li>
-        <li><b>Телефон:</b> {consultation_data.get('phone', '')}</li>
-        <li><b>Сообщение:</b> {consultation_data['brief_message']}</li>
-      </ul>
-      <p style='color:#888;font-size:13px;'>SoftDAB | noreply@softdab.tech</p>
-    </div>
-  </body>
-</html>"""
+            client_subject = "Thank you for your expert consultation request — SoftDAB"
+            
+            # Prepare consultation data for email template
+            email_consultation_data = {
+                'name': consultation_data['name'],
+                'email': consultation_data['email'],
+                'company': consultation_data.get('company'),
+                'phone': consultation_data.get('phone'),
+                'brief_message': consultation_data['brief_message'],
+                'client_type': consultation_data['client_type'],
+                'priority': consultation_data['priority'],
+                'details': consultation_data.get('details'),
+                'submitted_at': datetime.now()
+            }
+            
+            # Render HTML email
+            client_html = email_renderer.render_expert_consultation_email(email_consultation_data, routing_info)
             
             sent_client = await send_email(
                 to_address=client_to_address,
                 subject=client_subject,
                 content=client_html,
-                from_address="noreply@softdab.tech"
+                from_address="noreply@softdab.tech",
+                is_html=True
             )
             if sent_client:
                 logger.info(f"Expert consultation confirmation sent to client {client_to_address}")

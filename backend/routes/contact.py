@@ -8,6 +8,7 @@ import sqlite3
 import os
 from utils.emailer import send_email
 from utils.timezone import to_local_time_str
+from utils.email_renderer import email_renderer
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -74,17 +75,30 @@ Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
                 email_sent_count += 1
         except Exception as email_error:
             logger.error(f"Failed to send to admin {admin}: {email_error}")
-    # Confirmation to user
+    # Confirmation to user - HTML email
     try:
+        # Prepare contact data for email template
+        email_contact_data = {
+            'name': form_data.name,
+            'email': form_data.email,
+            'company': form_data.company,
+            'role': form_data.role,
+            'service': form_data.service,
+            'timeline': form_data.timeline,
+            'budget': form_data.budget,
+            'message': form_data.message,
+            'submitted_at': datetime.utcnow()
+        }
+        
+        # Render HTML email
+        html_content = email_renderer.render_contact_form_email(email_contact_data)
+        
         confirm = await send_email(
             to_address=form_data.email,
-            subject="We received your message — SoftDAB",
-            content=(
-                "Hello,\n\n" 
-                "Thanks for reaching out to SoftDAB. We've received your message and will reply within 24 hours.\n\n"
-                "Regards,\nSoftDAB Team"
-            ),
-            from_address=f"{FROM_NAME} <{FROM_EMAIL}>"
+            subject="Thank you for reaching out — SoftDAB",
+            content=html_content,
+            from_address=f"{FROM_NAME} <{FROM_EMAIL}>",
+            is_html=True
         )
         if confirm:
             email_sent_count += 1

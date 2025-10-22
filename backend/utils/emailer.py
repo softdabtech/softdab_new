@@ -10,7 +10,7 @@ FROM_EMAIL_DEFAULT = os.environ.get('FROM_EMAIL', 'info@softdab.tech')
 FROM_NAME_DEFAULT = os.environ.get('FROM_NAME', 'SoftDAB')
 
 
-def _smtp_send_blocking(to_address: str, subject: str, content: str, from_address: str | None) -> bool:
+def _smtp_send_blocking(to_address: str, subject: str, content: str, from_address: str | None, is_html: bool = False) -> bool:
     host = os.environ.get('SMTP_HOST', 'localhost')
     port = int(os.environ.get('SMTP_PORT', '25'))
     user = os.environ.get('SMTP_USER')
@@ -19,7 +19,7 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
 
     from_addr = from_address or f"{FROM_NAME_DEFAULT} <{FROM_EMAIL_DEFAULT}>"
     # Определяем тип письма: plain или html
-    if content.strip().lower().startswith('<html'):
+    if is_html or content.strip().lower().startswith('<html') or content.strip().lower().startswith('<!doctype'):
         msg = MIMEText(content, _subtype='html', _charset='utf-8')
     else:
         msg = MIMEText(content, _subtype='plain', _charset='utf-8')
@@ -50,8 +50,15 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
         return False
 
 
-async def send_email(to_address: str, subject: str, content: str, from_address: str | None = None) -> bool:
+async def send_email(to_address: str, subject: str, content: str, from_address: str | None = None, is_html: bool = False) -> bool:
     """Send email via Zoho SMTP (TLS). Async wrapper over blocking smtplib.
+
+    Args:
+        to_address: Recipient email address
+        subject: Email subject
+        content: Email content (plain text or HTML)
+        from_address: Sender address (optional)
+        is_html: Force HTML content type (optional, auto-detected by default)
 
     Environment variables expected:
     - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_TLS
@@ -59,4 +66,4 @@ async def send_email(to_address: str, subject: str, content: str, from_address: 
 
     Returns True on success, False otherwise.
     """
-    return await asyncio.to_thread(_smtp_send_blocking, to_address, subject, content, from_address)
+    return await asyncio.to_thread(_smtp_send_blocking, to_address, subject, content, from_address, is_html)

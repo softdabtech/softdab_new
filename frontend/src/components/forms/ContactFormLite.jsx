@@ -52,7 +52,19 @@ export default function ContactFormLite({ onSuccess, onError }) {
         <input name="name" required minLength={2} placeholder="Name" className="border p-3 rounded" />
         <input name="email" type="email" required placeholder="Work Email" className="border p-3 rounded" />
         <input name="company" required minLength={2} placeholder="Company" className="border p-3 rounded" />
-        <input name="role" required minLength={2} placeholder="Role" className="border p-3 rounded" />
+        <select name="role" required className="border p-3 rounded">
+          <option value="">Select your role</option>
+          <option>CEO/Founder</option>
+          <option>CTO/Technical Director</option>
+          <option>Product Manager</option>
+          <option>Project Manager</option>
+          <option>Development Team Lead</option>
+          <option>Business Analyst</option>
+          <option>Marketing Director</option>
+          <option>Operations Manager</option>
+          <option>Startup Founder</option>
+          <option>Other</option>
+        </select>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         <select name="service" required className="border p-3 rounded">
