@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.softdab.tech/sitemap.xml
+
+# Block development paths
+Disallow: /build/
+Disallow: /netlify/

@@ -1,0 +1,21 @@
+{
+  "name": "SoftDAB | Custom Software Development",
+  "short_name": "SoftDAB",
+  "description": "Custom software development and dedicated teams from a partner with 8 years in IT. Serving US and EU businesses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0066FF",
+  "icons": [
+    {
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
