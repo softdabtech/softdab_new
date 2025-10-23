@@ -52,7 +52,11 @@ app.add_middleware(CompressionMiddleware)
 app.add_middleware(CacheMiddleware, ttl=300)  # 5 minutes cache
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RateLimitMiddleware)
-app.add_middleware(CSRFMiddleware)
+"""
+CSRF middleware применяется только к защищённым роутам (например, /admin).
+Для публичных API (например, /api/contact) CSRF отключён.
+"""
+# app.add_middleware(CSRFMiddleware)
 
 # Event handlers
 @app.on_event("startup")
