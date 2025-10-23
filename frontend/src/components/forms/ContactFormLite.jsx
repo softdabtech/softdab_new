@@ -27,7 +27,7 @@ export default function ContactFormLite({ onSuccess, onError }) {
         throw new Error('Please accept the Privacy Policy');
       }
 
-      const res = await fetch('https://softdab.tech/api/contact', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

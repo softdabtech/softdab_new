@@ -1,7 +1,7 @@
 import { useCachedData } from './cache';
 import { addCSRFToken } from './csrf';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const API_URL = `${import.meta.env.VITE_API_URL}/api` || 'http://localhost:8000/api';
 
 /**
  * Базовая функция для API запросов с обработкой ошибок и CSRF

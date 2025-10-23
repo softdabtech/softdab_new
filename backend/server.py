@@ -35,7 +35,7 @@ app = FastAPI(
 )
 
 # Настройка CORS - читаем из .env файла
-cors_origins = os.getenv('CORS_ORIGINS', 'https://www.softdab.tech,https://softdab.tech').split(',')
+cors_origins = os.getenv('CORS_ORIGINS', 'https://www.softdab.tech,https://softdab.tech,https://softdabtech.github.io').split(',')
 logger.info(f"CORS origins: {cors_origins}")
 
 app.add_middleware(
