@@ -50,7 +50,7 @@ class ClientEmailRenderer:
             'sla_hours': None,
             'client_type_display': None,
             'assigned_team': None,
-            'unsubscribe_url': None
+            'unsubscribe_url': f"https://softdab.tech/api/unsubscribe?email={contact_data['email']}"
         }
         
         try:

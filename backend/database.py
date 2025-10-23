@@ -1,3 +1,16 @@
+async def unsubscribe_email(email: str):
+    """Mark email as unsubscribed in contacts table"""
+    try:
+        await database.connection.execute(
+            "UPDATE contacts SET status = 'unsubscribed' WHERE email = ?",
+            (email,)
+        )
+        await database.connection.commit()
+        logger.info(f"Email unsubscribed: {email}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to unsubscribe email {email}: {e}")
+        return False
 """
 SQLite database configuration and connection
 """
