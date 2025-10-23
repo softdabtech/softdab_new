@@ -13,7 +13,9 @@ class ClientEmailRenderer:
     """Renders client confirmation emails using Jinja2 templates"""
     
     def __init__(self):
-        self.template_path = os.path.join(os.path.dirname(__file__), 'templates', 'client_confirmation_email.html')
+        # Path to templates folder in backend root
+        backend_root = os.path.dirname(os.path.dirname(__file__))
+        self.template_path = os.path.join(backend_root, 'templates', 'client_confirmation_email.html')
         self._load_template()
     
     def _load_template(self):
