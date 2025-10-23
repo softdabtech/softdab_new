@@ -75,7 +75,10 @@
     "deploy:ftp": "node deploy-ftp.js",
     "deploy:netlify": "node deploy-netlify.js",
     "deploy:smart": "node deploy-smart.js",
-    "deploy:prod": "npm run build:critical && npm run deploy:netlify"
+    "deploy:gh-pages": "cd .. && git subtree push --prefix frontend/dist origin gh-pages",
+    "deploy:github": "npm run build:critical && npm run deploy:gh-pages",
+    "deploy:prod": "npm run deploy:github",
+    "status": "./check-production.sh"
   },
   "browserslist": {
     "production": [
