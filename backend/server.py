@@ -12,7 +12,6 @@ load_dotenv()
 from database import init_database, close_database
 from routes.contact import router as contact_router
 from routes.expert_consultation import router as expert_consultation_router
-from routes.unsubscribe import router as unsubscribe_router
 
 # Import security middleware
 from middlewares.security import SecurityHeadersMiddleware
@@ -36,7 +35,7 @@ app = FastAPI(
 )
 
 # Настройка CORS - читаем из .env файла
-cors_origins = os.getenv('CORS_ORIGINS', 'https://www.softdab.tech,https://softdab.tech,https://softdabtech.github.io').split(',')
+cors_origins = os.getenv('CORS_ORIGINS', 'https://www.softdab.tech,https://softdab.tech').split(',')
 logger.info(f"CORS origins: {cors_origins}")
 
 app.add_middleware(
@@ -53,10 +52,7 @@ app.add_middleware(CompressionMiddleware)
 app.add_middleware(CacheMiddleware, ttl=300)  # 5 minutes cache
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RateLimitMiddleware)
-"""
-CSRF middleware применяется только к защищённым роутам (например, /admin).
-Для публичных API (например, /api/contact) CSRF отключён.
-"""
+# CSRF отключён для публичных форм - если нужен, применяйте только к защищённым роутам
 # app.add_middleware(CSRFMiddleware)
 
 # Event handlers
@@ -75,7 +71,6 @@ async def shutdown_event():
 # Подключаем роутеры
 app.include_router(contact_router, prefix="/api/contact")
 app.include_router(expert_consultation_router, prefix="/api/expert-consultation")
-app.include_router(unsubscribe_router, prefix="/api")
 
 @app.get("/")
 async def root():
