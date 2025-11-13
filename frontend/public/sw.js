@@ -1,5 +1,5 @@
 // sw.js - Critical Service Worker для LCP < 2.5s
-const CACHE_VERSION = 'critical-lcp-v1';
+const CACHE_VERSION = 'critical-lcp-v2';
 const CRITICAL_CACHE = `${CACHE_VERSION}-critical`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -19,7 +19,6 @@ const CRITICAL_RESOURCES = [
   // Critical hero изображения
   '/images/hero-bg.webp',
   '/images/hero-mobile.webp',
-  '/icons/logo.svg',
   
   // Main HTML
   '/',

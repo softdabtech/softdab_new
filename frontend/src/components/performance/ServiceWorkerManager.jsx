@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 const ServiceWorkerManager = () => {
   useEffect(() => {
     // Регистрация SW только в production
-    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+    if ('serviceWorker' in navigator && import.meta.env.PROD) {
       registerServiceWorker();
     }
   }, []);
