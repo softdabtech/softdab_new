@@ -24,7 +24,11 @@ from middlewares.performance import PerformanceMiddleware, CompressionMiddleware
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('logs/app.log', encoding='utf-8')
+    ]
 )
 logger = logging.getLogger(__name__)
 
