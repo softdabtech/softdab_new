@@ -10,8 +10,6 @@ const CriticalResourcePreloader = () => {
       // Критические изображения hero секции
       { href: '/images/hero-bg.webp', as: 'image', type: 'image/webp' },
       { href: '/images/team/hero-team.webp', as: 'image', type: 'image/webp' },
-      // Критические иконки
-      { href: '/icons/logo.svg', as: 'image', type: 'image/svg+xml' },
     ];
 
     // Критический prefetch для ключевых страниц

@@ -21,7 +21,7 @@ const SEOHead = ({
     "name": "SoftDAB",
     "alternateName": "SoftDAB Software Development",
     "url": "https://www.softdab.tech",
-    "logo": "https://www.softdab.tech/icons/logo.svg",
+    "logo": "https://www.softdab.tech/images/softdab-logo-square.svg",
     "description": "Custom software development and outsourcing teams for US/EU companies",
     "foundingDate": "2020",
     "contactPoint": {
