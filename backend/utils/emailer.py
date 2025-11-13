@@ -1,6 +1,7 @@
 import os
 import asyncio
 import logging
+import time
 from email.mime.text import MIMEText
 import smtplib
 import httpx
@@ -70,14 +71,21 @@ async def send_email(to_address: str, subject: str, content: str, from_address: 
     Returns True on success, False otherwise.
     """
     # Try Resend API first if configured
+    start = time.time()
+    provider = 'smtp'
+    success = False
     if RESEND_API_KEY:
         try:
-            return await _send_via_resend(to_address, subject, content, from_address, is_html)
+            provider = 'resend'
+            success = await _send_via_resend(to_address, subject, content, from_address, is_html)
         except Exception as e:
             logger.error(f"Resend API error: {e}, falling back to SMTP")
-    
-    # Fallback to SMTP
-    return await asyncio.to_thread(_smtp_send_blocking, to_address, subject, content, from_address, is_html)
+            provider = 'smtp'
+    if provider == 'smtp' and not success:
+        success = await asyncio.to_thread(_smtp_send_blocking, to_address, subject, content, from_address, is_html)
+    latency_ms = int((time.time() - start) * 1000)
+    logger.info(f"email_delivery provider={provider} to={to_address} subject_len={len(subject)} html={is_html} success={success} latency_ms={latency_ms}")
+    return success
 
 
 async def _send_via_resend(to_address: str, subject: str, content: str, from_address: str | None, is_html: bool) -> bool:
