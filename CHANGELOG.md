@@ -1,5 +1,15 @@
 # SoftDAB Website Changelog
 
+## [0.3.1] - 2025-11-13
+### UI / Frontend
+- Добавлена новая колонка "Projects" в Footer с внешними ссылками на субдомены:
+  - Blog (blog.softdab.tech)
+  - Crypto Solution (cryptography.softdab.tech)
+  - OpticalDT (opto.softdab.tech)
+  - SnapSafe (snapsafe.softdab.tech)
+  - T.Y.K.E (tyke.softdab.tech)
+- Обновлён grid footer с 6 на 7 колонок для размещения новой секции Projects перед Legal.
+
 ## [0.3.0] - 2025-11-13
 ### Субдомены и Nginx
 - Развернуты отдельные сайты для субдоменов в `/var/www/subdomains/<name>`.

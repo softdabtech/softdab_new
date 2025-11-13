@@ -1,6 +1,6 @@
 {
   "name": "softdab-site",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "react-error-boundary": "^6.0.0",

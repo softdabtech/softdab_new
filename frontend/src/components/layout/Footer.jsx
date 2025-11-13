@@ -23,6 +23,13 @@ const FOOTER_SECTIONS = {
     { name: 'Contact', href: '/company/contact' },
     { name: 'Careers', href: '/company/careers' },
   ],
+  projects: [
+    { name: 'Blog', href: 'https://blog.softdab.tech', external: true },
+    { name: 'Crypto Solution', href: 'https://cryptography.softdab.tech', external: true },
+    { name: 'OpticalDT', href: 'https://opto.softdab.tech', external: true },
+    { name: 'SnapSafe', href: 'https://snapsafe.softdab.tech', external: true },
+    { name: 'T.Y.K.E', href: 'https://tyke.softdab.tech', external: true },
+  ],
   legal: [
     { name: 'Privacy Policy', href: '/legal/privacy' },
     { name: 'Cookie Policy', href: '/legal/cookies' },
@@ -36,7 +43,7 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white" aria-label="Site footer">
       <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-8">
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline" aria-label="Home">
               <div className="text-2xl font-bold text-white">SoftDAB</div>
@@ -97,6 +104,24 @@ const Footer = () => {
                   <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
                     {item.name}
                   </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Projects" className="lg:col-span-1">
+            <h3 className="text-lg font-semibold mb-4">Projects</h3>
+            <ul className="space-y-2">
+              {FOOTER_SECTIONS.projects.map((item) => (
+                <li key={item.href}>
+                  <a 
+                    href={item.href} 
+                    className="text-gray-300 hover:text-white transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.name}
+                  </a>
                 </li>
               ))}
             </ul>
