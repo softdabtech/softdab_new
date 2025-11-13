@@ -1,4 +1,7 @@
 {
+  "name": "softdab-site",
+  "version": "0.2.0",
+  "private": true,
   "dependencies": {
     "react-error-boundary": "^6.0.0",
     "react-helmet": "^6.1.0",
