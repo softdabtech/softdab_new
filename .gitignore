@@ -100,3 +100,6 @@ android-sdk/ -e
 
 # Local Netlify folder
 .netlify
+
+# Temporary subdomain downloads
+subdomain_downloads/
