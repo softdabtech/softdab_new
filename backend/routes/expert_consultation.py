@@ -12,6 +12,7 @@ from database import save_expert_consultation, get_db_connection
 from utils.emailer import send_email
 from utils.timezone import to_local_time_str
 from utils.email_renderer import email_renderer
+from utils.hubspot import send_to_hubspot_consultation
 
 def get_client_ip(request: Request) -> str:
     """Get client IP from request"""
@@ -342,6 +343,14 @@ async def submit_expert_consultation(
                 logger.warning(f"Expert consultation confirmation NOT sent to client {client_to_address}")
         except Exception as e:
             logger.error(f"Failed to send expert consultation confirmation to client: {e}")
+        
+        # Send to HubSpot (non-blocking)
+        try:
+            hubspot_sent = await send_to_hubspot_consultation(consultation_data)
+            if hubspot_sent:
+                logger.info(f"Expert consultation sent to HubSpot: {request.email}")
+        except Exception as hubspot_error:
+            logger.error(f"Failed to send expert consultation to HubSpot: {hubspot_error}")
         
         logger.info(f"Expert consultation submitted: {request.email} (Priority: {priority})")
         

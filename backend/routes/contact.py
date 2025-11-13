@@ -9,6 +9,7 @@ import os
 from utils.emailer import send_email
 from utils.timezone import to_local_time_str
 from utils.email_renderer import email_renderer
+from utils.hubspot import send_to_hubspot_contact
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -104,6 +105,14 @@ Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
             email_sent_count += 1
     except Exception as email_error:
         logger.error(f"Failed to send confirmation to user: {email_error}")
+    
+    # Send to HubSpot (non-blocking, don't fail if HubSpot is down)
+    try:
+        hubspot_sent = await send_to_hubspot_contact(contact_data)
+        if hubspot_sent:
+            logger.info(f"Contact sent to HubSpot: {form_data.email}")
+    except Exception as hubspot_error:
+        logger.error(f"Failed to send to HubSpot: {hubspot_error}")
     
     # Return appropriate response
     if saved:

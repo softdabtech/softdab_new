@@ -3,11 +3,13 @@ import asyncio
 import logging
 from email.mime.text import MIMEText
 import smtplib
+import httpx
 
 logger = logging.getLogger(__name__)
 
 FROM_EMAIL_DEFAULT = os.environ.get('FROM_EMAIL', 'info@softdab.tech')
 FROM_NAME_DEFAULT = os.environ.get('FROM_NAME', 'SoftDAB')
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
 
 
 def _smtp_send_blocking(to_address: str, subject: str, content: str, from_address: str | None, is_html: bool = False) -> bool:
@@ -51,7 +53,7 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
 
 
 async def send_email(to_address: str, subject: str, content: str, from_address: str | None = None, is_html: bool = False) -> bool:
-    """Send email via Zoho SMTP (TLS). Async wrapper over blocking smtplib.
+    """Send email via Resend API (fallback to SMTP if Resend not configured).
 
     Args:
         to_address: Recipient email address
@@ -61,9 +63,56 @@ async def send_email(to_address: str, subject: str, content: str, from_address: 
         is_html: Force HTML content type (optional, auto-detected by default)
 
     Environment variables expected:
-    - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_TLS
+    - RESEND_API_KEY (preferred)
+    - SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_TLS (fallback)
     - FROM_EMAIL, FROM_NAME
 
     Returns True on success, False otherwise.
     """
+    # Try Resend API first if configured
+    if RESEND_API_KEY:
+        try:
+            return await _send_via_resend(to_address, subject, content, from_address, is_html)
+        except Exception as e:
+            logger.error(f"Resend API error: {e}, falling back to SMTP")
+    
+    # Fallback to SMTP
     return await asyncio.to_thread(_smtp_send_blocking, to_address, subject, content, from_address, is_html)
+
+
+async def _send_via_resend(to_address: str, subject: str, content: str, from_address: str | None, is_html: bool) -> bool:
+    """Send email via Resend API"""
+    from_addr = from_address or f"{FROM_NAME_DEFAULT} <{FROM_EMAIL_DEFAULT}>"
+    
+    # Auto-detect HTML
+    if not is_html:
+        is_html = content.strip().lower().startswith('<html') or content.strip().lower().startswith('<!doctype')
+    
+    payload = {
+        "from": from_addr,
+        "to": [to_address],
+        "subject": subject,
+    }
+    
+    if is_html:
+        payload["html"] = content
+    else:
+        payload["text"] = content
+    
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            "https://api.resend.com/emails",
+            json=payload,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            timeout=30.0
+        )
+        
+        if response.status_code == 200:
+            logger.info(f"Email sent via Resend to {to_address}")
+            return True
+        else:
+            logger.error(f"Resend API error: {response.status_code} - {response.text}")
+            return False
