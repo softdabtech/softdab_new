@@ -1,4 +1,4 @@
-name: Deploy to FTP
+name: Deploy to Production
 
 on:
   push:
@@ -8,10 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: frontend
 
     steps:
       - name: Checkout code
@@ -25,27 +21,27 @@ jobs:
           cache-dependency-path: 'frontend/package-lock.json'
 
       - name: Install dependencies
+        working-directory: frontend
         run: npm ci
 
       - name: Build
+        working-directory: frontend
         run: npm run build
         env:
           VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
 
-      - name: Deploy to FTP with Clean Slate
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy to Production via SSH
+        uses: easingthemes/ssh-deploy@main
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          timeout: 360000  # Увеличили таймаут до 6 минут
-          local-dir: ./frontend/dist/
-          server-dir: softdab.tech/www/
-          dangerous-clean-slate: true
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.DS_Store
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          SOURCE: "frontend/dist/"
+          TARGET: "/var/www/html/"
+          ARGS: "-avz --delete"
+          SCRIPT_BEFORE: |
+            whoami
+            ls -lah /var/www/html/
+          SCRIPT_AFTER: |
+            echo "Deployment completed at $(date)"
+            ls -lah /var/www/html/ | head -10
