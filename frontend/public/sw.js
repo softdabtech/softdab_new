@@ -1,5 +1,5 @@
 // sw.js - Critical Service Worker для LCP < 2.5s
-const CACHE_VERSION = 'critical-lcp-v2';
+const CACHE_VERSION = 'critical-lcp-v5';
 const CRITICAL_CACHE = `${CACHE_VERSION}-critical`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 

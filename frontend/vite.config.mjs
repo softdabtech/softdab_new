@@ -35,50 +35,39 @@ export default defineConfig({
           const ext = name ? name.split('.').pop() : 'bin'
           return `assets/[name]-[hash].[ext]`
         },
-        // АГРЕССИВНЫЙ chunk splitting для критического LCP < 2.5s
+        // Упрощенный split: ВСЕ node_modules в один чанк (кроме analytics)
+        // чтобы исключить cross-chunk React зависимости
         manualChunks: (id) => {
-          // Critical React core - самый приоритетный
-          if (id.includes('react') && !id.includes('react-router')) {
-            return 'react-core';
+          // Analytics - отдельный чанк для lazy loading
+          if (id.includes('node_modules') && id.includes('posthog')) {
+            return 'analytics';
           }
-          
-          // Critical performance components - для LCP
+
+          // ВСЁ остальное из node_modules - в vendor-react
+          // Это предотвращает ANY cross-chunk React dependency issues
+          if (id.includes('node_modules')) {
+            return 'vendor-react';
+          }
+
+          // Формы — ленивое подключение (только код приложения)
+          if (id.includes('src/components/forms')) {
+            return 'forms';
+          }
+
+          // Критические секции (код приложения для LCP)
+          if (
+            id.includes('src/components/sections/HeroSection') ||
+            id.includes('src/components/sections/TrustSection')
+          ) {
+            return 'critical-sections';
+          }
+
+          // Критические perf-компоненты (код приложения)
           if (id.includes('src/components/performance')) {
             return 'critical-performance';
           }
-          
-          // Critical sections (Hero, etc) - для LCP
-          if (id.includes('src/components/sections/HeroSection') || 
-              id.includes('src/components/sections/TrustSection')) {
-            return 'critical-sections';
-          }
-          
-          // Router - отдельно для code splitting
-          if (id.includes('react-router')) {
-            return 'router';
-          }
-          
-          // UI Icons - часто используемые
-          if (id.includes('lucide-react')) {
-            return 'icons';
-          }
-          
-          // Forms - lazy load
-          if (id.includes('react-hook-form') || id.includes('src/components/forms')) {
-            return 'forms';
-          }
-          
-          // Node modules vendor split по размеру
-          if (id.includes('node_modules')) {
-            // Large libraries separate
-            if (id.includes('posthog')) return 'analytics';
-            if (id.includes('helmet')) return 'seo';
-            
-            // Small utilities together
-            return 'vendor';
-          }
-          
-          // Pages - individual chunks для lazy loading
+
+          // Страницы — отдельно для ленивой загрузки
           if (id.includes('src/pages/')) {
             const pageName = id.split('/pages/')[1]?.split('/')[0]?.replace('.jsx', '');
             return `page-${pageName}`;
