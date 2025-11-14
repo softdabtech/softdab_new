@@ -25,7 +25,7 @@ const ServiceWorkerManager = () => {
         
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed') {
-            if (navigator.serviceWorker.controller) {
+            if (navigator.serviceWorker && navigator.serviceWorker.controller) {
               console.log('🔄 Новая версия SW доступна');
               // Можно показать уведомление пользователю о необходимости обновления
               showUpdateNotification();
@@ -57,6 +57,9 @@ const ServiceWorkerManager = () => {
   };
 
   const checkCacheStatus = () => {
+    if (!navigator.serviceWorker || !navigator.serviceWorker.controller) {
+      return; // SW не готов или не поддерживается
+    }
     if (navigator.serviceWorker.controller) {
       const messageChannel = new MessageChannel();
       
@@ -83,7 +86,7 @@ const ServiceWorkerManager = () => {
   // Проверяем готовность SW после загрузки
   useEffect(() => {
     const handleLoad = () => {
-      if (navigator.serviceWorker.controller) {
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
         setTimeout(checkCacheStatus, 1000);
       }
     };
