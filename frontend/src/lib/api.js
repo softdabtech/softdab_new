@@ -1,7 +1,9 @@
 import { useCachedData } from './cache';
 import { addCSRFToken } from './csrf';
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api` || 'http://localhost:8000/api';
+// Normalize base API URL: if env already ends with /api, do not append
+const rawApi = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_URL = rawApi.endsWith('/api') ? rawApi : `${rawApi}/api`;
 
 /**
  * Базовая функция для API запросов с обработкой ошибок и CSRF
