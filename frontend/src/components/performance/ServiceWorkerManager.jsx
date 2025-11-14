@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 
 const ServiceWorkerManager = () => {
   useEffect(() => {
-    // Регистрация SW только в production
-    if ('serviceWorker' in navigator && import.meta.env.PROD) {
+    // Регистрация SW только если объект navigator.serviceWorker доступен (а не только ключ) и в production
+    if (navigator.serviceWorker && import.meta.env.PROD) {
       registerServiceWorker();
     }
   }, []);
