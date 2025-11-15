@@ -6,7 +6,16 @@ import { HelmetProvider } from 'react-helmet-async';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import App from './App.jsx';
-import './index.css';
+// Глобальный CSS загружаем асинхронно после первого кадра,
+// так как критический mobile CSS уже инлайнится в index.html
+if (typeof window !== 'undefined') {
+  const loadCSS = () => import('./index.css');
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadCSS, { timeout: 300 });
+  } else {
+    setTimeout(loadCSS, 0);
+  }
+}
 
 // Критический импорт Web Vitals мониторинга
 import { initWebVitals, logNavigationTiming, monitorResourceLoading } from './utils/performance';
