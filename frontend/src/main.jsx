@@ -3,8 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import posthog from 'posthog-js';
-import { PostHogProvider } from 'posthog-js/react';
 import App from './App.jsx';
 // Глобальный CSS загружаем асинхронно после первого кадра,
 // так как критический mobile CSS уже инлайнится в index.html
@@ -20,13 +18,23 @@ if (typeof window !== 'undefined') {
 // Критический импорт Web Vitals мониторинга
 import { initWebVitals, logNavigationTiming, monitorResourceLoading } from './utils/performance';
 
-// PostHog Initialization
+// PostHog: лениво загружаем и инициализируем после первой отрисовки
 const posthogKey = import.meta.env.VITE_POSTHOG_KEY;
-if (posthogKey) {
-  posthog.init(posthogKey, {
-    api_host: 'https://us-assets.i.posthog.com',
-    person_profiles: 'identified_only',
-  });
+if (posthogKey && typeof window !== 'undefined') {
+  const initPH = async () => {
+    const { default: ph } = await import('posthog-js');
+    ph.init(posthogKey, {
+      api_host: 'https://us-assets.i.posthog.com',
+      person_profiles: 'identified_only',
+      capture_pageview: true,
+    });
+    window.posthog = ph;
+  };
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(initPH, { timeout: 1000 });
+  } else {
+    setTimeout(initPH, 1000);
+  }
 }
 
 // Критическая инициализация мониторинга производительности
@@ -48,11 +56,9 @@ window.addEventListener('load', () => {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <PostHogProvider client={posthog}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PostHogProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>
 );
