@@ -391,6 +391,46 @@ Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         return False
 
 
+@router.get("")
+async def get_expert_consultations():
+    """Get all expert consultation submissions for admin panel"""
+    try:
+        conn = get_db_connection()
+        conn.row_factory = __import__('sqlite3').Row
+        cursor = conn.cursor()
+        
+        # Get all consultations ordered by date descending
+        cursor.execute("""
+            SELECT id, name, email, company, client_type, priority, submitted_at, status 
+            FROM expert_consultations 
+            ORDER BY submitted_at DESC
+        """)
+        
+        consultations = []
+        rows = cursor.fetchall()
+        logger.info(f"Found {len(rows)} expert consultations in database")
+        
+        for row in rows:
+            consultations.append({
+                "id": row[0],
+                "name": row[1],
+                "email": row[2],
+                "company": row[3],
+                "client_type": row[4] or "unknown",
+                "priority": row[5] or "normal",
+                "date": to_local_time_str(row[6]),
+                "status": row[7] or "new"
+            })
+        
+        conn.close()
+        logger.info(f"Returning {len(consultations)} expert consultations")
+        return consultations
+        
+    except Exception as e:
+        logger.error(f"Error fetching expert consultations: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch consultations: {str(e)}")
+
+
 @router.get("/{consultation_id}")
 async def get_expert_consultation_detail(consultation_id: int):
     """Get full expert consultation details by ID for admin modal"""
