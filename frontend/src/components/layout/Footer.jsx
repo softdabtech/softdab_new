@@ -51,10 +51,10 @@ const Footer = () => {
             <p className="text-gray-300 mb-6 max-w-md">
               Custom software that solves real business problems. Senior engineering teams delivering measurable outcomes.
             </p>
-            <div className="space-y-3" role="list" aria-label="Contact information">
+            <div className="space-y-3" aria-label="Contact information">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-400" />
-                <a href="mailto:hello@softdab.tech" className="text-gray-300 hover:text-white transition-colors" aria-label="Email">
+                <a href="mailto:hello@softdab.tech" className="text-gray-300 hover:text-white transition-colors" aria-label="Email us at hello@softdab.tech">
                   hello@softdab.tech
                 </a>
               </div>

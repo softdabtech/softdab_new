@@ -95,7 +95,7 @@ const ServicesSection = () => {
                     variant="outline" 
                     className="w-full group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all"
                   >
-                    <Link to={service.href}>
+                    <Link to={service.href} aria-label={`Learn more about ${service.title}`}>
                       Learn More
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Link>

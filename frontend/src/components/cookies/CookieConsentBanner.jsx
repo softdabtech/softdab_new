@@ -175,22 +175,22 @@ const CookieConsentBanner = () => {
             <div className="mt-4 sm:mt-0 flex-shrink-0 flex flex-col sm:flex-row gap-2">
               {!showSettings ? (
                 <>
-                  <Button variant="outline" onClick={() => setShowSettings(true)} className="whitespace-nowrap">
+                  <Button variant="outline" onClick={() => setShowSettings(true)} className="whitespace-nowrap border-gray-400 text-gray-900 hover:bg-gray-100">
                     Customize
                   </Button>
-                  <Button variant="secondary" onClick={rejectAll} className="whitespace-nowrap">
+                  <Button variant="outline" onClick={rejectAll} className="whitespace-nowrap border-gray-400 text-gray-900 hover:bg-gray-100">
                     Reject All
                   </Button>
-                  <Button onClick={acceptAll} className="whitespace-nowrap">
+                  <Button onClick={acceptAll} className="whitespace-nowrap bg-primary hover:bg-primary/90 text-white">
                     Accept All
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button variant="outline" onClick={() => setShowSettings(false)} className="whitespace-nowrap">
+                  <Button variant="outline" onClick={() => setShowSettings(false)} className="whitespace-nowrap border-gray-400 text-gray-900 hover:bg-gray-100">
                     Back
                   </Button>
-                  <Button onClick={saveSettings} className="whitespace-nowrap">
+                  <Button onClick={saveSettings} className="whitespace-nowrap bg-primary hover:bg-primary/90 text-white">
                     Save Preferences
                   </Button>
                 </>

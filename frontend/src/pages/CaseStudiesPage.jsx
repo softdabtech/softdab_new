@@ -139,7 +139,7 @@ const CaseStudiesPage = () => {
                       ${study.industry === "eCommerce" && "bg-orange-50"}
                       ${study.industry === "Logistics" && "bg-cyan-50"}
                     `}>
-                      <div className="text-xs text-gray-500 mb-1">Key Achievement</div>
+                      <div className="text-xs text-gray-700 font-medium mb-1">Key Achievement</div>
                       <div className="text-sm font-medium text-gray-900">{study.keyMetric}</div>
                     </div>
 
