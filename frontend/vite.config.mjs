@@ -17,14 +17,18 @@ export default defineConfig({
   },
   build: {
     // Критическая оптимизация для LCP
-    target: 'es2015', // Совместимость с большинством браузеров
+    target: 'es2020', // Современные браузеры = меньший bundle
     minify: 'terser',
-    cssMinify: true,
+    cssMinify: 'lightningcss',
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log'],
+        pure_funcs: ['console.log', 'console.info'],
+        passes: 2, // Две итерации сжатия
+      },
+      format: {
+        comments: false, // Удалить все комментарии
       },
     },
     rollupOptions: {
@@ -35,18 +39,31 @@ export default defineConfig({
           const ext = name ? name.split('.').pop() : 'bin'
           return `assets/[name]-[hash].[ext]`
         },
-        // Упрощенный split: ВСЕ node_modules в один чанк (кроме analytics)
-        // чтобы исключить cross-chunk React зависимости
+        // Оптимизированный split: разделяем тяжелые библиотеки для лучшего кеширования
         manualChunks: (id) => {
           // Analytics - отдельный чанк для lazy loading
-          if (id.includes('node_modules') && id.includes('posthog')) {
+          if (id.includes('node_modules/posthog')) {
             return 'analytics';
           }
 
-          // ВСЁ остальное из node_modules - в vendor-react
-          // Это предотвращает ANY cross-chunk React dependency issues
+          // React core - кешируется отдельно (редко меняется)
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/scheduler')) {
+            return 'vendor-react-core';
+          }
+
+          // React Router - отдельный чанк
+          if (id.includes('node_modules/react-router')) {
+            return 'vendor-router';
+          }
+
+          // UI библиотеки (Radix, Framer Motion, Emotion)
+          if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/framer-motion') || id.includes('node_modules/@emotion')) {
+            return 'vendor-ui';
+          }
+
+          // Остальные node_modules
           if (id.includes('node_modules')) {
-            return 'vendor-react';
+            return 'vendor-misc';
           }
 
           // Формы — ленивое подключение (только код приложения)
@@ -76,10 +93,11 @@ export default defineConfig({
       },
     },
     // Критическая настройка chunk size
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
     emptyOutDir: true,
     // Предварительная загрузка критических ресурсов
-    assetsInlineLimit: 4096, // Инлайним маленькие ассеты
+    assetsInlineLimit: 2048, // Меньше inline = лучше кеширование
+    reportCompressedSize: false, // Ускорение сборки
   },
   // Критические CSS настройки
   css: {
