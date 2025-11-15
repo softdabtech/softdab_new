@@ -39,31 +39,17 @@ export default defineConfig({
           const ext = name ? name.split('.').pop() : 'bin'
           return `assets/[name]-[hash].[ext]`
         },
-        // Оптимизированный split: разделяем тяжелые библиотеки для лучшего кеширования
+        // КРИТИЧЕСКОЕ: React ecosystem должен быть в ОДНОМ чанке для избежания cross-chunk dependency errors
         manualChunks: (id) => {
           // Analytics - отдельный чанк для lazy loading
           if (id.includes('node_modules/posthog')) {
             return 'analytics';
           }
 
-          // React core - кешируется отдельно (редко меняется)
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/scheduler')) {
-            return 'vendor-react-core';
-          }
-
-          // React Router - отдельный чанк
-          if (id.includes('node_modules/react-router')) {
-            return 'vendor-router';
-          }
-
-          // UI библиотеки (Radix, Framer Motion, Emotion)
-          if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/framer-motion') || id.includes('node_modules/@emotion')) {
-            return 'vendor-ui';
-          }
-
-          // Остальные node_modules
+          // ВСЁ из node_modules в vendor-react (безопасный вариант)
+          // Разделение React ecosystem на части вызывает "forwardRef is undefined"
           if (id.includes('node_modules')) {
-            return 'vendor-misc';
+            return 'vendor-react';
           }
 
           // Формы — ленивое подключение (только код приложения)
