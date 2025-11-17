@@ -89,8 +89,10 @@ const Footer = () => {
                 className="text-gray-400 hover:text-white transition-colors" 
                 aria-label="Clutch.co"
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm1-17h-2v8h2V5zm0 10h-2v2h2v-2z"/>
+                <svg className="h-5 w-5" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="100" cy="100" r="100" fill="#1D3851"/>
+                  <path d="M100 40C66.8629 40 40 66.8629 40 100C40 133.137 66.8629 160 100 160C133.137 160 160 133.137 160 100C160 66.8629 133.137 40 100 40ZM100 145C75.1472 145 55 124.853 55 100C55 75.1472 75.1472 55 100 55C124.853 55 145 75.1472 145 100C145 124.853 124.853 145 100 145Z" fill="white"/>
+                  <circle cx="100" cy="100" r="25" fill="#FF3D2E"/>
                 </svg>
               </a>
             </div>
