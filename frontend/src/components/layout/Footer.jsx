@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Linkedin, Twitter, Github } from 'lucide-react';
+import { Mail, MapPin, Linkedin, Instagram } from 'lucide-react';
 import { Separator } from '../ui/separator';
 
 const FOOTER_SECTIONS = {
@@ -64,9 +64,35 @@ const Footer = () => {
               </div>
             </div>
             <div className="flex space-x-4 mt-6" aria-label="Social links">
-              <a href="https://www.linkedin.com/company/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
-              <a href="https://twitter.com/softdab" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="Twitter/X"><Twitter className="h-5 w-5" /></a>
-              <a href="https://github.com/softdabtech" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="GitHub"><Github className="h-5 w-5" /></a>
+              <a 
+                href="https://www.linkedin.com/company/softdab/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-white transition-colors" 
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://www.instagram.com/softdab" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-white transition-colors" 
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://clutch.co/profile/softdab" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-white transition-colors" 
+                aria-label="Clutch.co"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm1-17h-2v8h2V5zm0 10h-2v2h2v-2z"/>
+                </svg>
+              </a>
             </div>
           </div>
           
