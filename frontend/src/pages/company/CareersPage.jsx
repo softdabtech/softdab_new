@@ -1,13 +1,237 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Briefcase, MapPin, Clock, ArrowRight, Heart, Users, TrendingUp, Award } from 'lucide-react';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
 
-/**
- * Заглушка страницы Careers для успешной сборки.
- */
-const CareersPage = () => (
-  <div style={{ padding: 40, textAlign: "center" }}>
-    <h1>Careers</h1>
-    <p>This is a placeholder page for Careers.</p>
-  </div>
-);
+const benefits = [
+  {
+    icon: Heart,
+    title: 'Work-Life Balance',
+    description: 'Flexible hours, remote options, and generous PTO policy'
+  },
+  {
+    icon: TrendingUp,
+    title: 'Career Growth',
+    description: 'Professional development budget, mentorship, and clear career paths'
+  },
+  {
+    icon: Users,
+    title: 'Great Team',
+    description: 'Collaborative culture with experienced professionals'
+  },
+  {
+    icon: Award,
+    title: 'Competitive Compensation',
+    description: 'Market-leading salaries, bonuses, and benefits package'
+  }
+];
+
+const openPositions = [
+  {
+    id: 1,
+    title: 'Senior Full Stack Developer',
+    location: 'Remote / Kyiv',
+    type: 'Full-time',
+    experience: '5+ years',
+    technologies: ['React', 'Node.js', 'TypeScript', 'PostgreSQL']
+  },
+  {
+    id: 2,
+    title: 'Senior Frontend Developer',
+    location: 'Remote / Kyiv',
+    type: 'Full-time',
+    experience: '4+ years',
+    technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS']
+  },
+  {
+    id: 3,
+    title: 'DevOps Engineer',
+    location: 'Remote / Kyiv',
+    type: 'Full-time',
+    experience: '3+ years',
+    technologies: ['AWS', 'Docker', 'Kubernetes', 'Terraform']
+  },
+  {
+    id: 4,
+    title: 'QA Automation Engineer',
+    location: 'Remote / Kyiv',
+    type: 'Full-time',
+    experience: '3+ years',
+    technologies: ['Selenium', 'Cypress', 'Jest', 'Python']
+  }
+];
+
+const CareersPage = () => {
+  useEffect(() => {
+    document.title = 'Careers at SoftDAB - Join Our Software Development Team | SoftDAB';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.content = 'Join SoftDAB software development team. Remote and Kyiv-based positions for senior developers, DevOps, QA engineers. Competitive salaries and career growth.';
+    }
+
+    // Breadcrumb Schema
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.softdab.tech/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Company",
+          "item": "https://www.softdab.tech/company/about"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Careers",
+          "item": "https://www.softdab.tech/company/careers"
+        }
+      ]
+    };
+
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.setAttribute('data-schema', 'breadcrumb');
+    schemaScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(schemaScript);
+
+    return () => {
+      if (schemaScript.parentNode) {
+        schemaScript.remove();
+      }
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen">
+      {/* Breadcrumb */}
+      <div className="bg-gray-50 py-4 mt-20">
+        <div className="container mx-auto px-6">
+          <nav className="text-sm text-gray-600">
+            <Link to="/" className="hover:text-primary">Home</Link>
+            <span className="mx-2">/</span>
+            <Link to="/company/about" className="hover:text-primary">Company</Link>
+            <span className="mx-2">/</span>
+            <span className="text-gray-900">Careers</span>
+          </nav>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <section className="py-16 bg-gradient-to-br from-primary/5 to-white">
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Build Your Career with SoftDAB
+            </h1>
+            <p className="text-xl text-gray-600">
+              Join a team of talented engineers working on cutting-edge projects for US/EU clients. 
+              Grow your skills, work remotely, and make an impact.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Join SoftDAB?</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {benefits.map((benefit, index) => (
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="mx-auto mb-4 p-3 bg-primary/10 rounded-lg w-fit">
+                    <benefit.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-lg">{benefit.title}</CardTitle>
+                  <CardDescription>{benefit.description}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Open Positions */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-4">Open Positions</h2>
+            <p className="text-center text-gray-600 mb-12">
+              We're always looking for talented engineers. If you don't see a perfect fit, reach out anyway!
+            </p>
+
+            <div className="space-y-6">
+              {openPositions.map((position) => (
+                <Card key={position.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      <div className="flex-1">
+                        <CardTitle className="text-xl mb-2">{position.title}</CardTitle>
+                        <div className="flex flex-wrap gap-3 text-sm text-gray-600">
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            {position.location}
+                          </div>
+                          <div className="flex items-center">
+                            <Clock className="h-4 w-4 mr-1" />
+                            {position.type}
+                          </div>
+                          <div className="flex items-center">
+                            <Briefcase className="h-4 w-4 mr-1" />
+                            {position.experience}
+                          </div>
+                        </div>
+                      </div>
+                      <Link to="/company/contact">
+                        <Button className="group">
+                          Apply Now
+                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {position.technologies.map((tech, idx) => (
+                        <Badge key={idx} variant="secondary">{tech}</Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            <h2 className="text-3xl font-bold">Don't See the Right Role?</h2>
+            <p className="text-xl text-gray-600">
+              We're always interested in meeting talented professionals. Send us your CV and let's talk!
+            </p>
+            <Link to="/company/contact">
+              <Button size="lg" className="group">
+                Get in Touch
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
 
 export default CareersPage;

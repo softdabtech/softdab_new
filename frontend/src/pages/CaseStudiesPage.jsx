@@ -16,6 +16,26 @@ const CaseStudiesPage = () => {
 
   useEffect(() => {
     setCaseStudies(mockData.caseStudies || []);
+
+    // SEO Meta Tags
+    document.title = PAGE_TITLE;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.content = PAGE_DESCRIPTION;
+    }
+
+    // Schema.org для Case Studies страницы
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.setAttribute('data-schema', 'breadcrumb');
+    schemaScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(schemaScript);
+
+    return () => {
+      if (schemaScript.parentNode) {
+        schemaScript.remove();
+      }
+    };
   }, []);
 
   const breadcrumbSchema = {

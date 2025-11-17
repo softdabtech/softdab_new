@@ -1,5 +1,5 @@
 // frontend/src/pages/HomePage.jsx 
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import HeroSection from '../components/sections/HeroSection';
 import TrustSection from '../components/sections/TrustSection';
@@ -33,6 +33,54 @@ const SectionLoader = () => (
 );
 
 const HomePage = () => {
+  useEffect(() => {
+    // Update page title and meta for homepage
+    document.title = 'SoftDAB | Custom Software Development & Outsourcing Teams';
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.content = 'SoftDAB provides custom software development and outsourcing teams for US/EU companies. Start in 2 weeks with a risk‑free trial and transparent pricing.';
+    }
+
+    // Ensure proper indexing
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta');
+      metaRobots.name = 'robots';
+      document.head.appendChild(metaRobots);
+    }
+    metaRobots.content = 'index, follow, max-image-preview:large';
+
+    // Schema.org for HomePage
+    const homepageSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "SoftDAB - Custom Software Development",
+      "description": "Custom software development and outsourcing teams for US/EU companies with transparent pricing and flexible engagement models.",
+      "url": "https://www.softdab.tech/",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "SoftDAB",
+        "url": "https://www.softdab.tech"
+      }
+    };
+
+    let schemaScript = document.querySelector('script[data-schema="homepage"]');
+    if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.type = 'application/ld+json';
+      schemaScript.setAttribute('data-schema', 'homepage');
+      document.head.appendChild(schemaScript);
+    }
+    schemaScript.textContent = JSON.stringify(homepageSchema);
+
+    return () => {
+      if (schemaScript && schemaScript.parentNode) {
+        schemaScript.remove();
+      }
+    };
+  }, []);
+
   return (
     <>
       {/* КРИТИЧЕСКИЙ HERO - БЕЗ SUSPENSE для мгновенного LCP */}

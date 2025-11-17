@@ -4,15 +4,11 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App.jsx';
-// Глобальный CSS загружаем асинхронно после первого кадра,
-// так как критический mobile CSS уже инлайнится в index.html
-if (typeof window !== 'undefined') {
-  const loadCSS = () => import('./index.css');
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(loadCSS, { timeout: 300 });
-  } else {
-    setTimeout(loadCSS, 0);
-  }
+// Defer global CSS import to reduce render-blocking on mobile
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => import('./index.css'), { timeout: 100 });
+} else {
+  setTimeout(() => import('./index.css'), 100);
 }
 
 // Критический импорт Web Vitals мониторинга

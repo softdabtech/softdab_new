@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import ContactFormLite from '../components/forms/ContactFormLite';
 
@@ -41,6 +41,46 @@ const budgets = [
 ];
 
 const ContactPage = () => {
+  useEffect(() => {
+    document.title = 'Contact SoftDAB - Start Your Software Project Today | SoftDAB';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.content = 'Get in touch with SoftDAB for custom software development. Fast response within 24 hours. Free consultation for US/EU businesses.';
+    }
+
+    // Breadcrumb Schema
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.softdab.tech/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contact",
+          "item": "https://www.softdab.tech/contact"
+        }
+      ]
+    };
+
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.setAttribute('data-schema', 'breadcrumb');
+    schemaScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(schemaScript);
+
+    return () => {
+      if (schemaScript.parentNode) {
+        schemaScript.remove();
+      }
+    };
+  }, []);
+
   const onSubmitSuccess = () => {
     toast.success('Thank you! We will contact you soon.');
   };
