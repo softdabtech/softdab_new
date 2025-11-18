@@ -54,8 +54,8 @@ const Footer = () => {
             <div className="space-y-3" aria-label="Contact information">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gray-400" />
-                <a href="mailto:hello@softdab.tech" className="text-gray-300 hover:text-white transition-colors" aria-label="Email us at hello@softdab.tech">
-                  hello@softdab.tech
+                <a href="mailto:info@softdab.tech" className="text-gray-300 hover:text-white transition-colors" aria-label="Email us at info@softdab.tech">
+                  info@softdab.tech
                 </a>
               </div>
               <div className="flex items-center space-x-3">

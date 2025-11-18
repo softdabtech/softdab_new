@@ -113,6 +113,38 @@ const ContactPage = () => {
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Share your vision with us, and we'll respond within 24 hours with insights on how we can bring your project to life.
             </p>
+
+            {/* Contact quick info */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+                <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Location</div>
+                <div className="text-gray-900 font-medium">Novoselitskaya Street 7</div>
+                <div className="text-gray-700">Kyiv, Ukraine</div>
+              </div>
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+                <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Email</div>
+                <a
+                  href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team"
+                  className="text-primary font-medium hover:underline"
+                >
+                  info@softdab.tech
+                </a>
+                <div className="mt-3">
+                  <a
+                    href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team"
+                    className="inline-flex items-center justify-center rounded-md bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-primary/90"
+                  >
+                    Contact Us
+                  </a>
+                </div>
+              </div>
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+                <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Phone</div>
+                <a href="tel:+380663790819" className="text-gray-900 font-medium hover:underline">
+                  +380 66 379 08 19
+                </a>
+              </div>
+            </div>
           </div>
 
           <ContactFormLite onSuccess={onSubmitSuccess} onError={onSubmitError} />

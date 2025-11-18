@@ -221,12 +221,12 @@ const CareersPage = () => {
             <p className="text-xl text-gray-600">
               We're always interested in meeting talented professionals. Send us your CV and let's talk!
             </p>
-            <Link to="/company/contact">
+            <a href="mailto:info@softdab.tech?subject=Job%20Inquiry%20%E2%80%94%20SoftDAB%20Careers">
               <Button size="lg" className="group">
                 Get in Touch
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>

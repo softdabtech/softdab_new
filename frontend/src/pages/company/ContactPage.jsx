@@ -126,22 +126,25 @@ const ContactPage = () => {
     visibility: 'hidden'
   });
 
-  // Контактная информация
+  // Контактная информация (для сайдбара)
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Office',
-      content: 'Estonia, Tallinn'
+      title: 'Location',
+      details: 'Novoselitskaya Street 7, Kyiv, Ukraine',
+      description: 'Head office in Kyiv'
     },
     {
       icon: Mail,
       title: 'Email',
-      content: 'hello@softdab.tech'
+      details: 'info@softdab.tech',
+      description: 'We reply within 24 hours'
     },
     {
       icon: Clock,
       title: 'Response Time',
-      content: 'Within 24 hours'
+      details: 'Within 24 hours',
+      description: 'Typically same business day'
     }
   ];
 
@@ -191,12 +194,43 @@ const ContactPage = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Let's Build Something <span className="gradient-text">Amazing</span>
+              Let's Build Something <span className="gradient-text">Great Together</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
               Ready to start your software development project? Get a free consultation and custom quote tailored to your
               specific needs.
             </p>
+
+            {/* Contact quick info under the headline */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+                <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Location</div>
+                <div className="text-gray-900 font-medium">Novoselitskaya Street 7</div>
+                <div className="text-gray-700">Kyiv, Ukraine</div>
+              </div>
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+                <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Email</div>
+                <a
+                  href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team"
+                  className="text-primary font-medium hover:underline"
+                >
+                  info@softdab.tech
+                </a>
+                <div className="mt-3">
+                  <Button asChild size="sm" className="group">
+                    <a href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team">
+                      Contact Us
+                    </a>
+                  </Button>
+                </div>
+              </div>
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+                <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Phone</div>
+                <a href="tel:+380663790819" className="text-gray-900 font-medium hover:underline">
+                  +380 66 379 08 19
+                </a>
+              </div>
+            </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -451,8 +485,8 @@ const ContactPage = () => {
                       variant="outline"
                       className="w-full border-white text-white"
                     >
-                      <a href="mailto:hello@softdab.tech" className="group">
-                        hello@softdab.tech
+                      <a href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team" className="group">
+                        info@softdab.tech
                         <Mail className="ml-2 group-hover:translate-x-1 transition-transform" />
                       </a>
                     </Button>
