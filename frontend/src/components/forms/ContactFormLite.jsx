@@ -105,8 +105,8 @@ export default function ContactFormLite({ onSuccess, onError }) {
         <input id="marketingConsent" name="marketingConsent" type="checkbox" />
         <label htmlFor="marketingConsent" className="text-sm text-gray-700">I want to receive updates</label>
       </div>
-      <button type="submit" disabled={submitting} className="bg-primary text-white px-6 py-3 rounded">
-        {submitting ? 'Sending…' : 'Send Message'}
+      <button type="submit" disabled={submitting} className="bg-primary text-white px-6 py-3 rounded w-full sm:w-auto text-base font-medium hover:bg-primary/90 transition-colors">
+        {submitting ? 'Sending…' : 'Get Free Consultation'}
       </button>
     </form>
   );

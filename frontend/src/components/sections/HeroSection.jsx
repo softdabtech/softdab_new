@@ -57,14 +57,14 @@ const HeroSection = () => {
             </div>
 
             {/* CTAs - КНОПКА С МОДАЛЬНЫМ ОКНОМ */}
-            <div className="flex justify-center pt-8">
+            <div className="flex justify-center pt-8 px-4">
               <Button 
                 onClick={openModal}
                 size="lg"
-                className="w-full sm:w-auto group"
+                className="w-full sm:w-auto group text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
               >
-                Talk to an expert
-                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+                Get Free Consultation
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
 

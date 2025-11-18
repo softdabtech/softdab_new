@@ -116,12 +116,12 @@ const ContactPage = () => {
 
             {/* Contact quick info */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200 min-h-[120px] flex flex-col justify-center">
                 <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Location</div>
                 <div className="text-gray-900 font-medium">Novoselitskaya Street 7</div>
                 <div className="text-gray-700">Kyiv, Ukraine</div>
               </div>
-              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200 min-h-[120px] flex flex-col justify-center">
                 <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Email</div>
                 <a
                   href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team"
@@ -132,13 +132,13 @@ const ContactPage = () => {
                 <div className="mt-3">
                   <a
                     href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team"
-                    className="inline-flex items-center justify-center rounded-md bg-primary text-white px-4 py-2 text-sm font-medium hover:bg-primary/90"
+                    className="inline-flex items-center justify-center rounded-md bg-primary text-white px-6 py-2.5 text-sm font-medium hover:bg-primary/90 transition-colors w-full sm:w-auto"
                   >
-                    Contact Us
+                    Email Us
                   </a>
                 </div>
               </div>
-              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200 min-h-[120px] flex flex-col justify-center">
                 <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Phone</div>
                 <a href="tel:+380663790819" className="text-gray-900 font-medium hover:underline">
                   +380 66 379 08 19

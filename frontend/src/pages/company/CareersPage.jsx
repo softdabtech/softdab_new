@@ -222,8 +222,8 @@ const CareersPage = () => {
               We're always interested in meeting talented professionals. Send us your CV and let's talk!
             </p>
             <a href="mailto:info@softdab.tech?subject=Job%20Inquiry%20%E2%80%94%20SoftDAB%20Careers">
-              <Button size="lg" className="group">
-                Get in Touch
+              <Button size="lg" className="group w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
+                Apply Now
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </a>

@@ -7,7 +7,6 @@ const FOOTER_SECTIONS = {
   services: [
     { name: 'Custom Development', href: '/services/custom-development' },
     { name: 'Dedicated Teams', href: '/services/dedicated-teams' },
-    { name: 'Outsourcing', href: '/services/outsourcing' },
     { name: 'Discovery & PoC', href: '/services/discovery' },
     { name: 'Support & Maintenance', href: '/services/support' },
   ],

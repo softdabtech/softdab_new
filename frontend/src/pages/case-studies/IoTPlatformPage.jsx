@@ -144,14 +144,14 @@ const IoTPlatformPage = () => {
           </Card>
 
           {/* CTA */}
-          <div className="text-center">
+          <div className="text-center px-4">
             <h2 className="text-2xl font-bold mb-4">Ready to Build Your IoT Solution?</h2>
             <p className="text-gray-600 mb-6">
-              Let's discuss how we can help you implement smart building technology for your properties.
+              Let's discuss how we can help you create a scalable IoT platform for your business.
             </p>
             <Link to="/contact">
-              <Button size="lg">
-                Contact Us
+              <Button size="lg" className="w-full sm:w-auto text-base px-6 py-3">
+                Discuss Your IoT Project
                 <ArrowLeft className="ml-2 h-4 w-4" />
               </Button>
             </Link>

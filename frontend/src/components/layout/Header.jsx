@@ -144,7 +144,7 @@ const Header = () => {
             size="default"
             className="hidden lg:flex"
           >
-            <Link to="/company/contact">Talk to an expert</Link>
+            <Link to="/company/contact">Request a Quote</Link>
           </Button>
 
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -233,7 +233,7 @@ const Header = () => {
                   className="w-full"
                 >
                   <Link to="/company/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                    Talk to an expert
+                    Request a Quote
                   </Link>
                 </Button>
               </div>

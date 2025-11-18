@@ -144,14 +144,14 @@ const LegalDocProcessingPage = () => {
           </Card>
 
           {/* CTA */}
-          <div className="text-center">
+          <div className="text-center px-4">
             <h2 className="text-2xl font-bold mb-4">Ready to Automate Your Document Processing?</h2>
             <p className="text-gray-600 mb-6">
               Let's discuss how we can help you implement AI-powered document processing for your organization.
             </p>
             <Link to="/contact">
-              <Button size="lg">
-                Contact Us
+              <Button size="lg" className="w-full sm:w-auto text-base px-6 py-3">
+                Start Your AI Project
                 <ArrowLeft className="ml-2 h-4 w-4" />
               </Button>
             </Link>

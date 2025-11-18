@@ -149,7 +149,7 @@ const CaseStudyDetailPage = () => {
                 Let's discuss how we can help you achieve similar results for your business.
               </p>
               <Button asChild size="lg">
-                <Link to="/contact">Contact Us Today</Link>
+                <Link to="/contact">Start Your Project</Link>
               </Button>
             </div>
           </div>

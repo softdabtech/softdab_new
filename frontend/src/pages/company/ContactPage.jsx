@@ -203,12 +203,12 @@ const ContactPage = () => {
 
             {/* Contact quick info under the headline */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200 min-h-[120px] flex flex-col justify-center">
                 <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Location</div>
                 <div className="text-gray-900 font-medium">Novoselitskaya Street 7</div>
                 <div className="text-gray-700">Kyiv, Ukraine</div>
               </div>
-              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200 min-h-[120px] flex flex-col justify-center">
                 <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Email</div>
                 <a
                   href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team"
@@ -217,14 +217,14 @@ const ContactPage = () => {
                   info@softdab.tech
                 </a>
                 <div className="mt-3">
-                  <Button asChild size="sm" className="group">
+                  <Button asChild size="sm" className="group w-full sm:w-auto">
                     <a href="mailto:info@softdab.tech?subject=Contact%20to%20SoftDAB%20Team">
-                      Contact Us
+                      Email Us
                     </a>
                   </Button>
                 </div>
               </div>
-              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200">
+              <div className="p-4 bg-white/70 backdrop-blur rounded-lg border border-gray-200 min-h-[120px] flex flex-col justify-center">
                 <div className="text-sm uppercase tracking-wide text-gray-500 mb-1">Phone</div>
                 <a href="tel:+380663790819" className="text-gray-900 font-medium hover:underline">
                   +380 66 379 08 19
@@ -234,15 +234,15 @@ const ContactPage = () => {
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="text-center">
+              <div className="text-center min-h-[80px]">
                 <div className="text-3xl font-bold text-primary mb-2">&lt; 24h</div>
                 <div className="text-gray-600">Response time</div>
               </div>
-              <div className="text-center">
+              <div className="text-center min-h-[80px]">
                 <div className="text-3xl font-bold text-primary mb-2">Fast start</div>
                 <div className="text-gray-600">Quick team ramp‑up</div>
               </div>
-              <div className="text-center">
+              <div className="text-center min-h-[80px]">
                 <div className="text-3xl font-bold text-primary mb-2">100%</div>
                 <div className="text-gray-600">Free consultation</div>
               </div>
@@ -412,7 +412,7 @@ const ContactPage = () => {
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full"
+                        className="w-full text-base sm:text-lg py-3 sm:py-4"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (
@@ -422,8 +422,8 @@ const ContactPage = () => {
                           </span>
                         ) : (
                           <span className="inline-flex items-center group">
-                            Send Message
-                            <Send className="group-hover:translate-x-1 transition-transform" />
+                            Request Project Quote
+                            <Send className="ml-2 group-hover:translate-x-1 transition-transform" />
                           </span>
                         )}
                       </Button>

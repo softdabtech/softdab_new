@@ -780,7 +780,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
                     disabled={isSubmitting || !formData.consent}
                     className="w-auto px-6 bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold disabled:opacity-50"
                   >
-                    {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                    {isSubmitting ? 'Submitting...' : 'Schedule Expert Call'}
                   </Button>
                 </div>
               </div>
