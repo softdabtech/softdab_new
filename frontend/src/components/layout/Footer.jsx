@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MapPin, Linkedin, Instagram } from 'lucide-react';
+import { Mail, MapPin, Phone, Linkedin, Instagram } from 'lucide-react';
 import { Separator } from '../ui/separator';
 
 const FOOTER_SECTIONS = {
@@ -60,7 +60,21 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-gray-400" />
-                <span className="text-gray-300">Kyiv, Ukraine</span>
+                <a
+                  href="https://maps.google.com/?q=Novoselitskaya%20Street%207,%20Kyiv,%20Ukraine"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-white transition-colors"
+                  aria-label="Open address in Google Maps"
+                >
+                  Novoselitskaya Street 7, Kyiv, Ukraine
+                </a>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Phone className="h-5 w-5 text-gray-400" />
+                <a href="tel:+380663790819" className="text-gray-300 hover:text-white transition-colors" aria-label="Call SoftDAB">
+                  +380 66 379 08 19
+                </a>
               </div>
             </div>
             <div className="flex space-x-4 mt-6" aria-label="Social links">
@@ -103,7 +117,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {FOOTER_SECTIONS.services.map((item) => (
                 <li key={item.href}>
-                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                  <Link to={item.href} className="block text-gray-300 hover:text-white transition-colors">
                     {item.name}
                   </Link>
                 </li>
@@ -116,7 +130,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {FOOTER_SECTIONS.industries.map((item) => (
                 <li key={item.href}>
-                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                  <Link to={item.href} className="block text-gray-300 hover:text-white transition-colors">
                     {item.name}
                   </Link>
                 </li>
@@ -129,7 +143,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {FOOTER_SECTIONS.company.map((item) => (
                 <li key={item.href}>
-                  <Link to={item.href} className="text-gray-300 hover:text-white transition-colors">
+                  <Link to={item.href} className="block text-gray-300 hover:text-white transition-colors">
                     {item.name}
                   </Link>
                 </li>
@@ -144,7 +158,7 @@ const Footer = () => {
                 <li key={item.href}>
                   <a 
                     href={item.href} 
-                    className="text-gray-300 hover:text-white transition-colors"
+                    className="block text-gray-300 hover:text-white transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -160,7 +174,7 @@ const Footer = () => {
             <ul className="space-y-2">
               {FOOTER_SECTIONS.legal.map((item) => (
                 <li key={item.href}>
-                  <Link to={item.href} className="text-gray-400 hover:text-gray-300 transition-colors text-sm">
+                  <Link to={item.href} className="block text-gray-400 hover:text-gray-300 transition-colors text-sm">
                     {item.name}
                   </Link>
                 </li>
