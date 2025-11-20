@@ -5,14 +5,14 @@ const Preloader = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Hide preloader after 2 seconds
+    // Hide preloader after 3 seconds
     const timer = setTimeout(() => {
       setIsVisible(false);
-      // Call onComplete callback after fade out animation
+      // Call onComplete callback after fade out animation (1 second)
       setTimeout(() => {
         if (onComplete) onComplete();
-      }, 500);
-    }, 2000);
+      }, 1000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
