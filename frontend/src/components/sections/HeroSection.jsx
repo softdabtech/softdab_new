@@ -1,10 +1,11 @@
 // frontend/src/components/sections/HeroSection.jsx (ФИНАЛЬНАЯ ЧИСТАЯ ВЕРСИЯ)
 import React from 'react';
-import { ArrowRight, CheckCircle } from 'lucide-react'; // Убрали неиспользуемый Play
+import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/button';
 import ExpertConsultationForm from '../forms/ExpertConsultationForm';
 import { useExpertConsultation } from '../../hooks/use-expert-consultation';
 import CodeFlowBackground from '../animations/CodeFlowBackground';
+import '../animations/CodeFlowBackground.css';
 
 const HeroSection = () => {
   const { isOpen, openModal, closeModal } = useExpertConsultation();
@@ -27,7 +28,7 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-6 py-32 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center space-y-8 fade-in">
+          <div className="text-center space-y-8 fade-in" style={{ minHeight: '600px' }}>
             {/* Badge */}
             <div className="inline-flex items-center px-3 sm:px-4 py-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full text-xs sm:text-sm text-gray-700 font-medium">
               <span className="mr-1 sm:mr-2">🚀</span>

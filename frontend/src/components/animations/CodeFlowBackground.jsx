@@ -49,7 +49,7 @@ const CodeFlowBackground = () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(47, 137, 252, 0.15)'; // SoftDAB primary blue
+        ctx.fillStyle = 'rgba(47, 137, 252, 0.3)'; // SoftDAB primary blue
         ctx.fill();
       }
     }
@@ -70,10 +70,10 @@ const CodeFlowBackground = () => {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < maxDistance) {
-            const opacity = (1 - distance / maxDistance) * 0.1;
+            const opacity = (1 - distance / maxDistance) * 0.2;
             ctx.beginPath();
             ctx.strokeStyle = `rgba(47, 137, 252, ${opacity})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 1;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
             ctx.stroke();
