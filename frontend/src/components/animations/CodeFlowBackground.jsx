@@ -32,9 +32,9 @@ const CodeFlowBackground = () => {
         this.y = Math.random() * -canvas.height;
         this.speed = Math.random() * 2 + 1;
         this.chars = '01';
-        this.fontSize = 14;
+        this.fontSize = 16;
         this.length = Math.floor(Math.random() * 20) + 10;
-        this.opacity = Math.random() * 0.3 + 0.2;
+        this.opacity = Math.random() * 0.4 + 0.4;
       }
 
       update() {
@@ -79,13 +79,13 @@ const CodeFlowBackground = () => {
       }
 
       draw() {
-        const pulseSize = Math.sin(this.pulse) * 5;
+        const pulseSize = Math.sin(this.pulse) * 8;
         const gradient = ctx.createRadialGradient(
           this.x, this.y, 0,
           this.x, this.y, this.radius + pulseSize
         );
-        gradient.addColorStop(0, 'rgba(47, 137, 252, 0.15)');
-        gradient.addColorStop(0.5, 'rgba(47, 137, 252, 0.05)');
+        gradient.addColorStop(0, 'rgba(47, 137, 252, 0.4)');
+        gradient.addColorStop(0.5, 'rgba(47, 137, 252, 0.15)');
         gradient.addColorStop(1, 'rgba(47, 137, 252, 0)');
         
         ctx.beginPath();
