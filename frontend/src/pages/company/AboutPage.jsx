@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Award, Globe, Heart } from 'lucide-react';
 import { Button } from '../../components/ui/button';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import { mockData } from '../../data/mockData';
@@ -44,6 +45,42 @@ const AboutPage = () => {
     { number: '20+', label: 'Projects Delivered' },
     { number: '10+', label: 'Countries Served' }
   ];
+
+  const faqItems = [
+    {
+      q: 'How do you start a new project?',
+      a: `We start with a Discovery phase that usually takes at least two weeks. During this time, we dive into your goals, domain, existing systems, and constraints. The outcome is a clear scope, prioritized roadmap, high-level architecture, and agreed success metrics. Only after Discovery do we move into active delivery.`
+    },
+    {
+      q: 'What does your team look like and can we interview the engineers?',
+      a: `We build teams around your needs, typically with Middle/Senior engineers (backend, frontend, mobile, QA, DevOps) and a dedicated Delivery/Project Manager. For dedicated teams and long-term engagements, we offer candidates for interviews on your side so you can assess both technical and cultural fit before they join your project.`
+    },
+    {
+      q: 'How do you ensure quality and security of the software you build?',
+      a: `We follow strict engineering practices: regular code reviews, CI/CD pipelines, automated testing, and security-by-design principles. For regulated industries such as fintech or healthcare, we align with relevant compliance and security requirements, and can support security audits and hardening activities as needed.`
+    },
+    {
+      q: 'How do pricing and billing work?',
+      a: `We provide transparent pricing based on the engagement model and scope. Depending on your needs, we work on a Time & Materials basis, fixed-scope projects, or monthly retainers for dedicated teams. All commercial terms are clearly documented upfront, so you always know what you are paying for.`
+    },
+    {
+      q: 'What happens after the initial launch? Do you provide ongoing support?',
+      a: `Yes. We offer ongoing support and continuous development after launch. This can include 24/7 monitoring (where needed), bug fixing under SLAs, performance optimization, and incremental feature development. Our goal is to be a long-term partner and keep your systems stable, secure, and evolving with your business.`
+    }
+  ];
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  };
 
   return (
     <div className="min-h-screen">
@@ -250,7 +287,7 @@ const AboutPage = () => {
       <section className="section-padding bg-primary text-white">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
               Ready to work with us?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
@@ -269,7 +306,7 @@ const AboutPage = () => {
                   <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <Button asChild variant="ghost" size="lg" className="bg-transparent border border-white text-white hover:bg-white/10 hover:text-white">
                 <Link to="/case-studies">
                   View Our Work
                 </Link>
@@ -277,6 +314,28 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="section-padding bg-white text-gray-900">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Frequently Asked Questions (FAQ)</h2>
+            <p className="text-lg text-gray-600 mb-8">Answers to common questions about how we start, structure, and deliver software projects.</p>
+            <Accordion type="single" collapsible className="w-full">
+              {faqItems.map((item, idx) => (
+                <AccordionItem key={idx} value={`faq-${idx}`}>
+                  <AccordionTrigger className="text-left text-lg font-semibold">{item.q}</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-700 leading-relaxed">{item.a}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+        {/* FAQ Schema for SEO */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       </section>
     </div>
   );

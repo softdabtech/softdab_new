@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Users, Clock, MessageSquare, TrendingUp } from 'lucide-react';
 import { Button } from '../../components/ui/button';
+import StaffingRequestModal from '../../components/forms/StaffingRequestModal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
 import { mockData } from '../../data/mockData';
 
 const DedicatedTeamsPage = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   useEffect(() => {
     document.title = 'Dedicated Teams - Extended Development Teams | SoftDAB';
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -183,17 +185,15 @@ const DedicatedTeamsPage = () => {
               {service.description} We assemble senior engineers who integrate with your culture and deliver consistently — without the overhead of hiring and managing full‑time employees.
             </p>
 
-            {/* Primary CTA — narrower, text stays white on hover; second button removed */}
+            {/* Primary CTA — open staffing modal */}
             <div className="flex justify-center">
               <Button
-                asChild
                 size="lg"
                 className="bg-primary hover:bg-primary/90 text-white hover:underline hover:text-white w-full sm:w-[22rem] max-w-[22rem] rounded-xl"
+                onClick={() => setModalOpen(true)}
               >
-                <Link to="/contact" aria-label="Build your team">
-                  Build Your Team
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+                Build Your Team
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </div>
@@ -408,29 +408,29 @@ const DedicatedTeamsPage = () => {
       <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
         {/* Primary: белая на синем фоне; на hover текст остаётся синим + подчеркивание */}
         <Button
-          asChild
           size="lg"
           className="
             bg-white text-primary hover:bg-white/90 hover:underline hover:text-primary
             w-full sm:w-[22rem] max-w-[22rem] h-14 rounded-2xl
           "
+          onClick={() => setModalOpen(true)}
         >
-          <Link to="/contact" aria-label="Build your team">
-            Build Your Team
-            <svg
-              className="ml-2 h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </Link>
+          Build Your Team
+          <svg
+            className="ml-2 h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
         </Button>
+  {/* Staffing Modal */}
+  <StaffingRequestModal open={modalOpen} onOpenChange={setModalOpen} />
 
         {/* Secondary: прозрачная, белая рамка; на hover лёгкий overlay, текст остаётся белым */}
         <Button

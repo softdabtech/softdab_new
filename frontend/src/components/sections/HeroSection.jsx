@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle } from 'lucide-react'; // Убрали неис
 import { Button } from '../ui/button';
 import ExpertConsultationForm from '../forms/ExpertConsultationForm';
 import { useExpertConsultation } from '../../hooks/use-expert-consultation';
+import CodeFlowBackground from '../animations/CodeFlowBackground';
 
 const HeroSection = () => {
   const { isOpen, openModal, closeModal } = useExpertConsultation();
@@ -14,6 +15,9 @@ const HeroSection = () => {
       data-hero="true"
       data-lcp-section="true"
     >
+      {/* Subtle Code Flow Animation */}
+      <CodeFlowBackground />
+      
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>

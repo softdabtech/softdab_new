@@ -67,6 +67,28 @@ async def init_database():
             )
         """)
         
+        # Create staffing_requests table
+        await database.connection.execute("""
+            CREATE TABLE IF NOT EXISTS staffing_requests (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                company TEXT,
+                roles TEXT NOT NULL,
+                engagement TEXT NOT NULL,
+                seniority TEXT NOT NULL,
+                duration TEXT,
+                start_date TEXT,
+                rate TEXT,
+                message TEXT,
+                gdpr_consent BOOLEAN NOT NULL,
+                ip_address TEXT,
+                user_agent TEXT,
+                status TEXT DEFAULT 'new',
+                submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        
         # Create expert_consultations table for multi-step form
         await database.connection.execute("""
             CREATE TABLE IF NOT EXISTS expert_consultations (
@@ -136,6 +158,41 @@ async def save_contact(contact_data: dict):
         
     except Exception as e:
         logger.error(f"Failed to save contact: {e}")
+        return False
+
+async def save_staffing_request(data: dict):
+    """Save staffing request to database"""
+    try:
+        # roles stored as comma-separated for simplicity
+        roles_value = ", ".join(data.get('roles') or [])
+        await database.connection.execute(
+            """
+            INSERT INTO staffing_requests (
+                name, email, company, roles, engagement, seniority, duration,
+                start_date, rate, message, gdpr_consent, ip_address, user_agent
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                data.get('name'),
+                data.get('email'),
+                data.get('company') or "",
+                roles_value,
+                data.get('engagement'),
+                data.get('seniority'),
+                data.get('duration') or "",
+                data.get('startDate') or "",
+                data.get('rate') or "",
+                data.get('message') or "",
+                data.get('gdprConsent'),
+                data.get('ip_address'),
+                data.get('user_agent'),
+            )
+        )
+        await database.connection.commit()
+        logger.info(f"Staffing request saved: {data.get('email')}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to save staffing request: {e}")
         return False
 
 async def get_all_contacts():

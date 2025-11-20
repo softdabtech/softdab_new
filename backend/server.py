@@ -11,6 +11,7 @@ load_dotenv()
 # Теперь используем относительные импорты для запуска из папки backend
 from database import init_database, close_database
 from routes.contact import router as contact_router
+from routes.staffing import router as staffing_router
 from routes.expert_consultation import router as expert_consultation_router
 
 # Import security middleware
@@ -74,6 +75,7 @@ async def shutdown_event():
 
 # Подключаем роутеры
 app.include_router(contact_router, prefix="/api/contact")
+app.include_router(staffing_router, prefix="/api/staffing")
 app.include_router(expert_consultation_router, prefix="/api/expert-consultation")
 
 @app.get("/")

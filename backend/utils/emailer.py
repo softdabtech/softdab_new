@@ -20,6 +20,12 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
     password = os.environ.get('SMTP_PASS')
     use_tls = os.environ.get('SMTP_TLS', 'false').lower() in ('1', 'true', 'yes')
 
+    # Verbose diagnostic (only if DEBUG_EMAIL=1)
+    if os.environ.get('DEBUG_EMAIL', '0') in ('1', 'true', 'yes'):
+        logger.info(
+            f"email_smtp_attempt host={host} port={port} user={'set' if user else 'none'} tls={use_tls} to={to_address} subject_len={len(subject)}"
+        )
+
     from_addr = from_address or f"{FROM_NAME_DEFAULT} <{FROM_EMAIL_DEFAULT}>"
     # Определяем тип письма: plain или html
     if is_html or content.strip().lower().startswith('<html') or content.strip().lower().startswith('<!doctype'):
@@ -49,7 +55,9 @@ def _smtp_send_blocking(to_address: str, subject: str, content: str, from_addres
             server.sendmail(envelope_from, [to_address], msg.as_string())
         return True
     except Exception as e:
-        logger.error(f"SMTP send error: {e}")
+        logger.error(
+            f"SMTP send error: {e} host={host} port={port} user={'set' if user else 'none'} tls={use_tls} to={to_address}"
+        )
         return False
 
 

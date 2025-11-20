@@ -71,7 +71,7 @@ export const AppRoutes = () => {
         <Route path="/industries/ecommerce" element={<EcommercePage />} />
         <Route path="/industries/logistics" element={<LogisticsPage />} />
         
-        /* Legal */
+        {/* Legal */}
         <Route path="/legal/privacy" element={<PrivacyPage />} />
         <Route path="/legal/cookies" element={<CookiesPolicyPage />} />
         <Route path="/legal/dpa" element={<DPAPage />} />
