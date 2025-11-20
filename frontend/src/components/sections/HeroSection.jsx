@@ -4,27 +4,19 @@ import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/button';
 import ExpertConsultationForm from '../forms/ExpertConsultationForm';
 import { useExpertConsultation } from '../../hooks/use-expert-consultation';
-import CodeFlowBackground from '../animations/CodeFlowBackground';
-import '../animations/CodeFlowBackground.css';
 
 const HeroSection = () => {
   const { isOpen, openModal, closeModal } = useExpertConsultation();
 
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center bg-gradient-subtle overflow-hidden" 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{
+        background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%)'
+      }}
       data-hero="true"
       data-lcp-section="true"
     >
-      {/* Subtle Code Flow Animation */}
-      <CodeFlowBackground />
-      
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div className="absolute top-40 right-10 w-96 h-96 bg-accent rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-300"></div>
-        <div className="absolute bottom-20 left-20 w-80 h-80 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-700"></div>
-      </div>
 
       <div className="container mx-auto px-6 py-32 relative z-10">
         <div className="max-w-6xl mx-auto">
