@@ -116,52 +116,27 @@
   }
 }
 
-/* Words appear sequentially */
-.words {
-  margin-top: 24px;
-  display: flex;
-  gap: 32px;
-  justify-content: center;
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.word {
+.tagline {
+  margin-top: 16px;
+  font-size: 18px;
+  color: #64748b;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 300;
   opacity: 0;
-  transform: translateY(12px);
-  filter: blur(4px);
-  background: linear-gradient(135deg, #1e293b 0%, #2F89FC 60%, #0ea5e9 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: wordRise 0.6s ease-out forwards;
+  animation: slideUp 1s ease-out 0.5s forwards;
 }
 
-.word-1 { animation-delay: 2.0s; }
-.word-2 { animation-delay: 2.4s; }
-.word-3 { animation-delay: 2.8s; }
-
-@keyframes wordRise {
-  0% { opacity: 0; transform: translateY(12px); filter: blur(6px); }
-  60% { opacity: 1; filter: blur(0); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-/* Dissolve effect for preloader */
-.preloader.dissolve {
-  animation: dissolve 1.2s ease forwards;
-}
-
-@keyframes dissolve {
-  0% { opacity: 1; filter: blur(0); }
-  40% { opacity: 0.7; filter: blur(2px); }
-  80% { opacity: 0.3; filter: blur(8px); }
-  100% { opacity: 0; filter: blur(12px); transform: scale(1.02); }
-}
-
-/* Fade overlay away sooner during dissolve */
-.phase-dissolve .overlay { transition: opacity 0.8s ease; opacity: 0; }
 
 /* Decorative circles */
 .deco-circle {
