@@ -1,0 +1,25 @@
+/* Logo.css - Gradient logo styling matching preloader design */
+
+.logo-gradient {
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  background: linear-gradient(135deg, #1e293b 0%, #2F89FC 50%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+/* Subtle animation on hover */
+.logo-gradient:hover {
+  background-position: 100% 50%;
+}
+
+/* Optional: add glow effect on hover for extra polish */
+@media (hover: hover) {
+  .logo-gradient:hover {
+    filter: drop-shadow(0 0 8px rgba(47, 137, 252, 0.3));
+  }
+}

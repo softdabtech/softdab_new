@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 // Hamburger menu icon implemented with CSS
 import { Button } from '../ui/button';
+import Logo from '../ui/Logo';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -91,7 +92,7 @@ const Header = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center space-x-2" aria-label="Back to homepage">
-          <span className="text-2xl font-bold text-primary">SoftDAB</span>
+          <Logo size="md" />
         </Link>
 
         <NavigationMenu className="hidden lg:flex">
