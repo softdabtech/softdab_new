@@ -2,7 +2,7 @@
 
 .logo-gradient {
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   background: linear-gradient(135deg, #1e293b 0%, #2F89FC 50%, #0ea5e9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -10,6 +10,8 @@
   background-size: 200% 200%;
   display: inline-block;
   transition: all 0.3s ease;
+  padding: 0 2px;
+  overflow: visible;
 }
 
 /* Subtle animation on hover */
@@ -27,7 +29,7 @@
 /* Footer variant: white with very subtle gradient */
 .logo-gradient-footer {
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -35,6 +37,8 @@
   background-size: 200% 200%;
   display: inline-block;
   transition: all 0.3s ease;
+  padding: 0 2px;
+  overflow: visible;
 }
 
 /* Subtle animation on hover for footer variant */
