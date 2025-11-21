@@ -17,6 +17,21 @@
   pointer-events: none;
 }
 
+.preloader.fade-out .tagline {
+  animation: fadeOutTagline 0.8s ease-out forwards;
+}
+
+@keyframes fadeOutTagline {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
 /* Liquid Gradients */
 .gradient-bg {
   position: absolute;
@@ -97,7 +112,7 @@
 .logo {
   font-size: 96px;
   font-weight: 900;
-  letter-spacing: -4px;
+  letter-spacing: -2px;
   background: linear-gradient(135deg, #1e293b 0%, #2F89FC 50%, #0ea5e9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -105,6 +120,8 @@
   background-size: 200% 200%;
   animation: gradientShift 5s ease infinite;
   filter: drop-shadow(0 0 30px rgba(47, 137, 252, 0.5));
+  padding: 0 4px;
+  overflow: visible;
 }
 
 @keyframes gradientShift {
@@ -171,7 +188,7 @@
 @media (max-width: 768px) {
   .logo {
     font-size: 64px;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
   }
   
   .tagline {
