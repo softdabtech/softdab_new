@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone, Linkedin, Instagram } from 'lucide-react';
 import { Separator } from '../ui/separator';
+import Logo from '../ui/Logo';
 
 const FOOTER_SECTIONS = {
   services: [
@@ -45,7 +46,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-8">
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-6 no-underline hover:no-underline focus:no-underline" aria-label="Home">
-              <div className="text-2xl font-bold text-white">SoftDAB</div>
+              <Logo size="md" variant="footer" />
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
               Custom software that solves real business problems. Senior engineering teams delivering measurable outcomes.

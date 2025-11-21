@@ -23,3 +23,28 @@
     filter: drop-shadow(0 0 8px rgba(47, 137, 252, 0.3));
   }
 }
+
+/* Footer variant: white with very subtle gradient */
+.logo-gradient-footer {
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+/* Subtle animation on hover for footer variant */
+.logo-gradient-footer:hover {
+  background-position: 100% 50%;
+}
+
+/* Very subtle glow on hover for footer */
+@media (hover: hover) {
+  .logo-gradient-footer:hover {
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+  }
+}
