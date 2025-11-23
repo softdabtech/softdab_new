@@ -18,18 +18,8 @@
 }
 
 .preloader.fade-out .tagline {
-  animation: fadeOutTagline 0.8s ease-out forwards;
-}
-
-@keyframes fadeOutTagline {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 /* Liquid Gradients */
@@ -142,6 +132,7 @@
   font-weight: 300;
   opacity: 0;
   animation: slideUp 1s ease-out 0.5s forwards;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 @keyframes slideUp {
