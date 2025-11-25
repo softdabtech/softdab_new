@@ -1,0 +1,67 @@
+2025-11-25 15:04:53,337 - __main__ - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:05:29,377 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:05:29,390 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:05:29,390 - server - INFO - Application started with SQLite database
+2025-11-25 15:06:02,630 - database - INFO - Closed database connection
+2025-11-25 15:06:02,631 - server - INFO - Application shutdown
+2025-11-25 15:06:43,325 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:06:43,331 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:06:43,331 - server - INFO - Application started with SQLite database
+2025-11-25 15:11:58,255 - routes.skycodec - INFO - Compressed rJ-8Gml2SoRQQH9Zyxd5Wg_test.txt: 103 → 55 bytes
+2025-11-25 15:13:10,234 - routes.skycodec - INFO - Decompressed rJ-8Gml2SoRQQH9Zyxd5Wg_compressed.skycodec → rJ-8Gml2SoRQQH9Zyxd5Wg_decompressed_test.txt
+2025-11-25 15:17:20,842 - database - INFO - Closed database connection
+2025-11-25 15:17:20,842 - server - INFO - Application shutdown
+2025-11-25 15:17:22,135 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:17:22,142 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:17:22,142 - server - INFO - Application started with SQLite database
+2025-11-25 15:29:58,397 - database - INFO - Closed database connection
+2025-11-25 15:29:58,398 - server - INFO - Application shutdown
+2025-11-25 15:29:59,474 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:29:59,482 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:29:59,482 - server - INFO - Application started with SQLite database
+2025-11-25 15:30:15,238 - database - INFO - Closed database connection
+2025-11-25 15:30:15,238 - server - INFO - Application shutdown
+2025-11-25 15:30:15,967 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:30:15,975 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:30:15,975 - server - INFO - Application started with SQLite database
+2025-11-25 15:32:59,468 - database - INFO - Closed database connection
+2025-11-25 15:32:59,469 - server - INFO - Application shutdown
+2025-11-25 15:33:00,531 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:33:00,539 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:33:00,539 - server - INFO - Application started with SQLite database
+2025-11-25 15:33:23,884 - database - INFO - Closed database connection
+2025-11-25 15:33:23,884 - server - INFO - Application shutdown
+2025-11-25 15:33:24,551 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:33:24,558 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:33:24,558 - server - INFO - Application started with SQLite database
+2025-11-25 15:33:40,567 - database - INFO - Closed database connection
+2025-11-25 15:33:40,567 - server - INFO - Application shutdown
+2025-11-25 15:33:41,226 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:33:41,232 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:33:41,232 - server - INFO - Application started with SQLite database
+2025-11-25 15:34:48,248 - database - INFO - Closed database connection
+2025-11-25 15:34:48,248 - server - INFO - Application shutdown
+2025-11-25 15:34:49,959 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 15:34:49,966 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 15:34:49,966 - server - INFO - Application started with SQLite database
+2025-11-25 15:35:06,501 - routes.skycodec - INFO - Compressed 0525SvhRZejt9xJb0UQ7Xw_test_document.txt: 252 → 130 bytes (ratio: 48.41%)
+2025-11-25 15:35:23,551 - routes.skycodec - INFO - Decompressed 0525SvhRZejt9xJb0UQ7Xw_test_document.sky → 0525SvhRZejt9xJb0UQ7Xw_decompressed_test_document.txt
+2025-11-25 16:39:51,003 - database - INFO - Closed database connection
+2025-11-25 16:39:51,004 - server - INFO - Application shutdown
+2025-11-25 16:39:52,066 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 16:39:52,073 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 16:39:52,073 - server - INFO - Application started with SQLite database
+2025-11-25 16:46:43,877 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 16:46:43,893 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 16:46:43,893 - server - INFO - Application started with SQLite database
+2025-11-25 16:49:41,423 - database - INFO - Closed database connection
+2025-11-25 16:49:41,425 - server - INFO - Application shutdown
+2025-11-25 16:49:59,339 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 16:49:59,348 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 16:49:59,348 - server - INFO - Application started with SQLite database
+2025-11-25 16:50:18,451 - routes.skycodec - INFO - Compressed K7sWucJc6NP2l6aFLe5xrg_test_zlib.txt: 188 → 98 bytes (ratio: 47.87%)
+2025-11-25 16:50:42,305 - routes.skycodec - ERROR - Decompression failed: Error -3 while decompressing data: incorrect header check
+2025-11-25 16:50:42,305 - routes.skycodec - ERROR - Decompression endpoint error: Error -3 while decompressing data: incorrect header check
+2025-11-25 17:16:07,028 - server - INFO - CORS origins: ['https://www.softdab.tech', 'https://softdab.tech', 'https://blog.softdab.tech', 'https://cryptography.softdab.tech', 'https://optical.softdab.tech', 'https://opto.softdab.tech', 'https://optocrypto.softdab.tech', 'https://snapsafe.softdab.tech', 'https://snapsafeapp.softdab.tech', 'https://tyke.softdab.tech']
+2025-11-25 17:16:07,036 - database - INFO - SQLite database initialized at data/contacts.db
+2025-11-25 17:16:07,036 - server - INFO - Application started with SQLite database
