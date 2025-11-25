@@ -515,13 +515,11 @@ const HealthcarePage = () => {
                 </Link>
               </Button>
               <Button 
-                variant="outline" 
                 size="lg" 
-                className="border-2 border-white text-white hover:bg-white hover:text-red-600 transition-all"
+                className="bg-red-800 text-white hover:bg-white hover:text-gray-900 transition-all"
                 onClick={() => setIsModalOpen(true)}
               >
-                <Download className="mr-2 h-5 w-5" />
-                Download HIPAA Guide
+                HIPAA Guide
               </Button>
             </div>
           </div>
