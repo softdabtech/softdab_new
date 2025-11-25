@@ -276,7 +276,7 @@ const HealthcarePage = () => {
               <Heart className="h-10 w-10 text-white" />
             </div>
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Badge variant="outline" className="border-red-200 text-red-700"> years in IT</Badge>
+              <Badge variant="outline" className="border-red-200 text-red-700">5+ years in IT</Badge>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Healthcare Software Development
