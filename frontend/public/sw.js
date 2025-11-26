@@ -113,6 +113,12 @@ self.addEventListener('fetch', (event) => {
 // Критический обработчик для LCP ресурсов
 async function handleCriticalResource(request) {
   try {
+    // Игнорируем chrome-extension и другие нестандартные протоколы
+    const url = new URL(request.url);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return fetch(request);
+    }
+    
     // Cache First - мгновенная загрузка для LCP
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
@@ -138,6 +144,12 @@ async function handleCriticalResource(request) {
 // Обработчик изображений для LCP
 async function handleImageRequest(request) {
   try {
+    // Игнорируем нестандартные протоколы
+    const url = new URL(request.url);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return fetch(request);
+    }
+    
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
@@ -160,6 +172,12 @@ async function handleImageRequest(request) {
 // Обработчик шрифтов
 async function handleFontRequest(request) {
   try {
+    // Игнорируем нестандартные протоколы
+    const url = new URL(request.url);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return fetch(request);
+    }
+    
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
@@ -181,6 +199,12 @@ async function handleFontRequest(request) {
 // API обработчик
 async function handleApiRequest(request) {
   try {
+    // Игнорируем chrome-extension и другие нестандартные протоколы
+    const url = new URL(request.url);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return fetch(request);
+    }
+    
     // Network First для актуальных данных
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
@@ -202,6 +226,12 @@ async function handleApiRequest(request) {
 // HTML обработчик
 async function handleHtmlRequest(request) {
   try {
+    // Игнорируем chrome-extension и другие нестандартные протоколы
+    const url = new URL(request.url);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return fetch(request);
+    }
+    
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
       const cache = await caches.open(RUNTIME_CACHE);
@@ -220,28 +250,75 @@ async function handleHtmlRequest(request) {
 // Utility functions
 function isCriticalResource(request) {
   const url = request.url;
+  
+  // Игнорируем chrome-extension и другие нестандартные протоколы
+  try {
+    const urlObj = new URL(url);
+    if (urlObj.protocol !== 'http:' && urlObj.protocol !== 'https:') {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+  
   return CRITICAL_RESOURCES.some(resource => 
     url.includes(resource) || url.endsWith(resource)
   );
 }
 
 function isImageRequest(request) {
+  try {
+    const urlObj = new URL(request.url);
+    if (urlObj.protocol !== 'http:' && urlObj.protocol !== 'https:') {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+  
   return request.destination === 'image' || 
          /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(request.url);
 }
 
 function isFontRequest(request) {
+  try {
+    const urlObj = new URL(request.url);
+    if (urlObj.protocol !== 'http:' && urlObj.protocol !== 'https:') {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+  
   return request.destination === 'font' ||
          /\.(woff|woff2|ttf|otf|eot)$/i.test(request.url) ||
          request.url.includes('fonts.gstatic.com');
 }
 
 function isApiRequest(request) {
+  try {
+    const url = new URL(request.url);
+    // Игнорируем chrome-extension и другие нестандартные протоколы
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
   return request.url.includes('/api/') || 
          request.url.includes('api.softdab.tech');
 }
 
 function isHtmlRequest(request) {
+  try {
+    const url = new URL(request.url);
+    // Игнорируем chrome-extension и другие нестандартные протоколы
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
   return request.destination === 'document' ||
          request.headers.get('accept')?.includes('text/html');
 }

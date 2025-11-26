@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 // Lazy-loaded components
 const HomePage = React.lazy(() => import('./pages/HomePage'));
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
-const SkyCodecPage = React.lazy(() => import('./pages/SkyCodecPage'));
 
 // Company pages
 const AboutPage = React.lazy(() => import('./pages/company/AboutPage'));
@@ -79,9 +78,6 @@ export const AppRoutes = () => {
         
         {/* Admin */}
         <Route path="/admin" element={<AdminPage />} />
-        
-        {/* SkyCodec - File Compression Service */}
-        <Route path="/skycodec" element={<SkyCodecPage />} />
         
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
