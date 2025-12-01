@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoftDAB Preloader - OG Image</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Arial, sans-serif;
+      }
+
+      /* Preloader.css - Liquid Gradient Loading Screen */
+      .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 1200px;
+        height: 630px;
+        background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
+        overflow: hidden;
+        z-index: 9999;
+      }
+
+      /* Liquid Gradients */
+      .gradient-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        filter: blur(80px);
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        mix-blend-mode: screen;
+        animation: blobMove 20s ease-in-out infinite;
+      }
+
+      .blob:nth-child(1) {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(47, 137, 252, 0.4), transparent);
+        top: -10%;
+        left: -10%;
+        animation-duration: 25s;
+      }
+
+      .blob:nth-child(2) {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(96, 165, 250, 0.3), transparent);
+        bottom: -15%;
+        right: -15%;
+        animation-duration: 30s;
+        animation-delay: -5s;
+      }
+
+      .blob:nth-child(3) {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.35), transparent);
+        top: 50%;
+        left: 50%;
+        animation-duration: 20s;
+        animation-delay: -10s;
+      }
+
+      @keyframes blobMove {
+        0%, 100% {
+          transform: translate(0, 0) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+      }
+
+      /* Overlay for contrast */
+      .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(2px);
+      }
+
+      /* Logo */
+      .logo-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 10;
+      }
+
+      .logo {
+        font-size: 96px;
+        font-weight: 900;
+        letter-spacing: -2px;
+        background: linear-gradient(135deg, #1e293b 0%, #2F89FC 50%, #0ea5e9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 200%;
+        animation: gradientShift 5s ease infinite;
+        filter: drop-shadow(0 0 30px rgba(47, 137, 252, 0.5));
+        padding: 0 4px;
+        overflow: visible;
+      }
+
+      @keyframes gradientShift {
+        0%, 100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .tagline {
+        margin-top: 16px;
+        font-size: 18px;
+        color: #64748b;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 300;
+        opacity: 1;
+      }
+
+      /* Decorative circles */
+      .deco-circle {
+        position: absolute;
+        border: 2px solid rgba(47, 137, 252, 0.2);
+        border-radius: 50%;
+        animation: rotate 30s linear infinite;
+      }
+
+      .deco-circle:nth-child(1) {
+        width: 240px;
+        height: 240px;
+        top: calc(50% - 120px);
+        left: calc(50% - 120px);
+      }
+
+      .deco-circle:nth-child(2) {
+        width: 320px;
+        height: 320px;
+        top: calc(50% - 160px);
+        left: calc(50% - 160px);
+        animation-direction: reverse;
+        animation-duration: 40s;
+      }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preloader">
+      <!-- Liquid Gradients -->
+      <div class="gradient-bg">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+      </div>
+
+      <!-- Overlay -->
+      <div class="overlay"></div>
+
+      <!-- Decorative Circles -->
+      <div class="deco-circle"></div>
+      <div class="deco-circle"></div>
+
+      <!-- Logo -->
+      <div class="logo-container">
+        <div class="logo">SOFTDAB</div>
+        <div class="tagline">Innovate • Build • Scale</div>
+      </div>
+    </div>
+  </body>
+</html>
