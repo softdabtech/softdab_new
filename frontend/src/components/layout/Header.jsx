@@ -132,6 +132,16 @@ const Header = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
+              <a
+                href="https://blog.softdab.tech"
+                className={navigationMenuTriggerStyle()}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Blog
+              </a>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
               <Link to="/company/contact" className={navigationMenuTriggerStyle()}>
                 Contact
               </Link>
@@ -218,6 +228,14 @@ const Header = () => {
                   className={`hover:text-foreground ${pathname === '/company/about' ? 'text-foreground' : 'text-muted-foreground'}`}>
                   About
                 </Link>
+                <a
+                  href="https://blog.softdab.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground text-muted-foreground"
+                >
+                  Blog
+                </a>
                 <Link 
                   to="/company/contact" 
                   onClick={() => setIsMobileMenuOpen(false)} 
