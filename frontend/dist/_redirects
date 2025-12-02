@@ -1,0 +1,8 @@
+# Redirect default Netlify subdomain to primary domain
+https://softdab.netlify.com/* https://softdab.tech/:splat 301!
+
+# Optional: Redirect www to non-www
+https://www.softdab.tech/* https://softdab.tech/:splat 301!
+
+# Handle 404s
+/* /index.html 200

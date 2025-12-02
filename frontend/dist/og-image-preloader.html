@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  width: 1200px; 
+  height: 630px; 
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Arial, sans-serif;
+}
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1200px;
+  height: 630px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
+  overflow: hidden;
+}
+
+/* Liquid Gradients */
+.gradient-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  filter: blur(80px);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  mix-blend-mode: screen;
+}
+
+.blob:nth-child(1) {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(47, 137, 252, 0.4), transparent);
+  top: -10%;
+  left: -5%;
+}
+
+.blob:nth-child(2) {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.3), transparent);
+  bottom: -15%;
+  right: -10%;
+}
+
+.blob:nth-child(3) {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.35), transparent);
+  top: 40%;
+  left: 45%;
+}
+
+/* Overlay for contrast */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+/* Logo */
+.logo-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 96px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #1e293b 0%, #2F89FC 50%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(47, 137, 252, 0.5));
+  padding: 0 4px;
+}
+
+.tagline {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #64748b;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.subtitle {
+  margin-top: 40px;
+  font-size: 24px;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* Decorative circles */
+.deco-circle {
+  position: absolute;
+  border: 2px solid rgba(47, 137, 252, 0.2);
+  border-radius: 50%;
+}
+
+.deco-circle:nth-child(4) {
+  width: 300px;
+  height: 300px;
+  top: calc(50% - 150px);
+  left: calc(50% - 150px);
+}
+
+.deco-circle:nth-child(5) {
+  width: 400px;
+  height: 400px;
+  top: calc(50% - 200px);
+  left: calc(50% - 200px);
+}
+
+.bottom-text {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: #667eea;
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+<div class="preloader">
+  <!-- Liquid Gradients -->
+  <div class="gradient-bg">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+  <!-- Decorative Circles -->
+  <div class="deco-circle"></div>
+  <div class="deco-circle"></div>
+
+  <!-- Logo -->
+  <div class="logo-container">
+    <div class="logo">SOFTDAB</div>
+    <div class="tagline">Innovate • Build • Scale</div>
+    <div class="subtitle">Software Development Studio</div>
+  </div>
+  
+  <div class="bottom-text">www.softdab.tech</div>
+</div>
+</body>
+</html>
