@@ -1,4 +1,5 @@
 // frontend/src/components/layout/Header.jsx (ФИНАЛЬНАЯ РАБОЧАЯ ВЕРСИЯ)
+// Updated: 2025-12-03 with Blog link
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 // Hamburger menu icon implemented with CSS
