@@ -83,10 +83,11 @@ const CareersPage = () => {
         
         const data = await response.json();
         
-        if (data.positions && data.positions.length > 0) {
-          setPositions(data.positions);
+        // Always use API response if success, even if empty
+        if (data.success) {
+          setPositions(data.positions || []);
         } else {
-          // Use default positions if no API positions available
+          // Use default positions only if API failed
           setPositions(DEFAULT_POSITIONS);
         }
       } catch (err) {
