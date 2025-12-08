@@ -40,7 +40,11 @@ async def fetch_djinni_jobs() -> List[Dict[str, Any]]:
                 if response.status == 200:
                     data = await response.json()
                     # API returns {"count": X, "items": [...], "total": Y}
-                    return data.get("items", [])
+                    all_jobs = data.get("items", [])
+                    # Filter only published jobs (status: "published")
+                    published_jobs = [job for job in all_jobs if job.get("status") == "published"]
+                    logger.info(f"Fetched {len(all_jobs)} total jobs, {len(published_jobs)} published")
+                    return published_jobs
                 else:
                     logger.warning(f"Djinni API failed: HTTP {response.status}")
                     return []
