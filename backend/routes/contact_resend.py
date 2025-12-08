@@ -57,7 +57,7 @@ async def send_email_via_resend(to_email: str, subject: str, content: str):
         logger.error(f"❌ Failed to send email via Resend: {e}")
         return False
 
-@router.post("/contact")
+@router.post("")
 async def handle_contact(form_data: ContactForm, request: Request):
     """Handle contact form submission"""
     

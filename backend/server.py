@@ -10,7 +10,7 @@ load_dotenv()
 
 # Теперь используем относительные импорты для запуска из папки backend
 from database import init_database, close_database
-from routes.contact import router as contact_router
+from routes.contact_resend import router as contact_router  # Using Resend API for email delivery
 from routes.staffing import router as staffing_router
 from routes.expert_consultation import router as expert_consultation_router
 
