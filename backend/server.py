@@ -13,6 +13,7 @@ from database import init_database, close_database
 from routes.contact_resend import router as contact_router  # Using Resend API for email delivery
 from routes.staffing import router as staffing_router
 from routes.expert_consultation import router as expert_consultation_router
+from routes.djinni import router as djinni_router
 
 # Import security middleware
 from middlewares.security import SecurityHeadersMiddleware
@@ -77,6 +78,7 @@ async def shutdown_event():
 app.include_router(contact_router, prefix="/api/contact")
 app.include_router(staffing_router, prefix="/api/staffing")
 app.include_router(expert_consultation_router, prefix="/api/expert-consultation")
+app.include_router(djinni_router)
 
 @app.get("/")
 async def root():

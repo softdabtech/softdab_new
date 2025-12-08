@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, MapPin, Clock, ArrowRight, Heart, Users, TrendingUp, Award } from 'lucide-react';
+import { Briefcase, MapPin, Clock, ArrowRight, Heart, Users, TrendingUp, Award, AlertCircle, Loader } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
@@ -28,7 +28,8 @@ const benefits = [
   }
 ];
 
-const openPositions = [
+// Fallback positions if API fails
+const DEFAULT_POSITIONS = [
   {
     id: 1,
     title: 'Senior Full Stack Developer',
@@ -64,6 +65,43 @@ const openPositions = [
 ];
 
 const CareersPage = () => {
+  const [positions, setPositions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch career positions from API
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch('/api/careers/positions');
+        if (!response.ok) {
+          throw new Error('Failed to fetch positions');
+        }
+        
+        const data = await response.json();
+        
+        if (data.positions && data.positions.length > 0) {
+          setPositions(data.positions);
+        } else {
+          // Use default positions if no API positions available
+          setPositions(DEFAULT_POSITIONS);
+        }
+      } catch (err) {
+        console.error('Error fetching careers positions:', err);
+        // Fall back to default positions on error
+        setPositions(DEFAULT_POSITIONS);
+        setError(null); // Don't show error UI, just use fallback
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPositions();
+  }, []);
+
   useEffect(() => {
     document.title = 'Careers at SoftDAB - Join Our Software Development Team | SoftDAB';
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -169,46 +207,67 @@ const CareersPage = () => {
               We're always looking for talented engineers. If you don't see a perfect fit, reach out anyway!
             </p>
 
-            <div className="space-y-6">
-              {openPositions.map((position) => (
-                <Card key={position.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                      <div className="flex-1">
-                        <CardTitle className="text-xl mb-2">{position.title}</CardTitle>
-                        <div className="flex flex-wrap gap-3 text-sm text-gray-600">
-                          <div className="flex items-center">
-                            <MapPin className="h-4 w-4 mr-1" />
-                            {position.location}
-                          </div>
-                          <div className="flex items-center">
-                            <Clock className="h-4 w-4 mr-1" />
-                            {position.type}
-                          </div>
-                          <div className="flex items-center">
-                            <Briefcase className="h-4 w-4 mr-1" />
-                            {position.experience}
+            {loading ? (
+              <div className="flex justify-center items-center py-12">
+                <Loader className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : error ? (
+              <Card className="border-red-200 bg-red-50">
+                <CardContent className="pt-6">
+                  <div className="flex items-center gap-3 text-red-700">
+                    <AlertCircle className="h-5 w-5" />
+                    <p>{error}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : positions && positions.length > 0 ? (
+              <div className="space-y-6">
+                {positions.map((position) => (
+                  <Card key={position.id} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div className="flex-1">
+                          <CardTitle className="text-xl mb-2">{position.title}</CardTitle>
+                          <div className="flex flex-wrap gap-3 text-sm text-gray-600">
+                            <div className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-1" />
+                              {position.location}
+                            </div>
+                            <div className="flex items-center">
+                              <Clock className="h-4 w-4 mr-1" />
+                              {position.type}
+                            </div>
+                            <div className="flex items-center">
+                              <Briefcase className="h-4 w-4 mr-1" />
+                              {position.experience}
+                            </div>
                           </div>
                         </div>
+                        <Link to="/company/contact">
+                          <Button className="group">
+                            Apply Now
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
                       </div>
-                      <Link to="/company/contact">
-                        <Button className="group">
-                          Apply Now
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {position.technologies.map((tech, idx) => (
-                        <Badge key={idx} variant="secondary">{tech}</Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2">
+                        {position.technologies && position.technologies.map((tech, idx) => (
+                          <Badge key={idx} variant="secondary">{tech}</Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="pt-6 text-center">
+                  <p className="text-gray-600">No open positions at the moment. Please check back soon or reach out to us!</p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </section>
