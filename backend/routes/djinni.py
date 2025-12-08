@@ -24,134 +24,78 @@ DJINNI_EMAIL = "info@softdab.tech"
 DJINNI_PASSWORD = "9yNRF3xIZW"
 
 
-async def get_djinni_token() -> Optional[str]:
-    """Authenticate with Djinni API and get access token."""
+async def fetch_djinni_jobs() -> List[Dict[str, Any]]:
+    """Fetch job listings from Djinni API using Basic Auth."""
     try:
         async with aiohttp.ClientSession() as session:
-            # Try basic auth first (most common for Djinni)
             auth = aiohttp.BasicAuth(DJINNI_EMAIL, DJINNI_PASSWORD)
             
-            async with session.post(
-                f"{DJINNI_API_BASE}/auth/login",
-                auth=auth,
-                timeout=aiohttp.ClientTimeout(total=10)
-            ) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    return data.get("access_token") or "authenticated"
-                elif response.status == 401:
-                    logger.warning("Djinni auth failed: Invalid credentials")
-                    return None
-                else:
-                    logger.warning(f"Djinni auth failed: {response.status}")
-                    return None
-    except Exception as e:
-        logger.error(f"Error getting Djinni token: {e}")
-        return None
-
-
-async def fetch_djinni_jobs_public() -> List[Dict[str, Any]]:
-    """Fetch job listings from Djinni API using public endpoint."""
-    try:
-        async with aiohttp.ClientSession() as session:
-            # Try public API endpoint first - Djinni has public job listings
-            # Filter by company domain or keywords
+            # Fetch company jobs with Basic Auth (endpoint: /api/v2/jobs/)
             async with session.get(
-                f"{DJINNI_API_BASE}/jobs",
-                params={
-                    "keywords": "softdab",
-                    "page": 1,
-                    "limit": 100
-                },
+                f"{DJINNI_API_BASE}/jobs/",
+                auth=auth,
+                params={"limit": 100},
                 timeout=aiohttp.ClientTimeout(total=10)
             ) as response:
                 if response.status == 200:
                     data = await response.json()
-                    return data.get("results", []) if isinstance(data, dict) else data
+                    # API returns {"count": X, "items": [...], "total": Y}
+                    return data.get("items", [])
                 else:
-                    logger.warning(f"Djinni jobs fetch failed: {response.status}")
+                    logger.warning(f"Djinni API failed: HTTP {response.status}")
                     return []
     except Exception as e:
-        logger.error(f"Error fetching Djinni jobs (public): {e}")
-        return []
-
-
-async def fetch_djinni_jobs(token: Optional[str]) -> List[Dict[str, Any]]:
-    """Fetch job listings from Djinni API with authentication."""
-    try:
-        async with aiohttp.ClientSession() as session:
-            headers = {
-                "Accept": "application/json"
-            }
-            
-            if token:
-                headers["Authorization"] = f"Bearer {token}"
-            
-            # Try authenticated endpoint for company-specific jobs
-            async with session.get(
-                f"{DJINNI_API_BASE}/company/jobs",
-                headers=headers,
-                timeout=aiohttp.ClientTimeout(total=10)
-            ) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    return data.get("results", []) if isinstance(data, dict) else data
-                else:
-                    logger.debug(f"Djinni company jobs endpoint failed: {response.status}")
-                    # Fall back to public search
-                    return await fetch_djinni_jobs_public()
-    except Exception as e:
         logger.error(f"Error fetching Djinni jobs: {e}")
-        # Fall back to public search
-        return await fetch_djinni_jobs_public()
+        return []
 
 
 def transform_djinni_job(job: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """Transform Djinni job format to our standard format."""
     try:
-        # Extract technologies from job description or metadata
+        # Extract technologies from primary/secondary keywords
         technologies = []
-        if "job_keywords" in job:
-            technologies = [kw["name"] for kw in job.get("job_keywords", [])][:5]
-        elif "skills" in job:
-            technologies = [s for s in job.get("skills", [])][:5]
-        elif "keywords" in job:
-            technologies = job.get("keywords", [])[:5]
+        if job.get("primary_keyword"):
+            technologies.append(job["primary_keyword"])
+        if job.get("secondary_keyword"):
+            technologies.append(job["secondary_keyword"])
         
-        # Map experience level
-        experience_map = {
-            "no_experience": "0+ years",
-            "junior": "0-1 years",
-            "middle": "2-4 years",
-            "senior": "5+ years",
-            "lead": "7+ years"
-        }
-        experience = experience_map.get(
-            job.get("experience_level", "middle"),
-            "3+ years"
-        )
+        # Map experience years to readable format
+        exp_years = job.get("experience_years", 0)
+        if exp_years == 0:
+            experience = "0-1 years"
+        elif exp_years < 2:
+            experience = "1-2 years"
+        elif exp_years < 5:
+            experience = f"{int(exp_years)}+ years"
+        else:
+            experience = "5+ years"
         
         # Build location string
-        locations = []
-        if job.get("country"):
-            locations.append(job["country"].get("name", ""))
-        if job.get("cities"):
-            cities = job["cities"] if isinstance(job["cities"], list) else [job["cities"]]
-            locations.extend([city.get("name", "") if isinstance(city, dict) else city for city in cities[:2]])
-        location = " / ".join(filter(None, locations)) or "Remote"
+        location = job.get("location", "").strip()
+        if not location:
+            # Use remote_type if available
+            remote_map = {
+                "full_remote": "Remote",
+                "office": "Office",
+                "hybrid": "Hybrid"
+            }
+            location = remote_map.get(job.get("remote_type"), "Remote")
         
         # Get title
-        title = job.get("title") or job.get("position") or "Unknown Position"
+        title = job.get("position", "Unknown Position")
+        
+        # Build job URL
+        url = job.get("public_url", f"https://djinni.co/jobs/{job.get('id')}/")
         
         return {
             "id": job.get("id"),
             "title": title,
             "location": location,
-            "type": "Full-time",  # Djinni doesn't always specify, assume full-time
+            "type": "Full-time",
             "experience": experience,
-            "technologies": technologies or [],
-            "url": job.get("url", ""),
-            "description": job.get("description_short", "")[:200] if job.get("description_short") else "",
+            "technologies": technologies,
+            "url": url,
+            "description": "",  # Description is HTML, skip for now
         }
     except Exception as e:
         logger.error(f"Error transforming Djinni job: {e}")
@@ -171,8 +115,7 @@ async def get_cached_or_fresh_jobs() -> List[Dict[str, Any]]:
     logger.info("Fetching fresh jobs from Djinni API")
     
     # Get fresh data
-    token = await get_djinni_token()
-    raw_jobs = await fetch_djinni_jobs(token)
+    raw_jobs = await fetch_djinni_jobs()
     
     if not raw_jobs:
         logger.warning("No jobs received from Djinni API")
