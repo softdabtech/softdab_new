@@ -208,7 +208,7 @@ const FintechPage = () => {
                 disabled={!caseStudy}
                 title={caseStudy ? 'View Case Study' : 'Case study coming soon'}
               >
-                <Link to={caseStudy ? `/case-studies/${caseStudy.id}` : '#'}>
+                <Link to={caseStudy ? `/case-studies/${caseStudy.slug}` : '#'}>
                   View Case Study
                 </Link>
               </Button>
@@ -382,7 +382,7 @@ const FintechPage = () => {
                   </div>
 
                   <Button asChild className="w-full bg-blue-600 hover:bg-blue-700">
-                    <Link to={`/case-studies/${caseStudy.id}`}>
+                    <Link to={`/case-studies/${caseStudy.slug}`}>
                       Read Full Case Study
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
