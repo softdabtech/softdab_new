@@ -93,6 +93,18 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
+    <!-- Unregister all Service Workers to prevent caching issues -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          registrations.forEach((registration) => {
+            console.log('🗑️ Unregistering Service Worker:', registration);
+            registration.unregister();
+          });
+        });
+      }
+    </script>
+
     <!-- Vite entry -->
   </body>
 </html><!-- Cache bust: 1760453919 -->
