@@ -82,16 +82,19 @@ const CareersPage = () => {
         }
         
         const data = await response.json();
+        console.log('🔍 API Response:', data);
         
         // Always use API response if success, even if empty
         if (data.success) {
+          console.log('✅ Using API positions:', data.positions);
           setPositions(data.positions || []);
         } else {
+          console.log('⚠️ API failed, using defaults');
           // Use default positions only if API failed
           setPositions(DEFAULT_POSITIONS);
         }
       } catch (err) {
-        console.error('Error fetching careers positions:', err);
+        console.error('❌ Error fetching careers positions:', err);
         // Fall back to default positions on error
         setPositions(DEFAULT_POSITIONS);
         setError(null); // Don't show error UI, just use fallback
