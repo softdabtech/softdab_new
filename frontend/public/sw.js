@@ -6,19 +6,11 @@ const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 // Критические ресурсы для мгновенной загрузки LCP
 const CRITICAL_RESOURCES = [
   // Critical CSS (будет инлайн, но как backup)
-  '/assets/index.css',
-  
-  // Critical JS chunks
-  '/assets/vendor.js',
-  '/assets/index.js', 
+  '/assets/index-DY5NLMWL.css',
   
   // Critical шрифты для FCP
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
   'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2',
-  
-  // Critical hero изображения
-  '/images/hero-bg.webp',
-  '/images/hero-mobile.webp',
   
   // Main HTML
   '/',
