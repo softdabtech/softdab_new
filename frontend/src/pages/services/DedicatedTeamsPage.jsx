@@ -442,8 +442,8 @@ const DedicatedTeamsPage = () => {
             w-full sm:w-[16rem] max-w-[16rem] h-14 rounded-2xl
           "
         >
-          <Link to="/developers" aria-label="View profiles">
-            View Profiles
+          <Link to="/company/contact" aria-label="Contact us">
+            Contact Us
           </Link>
         </Button>
       </div>

@@ -182,8 +182,8 @@ const LogisticsPage = () => {
                 disabled
                 title="Case study coming soon"
               >
-                <Link to="#">
-                  View Case Study
+                <Link to="/case-studies">
+                  View Case Studies
                 </Link>
               </Button>
             </div>

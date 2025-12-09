@@ -767,7 +767,7 @@ const ExpertConsultationForm = ({ isOpen, onClose }) => {
                     />
                     <Label htmlFor="consent" className="font-normal text-sm text-gray-600 cursor-pointer">
                       I agree to the{' '}
-                      <a href="/legal/privacy-policy" className="text-blue-600 hover:underline" target="_blank">
+                      <a href="/legal/privacy" className="text-blue-600 hover:underline" target="_blank">
                         Privacy Policy
                       </a>
                       {' '}and consent to SoftDAB processing my data for the purpose of this inquiry. *

@@ -260,7 +260,7 @@ const CookiesPolicy = () => {
                     Privacy Policy
                   </Link>{' '}
                   and{' '}
-                  <Link to="/dpa" className="text-primary underline font-medium">
+                  <Link to="/legal/dpa" className="text-primary underline font-medium">
                     Data Processing Addendum (DPA)
                   </Link>.
                 </p>
