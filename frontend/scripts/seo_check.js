@@ -1,12 +1,15 @@
 #!/usr/bin/env node
-const fetch = require('node-fetch');
+let fetchFn = globalThis.fetch;
+if (!fetchFn) {
+  fetchFn = (...args) => import('node-fetch').then(m => m.default(...args));
+}
 const { JSDOM } = require('jsdom');
 const fs = require('fs');
 
 (async function(){
   const sitemapUrl = 'https://www.softdab.tech/sitemap.xml';
   console.log('Fetching sitemap:', sitemapUrl);
-  const res = await fetch(sitemapUrl);
+  const res = await fetchFn(sitemapUrl);
   if (!res.ok) throw new Error('Failed to fetch sitemap: ' + res.status);
   const xml = await res.text();
   const urls = Array.from(xml.matchAll(/<loc>(.*?)<\/loc>/g)).map(m => m[1]);

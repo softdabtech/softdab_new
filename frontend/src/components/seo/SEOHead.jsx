@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 const SEOHead = ({
   title = "SoftDAB — Software Development — Custom Software & Teams",
-  description = "SoftDAB builds custom web & mobile applications and provides dedicated engineering teams for US and EU companies — scalable, modern software with transparent pricing.",
+  description = "SoftDAB builds custom web & mobile applications and provides dedicated engineering teams for US & EU companies. Scalable software with transparent pricing.",
   keywords = "SoftDAB, software development, outsourcing, outstaffing, dedicated teams, web development, mobile development, React, Node.js, Python, C#, C++, JavaScript, IoT, US, EU",
   image = "https://www.softdab.tech/og-image.jpg",
   url,
