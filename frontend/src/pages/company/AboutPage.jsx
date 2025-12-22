@@ -8,13 +8,7 @@ import { Badge } from '../../components/ui/badge';
 import { mockData } from '../../data/mockData';
 
 const AboutPage = () => {
-  useEffect(() => {
-    document.title = 'About SoftDAB - Software Development Company | Our Story';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'Learn about SoftDAB — 8 years in software development, specializing in custom software and dedicated teams for US/EU businesses. Meet our team and values.';
-    }
-  }, []);
+
 
   const values = [
     {

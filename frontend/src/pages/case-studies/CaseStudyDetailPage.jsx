@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
 import { mockData } from '../../data/mockData';
+import SEOHead from '../../components/seo/SEOHead';
 
 const CaseStudyDetailPage = () => {
   const { slug } = useParams();
@@ -60,6 +61,7 @@ const CaseStudyDetailPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={title + ' — SoftDAB'} description={description} url={`https://www.softdab.tech/case-studies/${slug}`} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'Case Studies', item:'https://www.softdab.tech/case-studies'},{name:title, item:`https://www.softdab.tech/case-studies/${slug}`}]} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">

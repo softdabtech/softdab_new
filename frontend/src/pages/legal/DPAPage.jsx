@@ -73,6 +73,7 @@ const DPAPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Data Processing Agreement — SoftDAB"} description={"Data Processing Agreement (DPA) for clients of SoftDAB."} url={"https://www.softdab.tech/legal/dpa"} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'Legal', item:'https://www.softdab.tech/legal/dpa'},{name:'DPA', item:'https://www.softdab.tech/legal/dpa'}]} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">

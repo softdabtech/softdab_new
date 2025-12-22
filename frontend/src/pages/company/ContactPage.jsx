@@ -35,14 +35,7 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { isBlocked, checkRateLimit, incrementAttempts } = useRateLimit();
 
-  useEffect(() => {
-    document.title = 'Contact Us - Start Your Software Development Project | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content =
-        'Contact SoftDAB for software development projects. Get free consultation and custom quote for outsourcing and dedicated teams.';
-    }
-  }, []);
+
 
   const handleInputChange = (name, value) => {
     setFormData(prev => ({ ...prev, [name]: value }));

@@ -3,17 +3,20 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SEOHead = ({
-  title = "SoftDAB | Custom Software Development & Outsourcing Teams",
-  description = "SoftDAB provides custom software development and outsourcing teams for US/EU companies. Start in 2 weeks with a risk‑free trial and transparent pricing.",
+  title = "SoftDAB — Software Development — Custom Software & Teams",
+  description = "SoftDAB builds custom web & mobile applications and provides dedicated engineering teams for US and EU companies — scalable, modern software with transparent pricing.",
   keywords = "SoftDAB, software development, outsourcing, outstaffing, dedicated teams, web development, mobile development, React, Node.js, Python, C#, C++, JavaScript, IoT, US, EU",
   image = "https://www.softdab.tech/og-image.jpg",
-  url = "https://www.softdab.tech",
+  url,
   type = "website",
   publishedTime,
   modifiedTime,
   author = "SoftDAB Team",
-  section = "Technology"
+  section = "Technology",
+  breadcrumbs = []
 }) => {
+  // Resolve canonical to the provided url or current location when available
+  const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://www.softdab.tech');
   // Структурированные данные Schema.org для Organization
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -150,7 +153,7 @@ const SEOHead = ({
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
-      <link rel="canonical" href={url} />
+      <link rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph теги */}
       <meta property="og:type" content={type} />

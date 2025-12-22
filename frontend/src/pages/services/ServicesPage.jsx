@@ -45,48 +45,7 @@ const services = [
 const ServicesPage = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = 'Software Development Services | Custom Development & Teams | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'Comprehensive software development services: custom development, dedicated teams, outsourcing, discovery, and 24/7 support. 8+ years delivering for US/EU companies.';
-    }
 
-    // Breadcrumb Schema
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://www.softdab.tech/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Services",
-          "item": "https://www.softdab.tech/services"
-        }
-      ]
-    };
-
-    let schemaScript = document.querySelector('script[data-schema="breadcrumb"]');
-    if (!schemaScript) {
-      schemaScript = document.createElement('script');
-      schemaScript.type = 'application/ld+json';
-      schemaScript.setAttribute('data-schema', 'breadcrumb');
-      document.head.appendChild(schemaScript);
-    }
-    schemaScript.textContent = JSON.stringify(breadcrumbSchema);
-
-    return () => {
-      if (schemaScript && schemaScript.parentNode) {
-        schemaScript.remove();
-      }
-    };
-  }, []);
 
   return (
     <div className="min-h-screen">

@@ -78,6 +78,7 @@
     "deploy:gh-pages": "cd .. && git subtree push --prefix frontend/dist origin gh-pages",
     "deploy:github": "npm run build:critical && npm run deploy:gh-pages",
     "deploy:prod": "npm run deploy:github",
+    "seo:check": "node scripts/seo_check.js",
     "status": "./check-production.sh"
   },
   "browserslist": {

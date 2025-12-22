@@ -64,6 +64,7 @@ const PrivacyPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Privacy Policy — SoftDAB"} description={"Privacy Policy for SoftDAB — how we collect, use, and protect your data."} url={"https://www.softdab.tech/legal/privacy"} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'Privacy Policy', item:'https://www.softdab.tech/legal/privacy'}]} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
