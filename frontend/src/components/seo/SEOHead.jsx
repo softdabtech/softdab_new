@@ -16,7 +16,8 @@ const SEOHead = ({
   breadcrumbs = []
 }) => {
   // Resolve canonical to the provided url or current location when available
-  const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : 'https://www.softdab.tech');
+  // Do not default to homepage during server-side rendering to avoid wrong canonical for SPA routes
+  const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : undefined);
   // Структурированные данные Schema.org для Organization
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -153,7 +154,7 @@ const SEOHead = ({
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
-      <link rel="canonical" href={canonicalUrl} />
+      {canonicalUrl && <link rel="canonical" href={canonicalUrl} /> }
 
       {/* Open Graph теги */}
       <meta property="og:type" content={type} />
