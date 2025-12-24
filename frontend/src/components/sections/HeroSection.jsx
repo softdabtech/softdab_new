@@ -1,8 +1,8 @@
 // frontend/src/components/sections/HeroSection.jsx (ФИНАЛЬНАЯ ЧИСТАЯ ВЕРСИЯ)
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/button';
-import ExpertConsultationForm from '../forms/ExpertConsultationForm';
+const ExpertConsultationForm = lazy(() => import('../forms/ExpertConsultationForm'));
 import { useExpertConsultation } from '../../hooks/use-expert-consultation';
 
 const HeroSection = () => {
@@ -80,8 +80,10 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Expert Consultation Modal */}
-      <ExpertConsultationForm isOpen={isOpen} onClose={closeModal} />
+      {/* Expert Consultation Modal (lazy loaded) */}
+      <Suspense fallback={null}>
+        {isOpen && <ExpertConsultationForm isOpen={isOpen} onClose={closeModal} />}
+      </Suspense>
     </section>
   );
 };

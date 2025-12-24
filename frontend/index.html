@@ -211,13 +211,41 @@
       .critical-render{contain:layout style paint}
       [data-lcp-section]{content-visibility:auto}
     </style>
-    <!-- Google Analytics (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BPPL55293F"></script>
+    <!-- Google Analytics (gtag.js) - deferred to idle to avoid blocking LCP -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-BPPL55293F');
+      (function(){
+        function loadAnalytics(){
+          try{
+            // load gtag after idle or onload
+            var s = document.createElement('script');
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BPPL55293F';
+            s.async = true;
+            s.onload = function(){
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);} 
+              window.gtag = gtag;
+              gtag('js', new Date());
+              gtag('config', 'G-BPPL55293F', { 'send_page_view': false });
+            };
+            document.head.appendChild(s);
+
+            // initialize posthog lazily (if key present)
+            var phKey = (function(){ try { return (window.__env && window.__env.POSTHOG_KEY) || null;} catch(e){ return null; } })();
+            if(!phKey && typeof import !== 'undefined'){
+              // fallback: lazy import the posthog client after idle
+              if('requestIdleCallback' in window){
+                requestIdleCallback(async function(){
+                  try{ const ph = (await import('/-/posthog-lazy.js')).default; if(window.VITE_POSTHOG_KEY){ ph.init(window.VITE_POSTHOG_KEY, { api_host: 'https://us-assets.i.posthog.com' }); window.posthog = ph; } }catch(e){}
+                });
+              } else {
+                window.addEventListener('load', async function(){ try{ const ph = (await import('/-/posthog-lazy.js')).default; if(window.VITE_POSTHOG_KEY){ ph.init(window.VITE_POSTHOG_KEY, { api_host: 'https://us-assets.i.posthog.com' }); window.posthog = ph; } }catch(e){} });
+              }
+            }
+
+          }catch(e){}
+        }
+        if('requestIdleCallback' in window){ requestIdleCallback(loadAnalytics, {timeout:2000}); } else { window.addEventListener('load', loadAnalytics); }
+      })();
     </script>
   </head>
   <body>
