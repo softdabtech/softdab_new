@@ -1,4 +1,10 @@
-const fetch = require('node-fetch');
+let fetch;
+try {
+  fetch = globalThis.fetch || require('node-fetch');
+} catch (err) {
+  // If bundler can't resolve node-fetch, rely on platform fetch (Node 18+ / Netlify env)
+  fetch = globalThis.fetch;
+}
 
 const ZOHO_ACCOUNTS_URL = 'https://accounts.zoho.com/oauth/v2/token';
 const ZOHO_MAIL_URL = 'https://mail.zoho.com/api/accounts/self/messages';
