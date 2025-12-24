@@ -1,0 +1,31 @@
+name: Weekly Keyword Check
+
+on:
+  schedule:
+    - cron: '0 6 * * MON' # every Monday at 06:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  keyword-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install deps
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+      - name: Run keyword check
+        run: node scripts/keyword_check.js
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: keyword-results
+          path: |
+            keyword_check_results.json
+            keyword_aggregate_prod_americas.json
+            keyword_page_matrix.csv
+            keyword_gap_summary.md
