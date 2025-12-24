@@ -7,16 +7,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Badge } from '../../components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
 import { mockData } from '../../data/mockData';
+import SEOHead from '../../components/seo/SEOHead';
 
 const DedicatedTeamsPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   useEffect(() => {
-    document.title = 'Dedicated Teams - Extended Development Teams | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content =
-        'Dedicated development teams with seamless integration, predictable delivery, and flexible scaling. Senior engineers aligned to your processes.';
-    }
+    // SEO title & description set via <SEOHead />
 
     const breadcrumbSchema = {
       '@context': 'https://schema.org',
@@ -157,6 +153,7 @@ const DedicatedTeamsPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Dedicated Development Teams (US & LATAM) — SoftDAB"} description={"Dedicated development teams and nearshore squads tailored for US, Canadian, and Latin American projects. Predictable delivery and seamless integration."} keywords={"dedicated development teams, nearshore teams, dedicated teams USA, dedicated teams Latin America, staff augmentation, US, Canada, LATAM"} url={"https://www.softdab.tech/services/dedicated-teams"} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
@@ -182,7 +179,7 @@ const DedicatedTeamsPage = () => {
               {service.title}
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              {service.description} We assemble senior engineers who integrate with your culture and deliver consistently — without the overhead of hiring and managing full‑time employees.
+              {service.description} We assemble senior engineers who integrate with your culture and deliver consistently — without the overhead of hiring and managing full‑time employees. We support US and Canadian clients and offer nearshore Latin American teams.
             </p>
 
             {/* Primary CTA — open staffing modal */}

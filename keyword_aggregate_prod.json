@@ -1,0 +1,102 @@
+{
+  "totals": {
+    "SoftDAB": 111,
+    "software development": 12,
+    "outsourcing": 2,
+    "outstaffing": 0,
+    "dedicated teams": 26,
+    "web development": 1,
+    "mobile development": 1,
+    "React": 16,
+    "Node.js": 6,
+    "Python": 2,
+    "C#": 0,
+    "C++": 8,
+    "JavaScript": 3,
+    "IoT": 3,
+    "US": 341,
+    "EU": 11,
+    "custom software": 24,
+    "software development studio": 0,
+    "IoT solutions": 1,
+    "software engineering": 0
+  },
+  "pagesWith": {
+    "SoftDAB": 22,
+    "software development": 7,
+    "outsourcing": 2,
+    "dedicated teams": 19,
+    "React": 7,
+    "Node.js": 6,
+    "C++": 2,
+    "JavaScript": 2,
+    "US": 22,
+    "EU": 7,
+    "custom software": 19,
+    "IoT": 2,
+    "IoT solutions": 1,
+    "Python": 2,
+    "web development": 1,
+    "mobile development": 1
+  },
+  "high": [
+    [
+      "US",
+      341
+    ],
+    [
+      "SoftDAB",
+      111
+    ],
+    [
+      "dedicated teams",
+      26
+    ],
+    [
+      "custom software",
+      24
+    ],
+    [
+      "React",
+      16
+    ],
+    [
+      "software development",
+      12
+    ],
+    [
+      "EU",
+      11
+    ]
+  ],
+  "low": [
+    [
+      "outstaffing",
+      0
+    ],
+    [
+      "C#",
+      0
+    ],
+    [
+      "software development studio",
+      0
+    ],
+    [
+      "software engineering",
+      0
+    ],
+    [
+      "web development",
+      1
+    ],
+    [
+      "mobile development",
+      1
+    ],
+    [
+      "IoT solutions",
+      1
+    ]
+  ]
+}

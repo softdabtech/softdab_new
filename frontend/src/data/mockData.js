@@ -216,5 +216,10 @@ export const mockData = {
         includes: ["Senior Architects", "Full Development Team", "DevOps Team", "QA Team", "Technical Lead", "Project Manager"]
       }
     ]
+  },
+  outsourcing: {
+    title: "Outsourcing",
+    description: "Custom software development outsourcing with end-to-end ownership. Discovery, delivery, and support with predictable timelines and quality.",
+    features: ["Project ownership", "Delivery guarantee", "QA & testing", "Post-launch support"]
   }
 };

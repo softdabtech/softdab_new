@@ -7,15 +7,17 @@ import { Badge } from '../../components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
 import { Separator } from '../../components/ui/separator';
 import { mockData } from '../../data/mockData';
+import SEOHead from '../../components/seo/SEOHead';
 
 const OutsourcingPage = () => {
   useEffect(() => {
-    document.title = 'Outsourcing - Custom Software Development | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content =
-        'Custom software development outsourcing with end-to-end ownership. Discovery, delivery, and support with predictable timelines and quality.';
-    }
+    // SEO title & description set via <SEOHead />
+
+    // Ensure meta description override exists (some environments may keep the global meta first)
+    const desc = 'Custom software development outsourcing with end-to-end ownership. Discovery, delivery, and support with predictable timelines and quality.';
+    const metas = document.querySelectorAll('meta[name="description"]');
+    if (metas && metas.length) metas[metas.length-1].setAttribute('content', desc);
+    else { const m = document.createElement('meta'); m.name='description'; m.content=desc; document.head.appendChild(m); }
 
     const breadcrumbSchema = {
       '@context': 'https://schema.org',
@@ -53,7 +55,7 @@ const OutsourcingPage = () => {
     };
   }, []);
 
-  const service = mockData.services.outsourcing;
+  const service = mockData.outsourcing;
 
   const processSteps = [
     {
@@ -164,6 +166,7 @@ const OutsourcingPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Outsourcing & Nearshore Development — SoftDAB"} description={"Custom software development outsourcing and nearshore teams for US, Canadian and Latin American clients. Full project delivery and long-term support."} keywords={"outsourcing, nearshore, nearshore outsourcing, outsourcing USA, outsourcing Latin America, software development outsourcing, US, USA, Canada, Latin America, LATAM"} url={"https://www.softdab.tech/services/outsourcing"} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
@@ -189,7 +192,7 @@ const OutsourcingPage = () => {
               {service.title}
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              {service.description} With 8+ years in IT delivery, we take full ownership from discovery to deployment and support — so you can focus on outcomes.
+              {service.description} With 8+ years in IT delivery, we take full ownership from discovery to deployment and support — so you can focus on outcomes. We provide nearshore outsourcing and serve clients in the United States and Latin America.
             </p>
 
             {/* CTA: make narrower, keep white text on hover, remove second button */}

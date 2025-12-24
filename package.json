@@ -2,6 +2,11 @@
   "name": "softdab-site",
   "version": "0.3.1",
   "private": true,
+  "scripts": {
+    "keyword-check:prod": "node scripts/keyword_check.js",
+    "keyword-check:local": "node scripts/keyword_check_local.js http://localhost:4173",
+    "keyword-gap-report": "node scripts/keyword_gap_report.js"
+  },
   "dependencies": {
     "react-error-boundary": "^6.0.0",
     "react-helmet": "^6.1.0",

@@ -1,0 +1,282 @@
+{
+  "totals": {
+    "SoftDAB": 93,
+    "software development": 8,
+    "software development company": 0,
+    "custom software": 17,
+    "custom software development": 2,
+    "software development company USA": 0,
+    "software development company US": 0,
+    "software development company Canada": 0,
+    "outsourcing": 2,
+    "outsourcing USA": 0,
+    "outsourcing company USA": 0,
+    "outsourcing Latin America": 0,
+    "nearshore": 0,
+    "nearshore outsourcing": 0,
+    "nearshore software development": 0,
+    "nearshore development": 0,
+    "dedicated teams": 18,
+    "dedicated development teams": 0,
+    "dedicated teams USA": 0,
+    "staff augmentation": 0,
+    "team augmentation": 0,
+    "software engineering": 0,
+    "product engineering": 0,
+    "web development": 1,
+    "mobile development": 1,
+    "React": 13,
+    "Node.js": 5,
+    "Python": 1,
+    "JavaScript": 3,
+    "C++": 8,
+    "C#": 0,
+    "IoT": 2,
+    "cloud migration": 0,
+    "SaaS development": 0,
+    "enterprise software": 0,
+    "US": 218,
+    "USA": 0,
+    "United States": 0,
+    "Canada": 0,
+    "Latin America": 0,
+    "LATAM": 0,
+    "Brazil": 0,
+    "Brasil": 0,
+    "desarrollo de software": 0,
+    "empresa de desarrollo de software": 0,
+    "equipos dedicados": 0,
+    "tercerización": 0,
+    "externalización": 0,
+    "desarrollo de software LATAM": 0,
+    "desarrollo de software en Estados Unidos": 0,
+    "desarrollo de software Brasil": 0,
+    "nearshore Latinoamérica": 0,
+    "desenvolvimento de software": 0,
+    "empresa de desenvolvimento de software": 0,
+    "terceirização": 0,
+    "equipes dedicadas": 0,
+    "desenvolvimento de software Brasil": 0
+  },
+  "pagesWith": {
+    "SoftDAB": 22,
+    "software development": 5,
+    "custom software": 14,
+    "custom software development": 2,
+    "outsourcing": 2,
+    "dedicated teams": 14,
+    "React": 5,
+    "Node.js": 5,
+    "JavaScript": 2,
+    "C++": 2,
+    "US": 22,
+    "Python": 1,
+    "IoT": 1,
+    "web development": 1,
+    "mobile development": 1
+  },
+  "high": [
+    [
+      "US",
+      218
+    ],
+    [
+      "SoftDAB",
+      93
+    ],
+    [
+      "dedicated teams",
+      18
+    ],
+    [
+      "custom software",
+      17
+    ],
+    [
+      "React",
+      13
+    ]
+  ],
+  "low": [
+    [
+      "software development company",
+      0
+    ],
+    [
+      "software development company USA",
+      0
+    ],
+    [
+      "software development company US",
+      0
+    ],
+    [
+      "software development company Canada",
+      0
+    ],
+    [
+      "outsourcing USA",
+      0
+    ],
+    [
+      "outsourcing company USA",
+      0
+    ],
+    [
+      "outsourcing Latin America",
+      0
+    ],
+    [
+      "nearshore",
+      0
+    ],
+    [
+      "nearshore outsourcing",
+      0
+    ],
+    [
+      "nearshore software development",
+      0
+    ],
+    [
+      "nearshore development",
+      0
+    ],
+    [
+      "dedicated development teams",
+      0
+    ],
+    [
+      "dedicated teams USA",
+      0
+    ],
+    [
+      "staff augmentation",
+      0
+    ],
+    [
+      "team augmentation",
+      0
+    ],
+    [
+      "software engineering",
+      0
+    ],
+    [
+      "product engineering",
+      0
+    ],
+    [
+      "C#",
+      0
+    ],
+    [
+      "cloud migration",
+      0
+    ],
+    [
+      "SaaS development",
+      0
+    ],
+    [
+      "enterprise software",
+      0
+    ],
+    [
+      "USA",
+      0
+    ],
+    [
+      "United States",
+      0
+    ],
+    [
+      "Canada",
+      0
+    ],
+    [
+      "Latin America",
+      0
+    ],
+    [
+      "LATAM",
+      0
+    ],
+    [
+      "Brazil",
+      0
+    ],
+    [
+      "Brasil",
+      0
+    ],
+    [
+      "desarrollo de software",
+      0
+    ],
+    [
+      "empresa de desarrollo de software",
+      0
+    ],
+    [
+      "equipos dedicados",
+      0
+    ],
+    [
+      "tercerización",
+      0
+    ],
+    [
+      "externalización",
+      0
+    ],
+    [
+      "desarrollo de software LATAM",
+      0
+    ],
+    [
+      "desarrollo de software en Estados Unidos",
+      0
+    ],
+    [
+      "desarrollo de software Brasil",
+      0
+    ],
+    [
+      "nearshore Latinoamérica",
+      0
+    ],
+    [
+      "desenvolvimento de software",
+      0
+    ],
+    [
+      "empresa de desenvolvimento de software",
+      0
+    ],
+    [
+      "terceirização",
+      0
+    ],
+    [
+      "equipes dedicadas",
+      0
+    ],
+    [
+      "desenvolvimento de software Brasil",
+      0
+    ],
+    [
+      "web development",
+      1
+    ],
+    [
+      "mobile development",
+      1
+    ],
+    [
+      "Python",
+      1
+    ]
+  ]
+}

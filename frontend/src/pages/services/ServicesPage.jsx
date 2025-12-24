@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import SEOHead from '../../components/seo/SEOHead';
 import { ArrowRight, Code, Users, Lightbulb, Headphones, Building } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
@@ -45,10 +46,18 @@ const services = [
 const ServicesPage = () => {
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    const desc = 'From custom development to dedicated teams — flexible engagement models designed for US/EU businesses seeking reliable, scalable solutions.';
+    const metas = document.querySelectorAll('meta[name="description"]');
+    if (metas && metas.length) metas[metas.length-1].setAttribute('content', desc);
+    else { const m = document.createElement('meta'); m.name='description'; m.content=desc; document.head.appendChild(m); }
+  }, []);
+
 
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Software Development Services — SoftDAB — USA & LATAM"} description={"From custom development to dedicated teams — flexible engagement models for US, Canadian and Latin American companies. Nearshore delivery options available."} keywords={"custom software development, software development company, software development company USA, nearshore development, nearshore software development, dedicated development teams, outsourcing, US, USA, Canada, Latin America, LATAM"} url={"https://www.softdab.tech/services"} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">

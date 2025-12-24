@@ -34,6 +34,9 @@ const CaseStudyDetailPage = () => {
     workPerformed
   } = caseStudy;
 
+  const keywords = [...(technologies||[]), industry, 'case study', 'custom software development'].filter(Boolean).join(', ');
+
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -61,7 +64,7 @@ const CaseStudyDetailPage = () => {
 
   return (
     <div className="min-h-screen">
-      <SEOHead title={title + ' — SoftDAB'} description={description} url={`https://www.softdab.tech/case-studies/${slug}`} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'Case Studies', item:'https://www.softdab.tech/case-studies'},{name:title, item:`https://www.softdab.tech/case-studies/${slug}`}]} />
+      <SEOHead title={title + ' — SoftDAB'} description={description} keywords={keywords} url={`https://www.softdab.tech/case-studies/${slug}`} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'Case Studies', item:'https://www.softdab.tech/case-studies'},{name:title, item:`https://www.softdab.tech/case-studies/${slug}`}]} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">

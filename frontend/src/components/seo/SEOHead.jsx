@@ -32,8 +32,8 @@ const SEOHead = ({
       "@type": "ContactPoint",
       "telephone": "+1-XXX-XXX-XXXX",
       "contactType": "customer service",
-      "availableLanguage": ["English", "Ukrainian"],
-      "areaServed": ["US", "EU", "Worldwide"]
+      "availableLanguage": ["English", "Spanish", "Portuguese", "Ukrainian"],
+      "areaServed": ["United States", "Canada", "Latin America", "European Union", "Worldwide"]
     },
     "address": {
       "@type": "PostalAddress",
@@ -184,6 +184,10 @@ const SEOHead = ({
 
       {/* Языковые альтернативы */}
       <link rel="alternate" hreflang="en" href="https://www.softdab.tech" />
+      <link rel="alternate" hreflang="en-US" href="https://www.softdab.tech" />
+      <link rel="alternate" hreflang="en-CA" href="https://www.softdab.tech" />
+      <link rel="alternate" hreflang="es" href="https://www.softdab.tech/es" />
+      <link rel="alternate" hreflang="pt-BR" href="https://www.softdab.tech/pt" />
       <link rel="alternate" hreflang="x-default" href="https://www.softdab.tech" />
 
       {/* DNS prefetch для производительности */}

@@ -31,13 +31,16 @@ const fs = require('fs');
         const { chromium } = require('playwright');
         const browser = await chromium.launch();
         const page = await browser.newPage();
-        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
+        await page.goto(url, { waitUntil: 'load', timeout: 15000 });
+        // allow client-side updates to head
+        await page.waitForTimeout(250);
         const html = await page.content();
         await browser.close();
         const dom = new JSDOM(html);
         const doc = dom.window.document;
         const title = doc.querySelector('title') ? doc.querySelector('title').textContent.trim() : '';
-        const meta = doc.querySelector('meta[name="description"]') ? doc.querySelector('meta[name="description"]').getAttribute('content') : '';
+        const metaEls = doc.querySelectorAll('meta[name="description"]');
+        const meta = (metaEls && metaEls.length) ? metaEls[metaEls.length-1].getAttribute('content') : '';
         const canonical = doc.querySelector('link[rel="canonical"]') ? doc.querySelector('link[rel="canonical"]').href : '';
         const jsonld = doc.querySelectorAll('script[type="application/ld+json"]').length;
         results.push({url, title, meta_len: meta.length, canonical, jsonld});

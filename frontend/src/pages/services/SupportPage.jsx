@@ -5,15 +5,17 @@ import { CheckCircle, ArrowRight, Shield, Zap, Settings, Clock, Users, FileText,
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
+import SEOHead from '../../components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
 
 const SupportPage = () => {
   useEffect(() => {
-    document.title = 'Software Support & Maintenance - 24/7 Professional Support | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = '24/7 professional software support and maintenance services. System monitoring, bug fixing, performance optimization, and continuous improvements.';
-    }
+    // SEO title & description set via <SEOHead />
+
+    const desc = '24/7 professional software support and maintenance services. System monitoring, bug fixing, performance optimization, and continuous improvements.';
+    const metas = document.querySelectorAll('meta[name="description"]');
+    if (metas && metas.length) metas[metas.length-1].setAttribute('content', desc);
+    else { const m = document.createElement('meta'); m.name='description'; m.content=desc; document.head.appendChild(m); }
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
@@ -275,6 +277,7 @@ const SupportPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Software Support & Maintenance — SoftDAB"} description={"24/7 professional software support and maintenance services. System monitoring, bug fixing, performance optimization, and continuous improvements."} keywords={"support, maintenance, SaaS support, bug fixes, performance monitoring, security updates, 24/7 support"} url={"https://www.softdab.tech/services/support"} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">

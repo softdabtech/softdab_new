@@ -6,14 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Badge } from '../../components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
 import { mockData } from '../../data/mockData';
+import SEOHead from '../../components/seo/SEOHead';
 
 const CustomDevelopmentPage = () => {
   useEffect(() => {
-    document.title = 'Custom Software Development Services | End-to-End Solutions | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'End-to-end custom software development services. From discovery to deployment, we deliver reliable and scalable solutions tailored to your business needs.';
-    }
+    // SEO title & description set via <SEOHead />
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
@@ -139,6 +136,7 @@ const CustomDevelopmentPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Custom Software Development (USA & LATAM) — SoftDAB"} description={"End-to-end custom software development services for US, Canadian, and Latin American companies. Nearshore teams and flexible engagement models."} keywords={"custom software development, software development company, software development company USA, software development company Canada, custom software, web applications, mobile apps, API development, nearshore, nearshore development, USA, Canada, Latin America"} url={"https://www.softdab.tech/services/custom-development"} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
@@ -161,7 +159,7 @@ const CustomDevelopmentPage = () => {
               {service?.title || 'Custom Software Development'}
             </h1>
             <p className="text-xl text-gray-600 mb-8 text-balance leading-relaxed">
-              {service?.description || 'Transform your business ideas into powerful software solutions with our end-to-end development services.'} We build reliable, scalable solutions that drive your business forward.
+              {service?.description || 'Transform your business ideas into powerful software solutions with our end-to-end development services.'} We build reliable, scalable solutions that drive your business forward. We work with clients across the US, Canada and Latin America and provide nearshore teams when needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-primary hover:bg-primary-dark">

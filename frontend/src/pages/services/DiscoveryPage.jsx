@@ -5,15 +5,17 @@ import { CheckCircle, ArrowRight, Lightbulb, Search, Zap, Shield, BarChart, File
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
+import SEOHead from '../../components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
 
 const DiscoveryPage = () => {
   useEffect(() => {
-    document.title = 'Discovery & PoC - Technical Validation Services | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'Validate your ideas with Discovery & Proof of Concept services. Technical feasibility analysis, rapid prototyping, and clear implementation roadmap.';
-    }
+    // SEO title & description set via <SEOHead />
+
+    const desc = 'Validate your ideas with Discovery & Proof of Concept services. Technical feasibility analysis, rapid prototyping, and clear implementation roadmap.';
+    const metas = document.querySelectorAll('meta[name="description"]');
+    if (metas && metas.length) metas[metas.length-1].setAttribute('content', desc);
+    else { const m = document.createElement('meta'); m.name='description'; m.content=desc; document.head.appendChild(m); }
 
     // Breadcrumb Schema
     const breadcrumbSchema = {
@@ -220,6 +222,7 @@ const DiscoveryPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Discovery & PoC — SoftDAB"} description={"Validate your ideas with Discovery & Proof of Concept services. Technical feasibility analysis, rapid prototyping, and clear implementation roadmap."} keywords={"discovery, proof of concept, technical validation, rapid prototyping, feasibility analysis, product discovery, PoC"} url={"https://www.softdab.tech/services/discovery"} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
