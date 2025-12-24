@@ -2809,13 +2809,13 @@
         "in_title": true,
         "in_meta": true,
         "in_body": true,
-        "count_in_body": 5
+        "count_in_body": 2
       },
       "software development": {
         "in_title": true,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 2
+        "in_body": false,
+        "count_in_body": 0
       },
       "software development company": {
         "in_title": false,
@@ -2826,14 +2826,14 @@
       "custom software": {
         "in_title": true,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 2
+        "in_body": false,
+        "count_in_body": 0
       },
       "custom software development": {
         "in_title": false,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 1
+        "in_body": false,
+        "count_in_body": 0
       },
       "software development company USA": {
         "in_title": false,
@@ -2856,8 +2856,8 @@
       "outsourcing": {
         "in_title": false,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 1
+        "in_body": false,
+        "count_in_body": 0
       },
       "outsourcing USA": {
         "in_title": false,
@@ -2904,8 +2904,8 @@
       "dedicated teams": {
         "in_title": false,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 3
+        "in_body": false,
+        "count_in_body": 0
       },
       "dedicated development teams": {
         "in_title": false,
@@ -3019,7 +3019,7 @@
         "in_title": true,
         "in_meta": true,
         "in_body": true,
-        "count_in_body": 16
+        "count_in_body": 1
       },
       "USA": {
         "in_title": false,
@@ -3858,8 +3858,8 @@
       "SoftDAB": {
         "in_title": true,
         "in_meta": true,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 2
       },
       "software development": {
         "in_title": true,
@@ -4068,8 +4068,8 @@
       "US": {
         "in_title": true,
         "in_meta": true,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "USA": {
         "in_title": false,
@@ -4559,7 +4559,7 @@
         "in_title": true,
         "in_meta": true,
         "in_body": true,
-        "count_in_body": 2
+        "count_in_body": 5
       },
       "software development": {
         "in_title": true,
@@ -4576,8 +4576,8 @@
       "custom software": {
         "in_title": true,
         "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "custom software development": {
         "in_title": false,
@@ -4654,8 +4654,8 @@
       "dedicated teams": {
         "in_title": false,
         "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "dedicated development teams": {
         "in_title": false,
@@ -4769,7 +4769,7 @@
         "in_title": true,
         "in_meta": true,
         "in_body": true,
-        "count_in_body": 1
+        "count_in_body": 34
       },
       "USA": {
         "in_title": false,
@@ -4901,356 +4901,6 @@
   },
   {
     "url": "https://www.softdab.tech/industries",
-    "title": "SoftDAB — Software Development — Custom Software & Teams",
-    "meta_len": 155,
-    "canonical": "https://www.softdab.tech/",
-    "presence": {
-      "SoftDAB": {
-        "in_title": true,
-        "in_meta": false,
-        "in_body": true,
-        "count_in_body": 5
-      },
-      "software development": {
-        "in_title": true,
-        "in_meta": true,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "software development company": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "custom software": {
-        "in_title": true,
-        "in_meta": false,
-        "in_body": true,
-        "count_in_body": 1
-      },
-      "custom software development": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "software development company USA": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "software development company US": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "software development company Canada": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "outsourcing": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "outsourcing USA": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "outsourcing company USA": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "outsourcing Latin America": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "nearshore": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "nearshore outsourcing": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "nearshore software development": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "nearshore development": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "dedicated teams": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": true,
-        "count_in_body": 1
-      },
-      "dedicated development teams": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "dedicated teams USA": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "staff augmentation": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "team augmentation": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "software engineering": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "product engineering": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "web development": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "mobile development": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "React": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "Node.js": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "Python": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "JavaScript": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "C++": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "C#": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "IoT": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "cloud migration": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "SaaS development": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "enterprise software": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "US": {
-        "in_title": true,
-        "in_meta": true,
-        "in_body": true,
-        "count_in_body": 14
-      },
-      "USA": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "United States": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "Canada": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "Latin America": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "LATAM": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "Brazil": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "Brasil": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "desarrollo de software": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "empresa de desarrollo de software": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "equipos dedicados": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "tercerización": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "externalización": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "desarrollo de software LATAM": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "desarrollo de software en Estados Unidos": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "desarrollo de software Brasil": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "nearshore Latinoamérica": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "desenvolvimento de software": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "empresa de desenvolvimento de software": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "terceirização": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "equipes dedicadas": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      },
-      "desenvolvimento de software Brasil": {
-        "in_title": false,
-        "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
-      }
-    }
-  },
-  {
-    "url": "https://www.softdab.tech/industries/fintech",
     "title": "SoftDAB — Software Development — Custom Software & Teams",
     "meta_len": 157,
     "canonical": "https://www.softdab.tech/",
@@ -5470,6 +5120,356 @@
         "in_meta": true,
         "in_body": true,
         "count_in_body": 1
+      },
+      "USA": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "United States": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "Canada": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "Latin America": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "LATAM": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "Brazil": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "Brasil": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "desarrollo de software": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "empresa de desarrollo de software": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "equipos dedicados": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "tercerización": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "externalización": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "desarrollo de software LATAM": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "desarrollo de software en Estados Unidos": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "desarrollo de software Brasil": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "nearshore Latinoamérica": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "desenvolvimento de software": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "empresa de desenvolvimento de software": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "terceirização": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "equipes dedicadas": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "desenvolvimento de software Brasil": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      }
+    }
+  },
+  {
+    "url": "https://www.softdab.tech/industries/fintech",
+    "title": "SoftDAB — Software Development — Custom Software & Teams",
+    "meta_len": 187,
+    "canonical": "https://www.softdab.tech/",
+    "presence": {
+      "SoftDAB": {
+        "in_title": true,
+        "in_meta": false,
+        "in_body": true,
+        "count_in_body": 7
+      },
+      "software development": {
+        "in_title": true,
+        "in_meta": true,
+        "in_body": true,
+        "count_in_body": 1
+      },
+      "software development company": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "custom software": {
+        "in_title": true,
+        "in_meta": false,
+        "in_body": true,
+        "count_in_body": 1
+      },
+      "custom software development": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "software development company USA": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "software development company US": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "software development company Canada": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "outsourcing": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "outsourcing USA": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "outsourcing company USA": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "outsourcing Latin America": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "nearshore": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "nearshore outsourcing": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "nearshore software development": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "nearshore development": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "dedicated teams": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": true,
+        "count_in_body": 1
+      },
+      "dedicated development teams": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "dedicated teams USA": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "staff augmentation": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "team augmentation": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "software engineering": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "product engineering": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "web development": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "mobile development": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "React": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": true,
+        "count_in_body": 2
+      },
+      "Node.js": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "Python": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "JavaScript": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": true,
+        "count_in_body": 1
+      },
+      "C++": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "C#": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "IoT": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "cloud migration": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "SaaS development": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "enterprise software": {
+        "in_title": false,
+        "in_meta": false,
+        "in_body": false,
+        "count_in_body": 0
+      },
+      "US": {
+        "in_title": true,
+        "in_meta": false,
+        "in_body": true,
+        "count_in_body": 15
       },
       "USA": {
         "in_title": false,
@@ -6659,13 +6659,13 @@
         "in_title": true,
         "in_meta": true,
         "in_body": true,
-        "count_in_body": 8
+        "count_in_body": 2
       },
       "software development": {
         "in_title": true,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 3
+        "in_body": false,
+        "count_in_body": 0
       },
       "software development company": {
         "in_title": false,
@@ -6676,8 +6676,8 @@
       "custom software": {
         "in_title": true,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 1
+        "in_body": false,
+        "count_in_body": 0
       },
       "custom software development": {
         "in_title": false,
@@ -6754,8 +6754,8 @@
       "dedicated teams": {
         "in_title": false,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 2
+        "in_body": false,
+        "count_in_body": 0
       },
       "dedicated development teams": {
         "in_title": false,
@@ -6808,14 +6808,14 @@
       "React": {
         "in_title": false,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 1
+        "in_body": false,
+        "count_in_body": 0
       },
       "Node.js": {
         "in_title": false,
         "in_meta": false,
-        "in_body": true,
-        "count_in_body": 1
+        "in_body": false,
+        "count_in_body": 0
       },
       "Python": {
         "in_title": false,
@@ -6869,7 +6869,7 @@
         "in_title": true,
         "in_meta": true,
         "in_body": true,
-        "count_in_body": 26
+        "count_in_body": 1
       },
       "USA": {
         "in_title": false,
@@ -7002,7 +7002,7 @@
   {
     "url": "https://www.softdab.tech/company/contact",
     "title": "SoftDAB — Software Development — Custom Software & Teams",
-    "meta_len": 157,
+    "meta_len": 129,
     "canonical": "https://www.softdab.tech/",
     "presence": {
       "SoftDAB": {
@@ -7013,7 +7013,7 @@
       },
       "software development": {
         "in_title": true,
-        "in_meta": false,
+        "in_meta": true,
         "in_body": false,
         "count_in_body": 0
       },
@@ -7025,13 +7025,13 @@
       },
       "custom software": {
         "in_title": true,
-        "in_meta": false,
+        "in_meta": true,
         "in_body": true,
         "count_in_body": 1
       },
       "custom software development": {
         "in_title": false,
-        "in_meta": false,
+        "in_meta": true,
         "in_body": false,
         "count_in_body": 0
       },
@@ -7352,18 +7352,18 @@
   {
     "url": "https://www.softdab.tech/company/careers",
     "title": "SoftDAB — Software Development — Custom Software & Teams",
-    "meta_len": 157,
+    "meta_len": 156,
     "canonical": "https://www.softdab.tech/",
     "presence": {
       "SoftDAB": {
         "in_title": true,
         "in_meta": true,
         "in_body": true,
-        "count_in_body": 2
+        "count_in_body": 7
       },
       "software development": {
         "in_title": true,
-        "in_meta": false,
+        "in_meta": true,
         "in_body": false,
         "count_in_body": 0
       },
@@ -7376,8 +7376,8 @@
       "custom software": {
         "in_title": true,
         "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "custom software development": {
         "in_title": false,
@@ -7454,8 +7454,8 @@
       "dedicated teams": {
         "in_title": false,
         "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "dedicated development teams": {
         "in_title": false,
@@ -7508,20 +7508,20 @@
       "React": {
         "in_title": false,
         "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 2
       },
       "Node.js": {
         "in_title": false,
         "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "Python": {
         "in_title": false,
         "in_meta": false,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "JavaScript": {
         "in_title": false,
@@ -7567,9 +7567,9 @@
       },
       "US": {
         "in_title": true,
-        "in_meta": true,
+        "in_meta": false,
         "in_body": true,
-        "count_in_body": 1
+        "count_in_body": 13
       },
       "USA": {
         "in_title": false,
@@ -8408,8 +8408,8 @@
       "SoftDAB": {
         "in_title": true,
         "in_meta": true,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 2
       },
       "software development": {
         "in_title": true,
@@ -8618,8 +8618,8 @@
       "US": {
         "in_title": true,
         "in_meta": true,
-        "in_body": false,
-        "count_in_body": 0
+        "in_body": true,
+        "count_in_body": 1
       },
       "USA": {
         "in_title": false,

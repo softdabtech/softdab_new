@@ -1,14 +1,14 @@
 {
   "totals": {
-    "SoftDAB": 93,
-    "software development": 8,
+    "SoftDAB": 98,
+    "software development": 4,
     "software development company": 0,
-    "custom software": 17,
-    "custom software development": 2,
+    "custom software": 16,
+    "custom software development": 1,
     "software development company USA": 0,
     "software development company US": 0,
     "software development company Canada": 0,
-    "outsourcing": 2,
+    "outsourcing": 1,
     "outsourcing USA": 0,
     "outsourcing company USA": 0,
     "outsourcing Latin America": 0,
@@ -16,7 +16,7 @@
     "nearshore outsourcing": 0,
     "nearshore software development": 0,
     "nearshore development": 0,
-    "dedicated teams": 18,
+    "dedicated teams": 15,
     "dedicated development teams": 0,
     "dedicated teams USA": 0,
     "staff augmentation": 0,
@@ -25,17 +25,17 @@
     "product engineering": 0,
     "web development": 1,
     "mobile development": 1,
-    "React": 13,
+    "React": 16,
     "Node.js": 5,
-    "Python": 1,
-    "JavaScript": 3,
+    "Python": 2,
+    "JavaScript": 4,
     "C++": 8,
     "C#": 0,
     "IoT": 2,
     "cloud migration": 0,
     "SaaS development": 0,
     "enterprise software": 0,
-    "US": 218,
+    "US": 226,
     "USA": 0,
     "United States": 0,
     "Canada": 0,
@@ -59,18 +59,18 @@
     "desenvolvimento de software Brasil": 0
   },
   "pagesWith": {
-    "SoftDAB": 22,
-    "software development": 5,
+    "SoftDAB": 24,
+    "software development": 4,
     "custom software": 14,
-    "custom software development": 2,
-    "outsourcing": 2,
+    "custom software development": 1,
+    "outsourcing": 1,
     "dedicated teams": 14,
-    "React": 5,
+    "React": 6,
     "Node.js": 5,
-    "JavaScript": 2,
+    "JavaScript": 3,
     "C++": 2,
-    "US": 22,
-    "Python": 1,
+    "US": 24,
+    "Python": 2,
     "IoT": 1,
     "web development": 1,
     "mobile development": 1
@@ -78,23 +78,23 @@
   "high": [
     [
       "US",
-      218
+      226
     ],
     [
       "SoftDAB",
-      93
-    ],
-    [
-      "dedicated teams",
-      18
+      98
     ],
     [
       "custom software",
-      17
+      16
     ],
     [
       "React",
-      13
+      16
+    ],
+    [
+      "dedicated teams",
+      15
     ]
   ],
   "low": [
@@ -267,15 +267,19 @@
       0
     ],
     [
+      "custom software development",
+      1
+    ],
+    [
+      "outsourcing",
+      1
+    ],
+    [
       "web development",
       1
     ],
     [
       "mobile development",
-      1
-    ],
-    [
-      "Python",
       1
     ]
   ]
