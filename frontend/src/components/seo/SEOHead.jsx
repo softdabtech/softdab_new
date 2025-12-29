@@ -218,7 +218,7 @@ const SEOHead = ({
       <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       <link rel="dns-prefetch" href="//api.softdab.tech" />
 
-      {/* Структурированные данные Schema.org */
+      {/* Структурированные данные Schema.org */}
       <script type="application/ld+json">
         {JSON.stringify(organizationSchema)}
       </script>
