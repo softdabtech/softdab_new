@@ -10,6 +10,7 @@ import CriticalCSS from './components/performance/CriticalCSS';
 import EarlyResourceDiscovery from './components/performance/EarlyResourceDiscovery';
 import ServiceWorkerManager from './components/performance/ServiceWorkerManager';
 import SEOHead from './components/seo/SEOHead';
+import './lib/analytics';
 
 // Критический lazy loading для некритических компонентов
 const Footer = lazy(() => import('./components/layout/Footer'));

@@ -16,6 +16,9 @@ if (!fetchFn) fetchFn = (...args) => import('node-fetch').then(m => m.default(..
 
   console.log('Local URLs to check:', localUrls.length);
 
+  // Expected locales for hreflang validation
+  const EXPECTED_LOCALES = ['en-US','en-GB','de-DE','fr-FR','es-ES','x-default'];
+
   // Load keywords from file if present (allows region-specific lists) or use defaults
   let keywords;
   try {
@@ -54,8 +57,33 @@ if (!fetchFn) fetchFn = (...args) => import('node-fetch').then(m => m.default(..
       }).catch(()=>'');
       const bodyText = await page.$eval('body', el => el.innerText).catch(()=>'');
 
+      // hreflang links and html lang attr
+      const hreflangLinks = await page.$$eval('link[rel="alternate"][hreflang]', els => els.map(el => ({ hreflang: el.getAttribute('hreflang'), href: el.getAttribute('href') }))).catch(()=>[]);
+      const hreflangCodes = hreflangLinks.map(l => l.hreflang);
+      const htmlLang = await page.$eval('html', el => el.getAttribute('lang') || '').catch(()=>'');
+
+      // decide locale based on path prefix
+      const path = new URL(url).pathname || '/';
+      let locale = 'en-US';
+      if (path.startsWith('/de')) locale = 'de-DE';
+      else if (path.startsWith('/fr')) locale = 'fr-FR';
+      else if (path.startsWith('/es')) locale = 'es-ES';
+      else if (path.startsWith('/en-GB')) locale = 'en-GB';
+
+      // load locale-specific keywords if available
+      let localeKeywords = keywords;
+      try {
+        const kfile = __dirname + '/keywords_' + locale + '.json';
+        if (require('fs').existsSync(kfile)) {
+          localeKeywords = JSON.parse(require('fs').readFileSync(kfile,'utf8'));
+          console.log('Using', locale, 'keywords from', kfile);
+        }
+      } catch (e) {
+        // ignore and use defaults
+      }
+
       const presence = {};
-      for (const kw of keywords) {
+      for (const kw of localeKeywords) {
         const re = new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'i');
         presence[kw] = {
           in_title: re.test(title),
@@ -66,7 +94,8 @@ if (!fetchFn) fetchFn = (...args) => import('node-fetch').then(m => m.default(..
       }
 
       const canonical = await page.$eval('link[rel="canonical"]', el=>el.href).catch(()=>'');
-      results.push({url, title, meta_len: (meta||'').length, canonical, presence});
+      const missingLocales = EXPECTED_LOCALES.filter(l => !hreflangCodes.includes(l));
+      results.push({url, title, meta_len: (meta||'').length, canonical, htmlLang, hreflang: hreflangLinks, missingLocales, presence});
       await page.close();
       console.log('Checked', url);
     } catch (e) {

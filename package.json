@@ -5,7 +5,8 @@
   "scripts": {
     "keyword-check:prod": "node scripts/keyword_check.js",
     "keyword-check:local": "node scripts/keyword_check_local.js http://localhost:4173",
-    "keyword-gap-report": "node scripts/keyword_gap_report.js"
+    "keyword-gap-report": "node scripts/keyword_gap_report.js",
+    "generate-sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
     "react-error-boundary": "^6.0.0",

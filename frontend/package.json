@@ -79,7 +79,8 @@
     "deploy:github": "npm run build:critical && npm run deploy:gh-pages",
     "deploy:prod": "npm run deploy:github",
     "seo:check": "node scripts/seo_check.js",
-    "status": "./check-production.sh"
+    "status": "./check-production.sh",
+    "test:unit": "vitest run"
   },
   "browserslist": {
     "production": [

@@ -185,17 +185,24 @@ const SEOHead = ({
       {/* Языковые альтернативы */}
       <link rel="alternate" hreflang="en" href="https://www.softdab.tech" />
       <link rel="alternate" hreflang="en-US" href="https://www.softdab.tech" />
+      <link rel="alternate" hreflang="en-GB" href="https://www.softdab.tech" />
       <link rel="alternate" hreflang="en-CA" href="https://www.softdab.tech" />
       <link rel="alternate" hreflang="es" href="https://www.softdab.tech/es" />
+      <link rel="alternate" hreflang="es-ES" href="https://www.softdab.tech/es" />
+      <link rel="alternate" hreflang="de-DE" href="https://www.softdab.tech/de" />
+      <link rel="alternate" hreflang="fr-FR" href="https://www.softdab.tech/fr" />
       <link rel="alternate" hreflang="pt-BR" href="https://www.softdab.tech/pt" />
       <link rel="alternate" hreflang="x-default" href="https://www.softdab.tech" />
+
+      {/* Google Analytics is loaded via consent-aware loader (see /src/lib/analytics.js) */}
+      <script>{`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; window.__GA_MANAGER = {id: 'G-BPPL55293F'};`}</script>
 
       {/* DNS prefetch для производительности */}
       <link rel="dns-prefetch" href="//fonts.googleapis.com" />
       <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       <link rel="dns-prefetch" href="//api.softdab.tech" />
 
-      {/* Структурированные данные Schema.org */}
+      {/* Структурированные данные Schema.org */
       <script type="application/ld+json">
         {JSON.stringify(organizationSchema)}
       </script>
