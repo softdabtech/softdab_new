@@ -64,59 +64,26 @@ const DEFAULT_POSITIONS = [
   }
 ];
 
+import SEOHead from '../../components/seo/SEOHead';
+
 const CareersPage = () => {
   const [positions] = useState(DEFAULT_POSITIONS);
   const [loading] = useState(false);
   const [error] = useState(null);
 
   useEffect(() => {
-    document.title = 'Careers at SoftDAB - Join Our Software Development Team | SoftDAB';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.content = 'Join SoftDAB software development team. Remote and Kyiv-based positions for senior developers, DevOps, QA engineers. Competitive salaries and career growth.';
-    }
-
-    // Breadcrumb Schema
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://www.softdab.tech/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Company",
-          "item": "https://www.softdab.tech/company/about"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Careers",
-          "item": "https://www.softdab.tech/company/careers"
-        }
-      ]
-    };
-
-    const schemaScript = document.createElement('script');
-    schemaScript.type = 'application/ld+json';
-    schemaScript.setAttribute('data-schema', 'breadcrumb');
-    schemaScript.textContent = JSON.stringify(breadcrumbSchema);
-    document.head.appendChild(schemaScript);
-
-    return () => {
-      if (schemaScript.parentNode) {
-        schemaScript.remove();
-      }
-    };
+    // Careers metadata handled by SEOHead
   }, []);
+
+  const breadcrumbSchema = [
+    { name: 'Home', item: 'https://www.softdab.tech/' },
+    { name: 'Company', item: 'https://www.softdab.tech/company/about' },
+    { name: 'Careers', item: 'https://www.softdab.tech/company/careers' }
+  ];
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"Careers at SoftDAB — Join Our Team | SoftDAB"} description={"Join SoftDAB — remote and Kyiv positions for senior developers, DevOps, and QA engineers. Competitive compensation and career growth."} url={"https://www.softdab.tech/company/careers"} breadcrumbs={breadcrumbSchema} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">

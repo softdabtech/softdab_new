@@ -11,6 +11,8 @@ const PAGE_TITLE = 'Case Studies - Software Development Success Stories | SoftDA
 const PAGE_DESCRIPTION = 'Explore our software development case studies from a partner with 8 years in IT. Real results from fintech, healthcare, eCommerce and logistics with measurable business outcomes.';
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80';
 
+import SEOHead from '../components/seo/SEOHead';
+
 const CaseStudiesPage = () => {
   const [caseStudies, setCaseStudies] = useState([]);
 
@@ -18,27 +20,14 @@ const CaseStudiesPage = () => {
     setCaseStudies(mockData.caseStudies || []);
   }, []);
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://www.softdab.tech/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Case Studies",
-        "item": "https://www.softdab.tech/case-studies"
-      }
-    ]
-  };
+  const breadcrumbSchema = [
+    { name: 'Home', item: 'https://www.softdab.tech/' },
+    { name: 'Case Studies', item: 'https://www.softdab.tech/case-studies' }
+  ];
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={PAGE_TITLE} description={PAGE_DESCRIPTION} url={"https://www.softdab.tech/case-studies"} breadcrumbs={breadcrumbSchema} />
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
           <nav className="text-sm text-gray-600">

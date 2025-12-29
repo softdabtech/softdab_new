@@ -32,11 +32,13 @@ const SectionLoader = () => (
   </div>
 );
 
-const HomePage = () => {
+import SEOHead from '../components/seo/SEOHead';
 
+const HomePage = () => {
 
   return (
     <>
+      <SEOHead title={"SoftDAB — Software Development — Custom Software & Teams"} description={"SoftDAB builds custom web & mobile applications and provides dedicated engineering teams for US & EU companies. Scalable software with transparent pricing."} url={"https://www.softdab.tech/"} />
       {/* КРИТИЧЕСКИЙ HERO - БЕЗ SUSPENSE для мгновенного LCP */}
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <HeroSection />

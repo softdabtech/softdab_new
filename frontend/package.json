@@ -80,7 +80,8 @@
     "deploy:prod": "npm run deploy:github",
     "seo:check": "node scripts/seo_check.js",
     "status": "./check-production.sh",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "test:ci": "vitest run --run --reporter verbose"
   },
   "browserslist": {
     "production": [

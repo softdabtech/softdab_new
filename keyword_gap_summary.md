@@ -17,7 +17,7 @@
 - Add a short FAQ or schema where appropriate referencing the keywords.
 
 ## /services/dedicated-teams
-- Missing 53 keywords: software development company, custom software development, software development company USA, software development company US, software development company Canada, outsourcing, outsourcing USA, outsourcing company USA, outsourcing Latin America, nearshore, nearshore outsourcing, nearshore software development, nearshore development, dedicated teams, dedicated development teams, dedicated teams USA, staff augmentation, team augmentation, software engineering, product engineering
+- Missing 50 keywords: software development company, custom software development, software development company USA, software development company US, software development company Canada, outsourcing, outsourcing USA, outsourcing company USA, outsourcing Latin America, nearshore, nearshore outsourcing, nearshore software development, nearshore development, dedicated teams USA, staff augmentation, team augmentation, software engineering, product engineering, web development, mobile development
 
 ### Recommendations
 - Add target keywords to **title** and **meta description** if relevant.
@@ -33,7 +33,7 @@
 - Add a short FAQ or schema where appropriate referencing the keywords.
 
 ## /services/discovery
-- Missing 53 keywords: software development company, custom software development, software development company USA, software development company US, software development company Canada, outsourcing, outsourcing USA, outsourcing company USA, outsourcing Latin America, nearshore, nearshore outsourcing, nearshore software development, nearshore development, dedicated teams, dedicated development teams, dedicated teams USA, staff augmentation, team augmentation, software engineering, product engineering
+- Missing 52 keywords: software development company, custom software development, software development company USA, software development company US, software development company Canada, outsourcing, outsourcing USA, outsourcing company USA, outsourcing Latin America, nearshore, nearshore outsourcing, nearshore software development, nearshore development, dedicated development teams, dedicated teams USA, staff augmentation, team augmentation, software engineering, product engineering, web development
 
 ### Recommendations
 - Add target keywords to **title** and **meta description** if relevant.

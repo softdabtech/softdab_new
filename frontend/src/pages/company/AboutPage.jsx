@@ -7,8 +7,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Badge } from '../../components/ui/badge';
 import { mockData } from '../../data/mockData';
 
-const AboutPage = () => {
+import SEOHead from '../../components/seo/SEOHead';
 
+const AboutPage = () => {
 
   const values = [
     {
@@ -78,6 +79,8 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen">
+      <SEOHead title={"About SoftDAB — Software Development Studio — USA & EU"} description={"About SoftDAB — our mission, values, and history in software development for US & EU clients."} url={"https://www.softdab.tech/company/about"} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'About', item:'https://www.softdab.tech/company/about'}]} />
+
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
