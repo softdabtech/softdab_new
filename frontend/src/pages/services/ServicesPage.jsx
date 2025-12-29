@@ -53,11 +53,20 @@ const ServicesPage = () => {
     else { const m = document.createElement('meta'); m.name='description'; m.content=desc; document.head.appendChild(m); }
   }, []);
 
+  const breadcrumbs = [{name:'Home', item:'https://www.softdab.tech/'},{name:'Services', item:'https://www.softdab.tech/services'}];
+
+  const serviceCatalogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    'name': 'SoftDAB Service Catalog',
+    'itemListElement': services.map((s, idx) => ({ '@type': 'Offer', 'itemOffered': { '@type': 'Service', 'name': s.title, 'description': s.description }, 'position': idx + 1 }))
+  };
+
 
 
   return (
     <div className="min-h-screen">
-      <SEOHead title={"Software Development Services — SoftDAB — USA & LATAM"} description={"From custom development to dedicated teams — flexible engagement models for US, Canadian and Latin American companies. Nearshore delivery options available."} keywords={"custom software development, software development company, software development company USA, nearshore development, nearshore software development, dedicated development teams, outsourcing, US, USA, Canada, Latin America, LATAM"} url={"https://www.softdab.tech/services"} />
+      <SEOHead title={"Software Development Services — SoftDAB — USA & LATAM"} description={"From custom development to dedicated teams — flexible engagement models for US, Canadian and Latin American companies. Nearshore delivery options available."} keywords={"custom software development, software development company, software development company USA, nearshore development, nearshore software development, dedicated development teams, outsourcing, US, USA, Canada, Latin America, LATAM"} url={"https://www.softdab.tech/services"} breadcrumbs={breadcrumbs} additionalSchema={[serviceCatalogSchema]} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
