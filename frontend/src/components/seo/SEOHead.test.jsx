@@ -22,4 +22,16 @@ describe('SEOHead', () => {
     // canonical link should exist (client-side fallback sets it)
     expect(document.querySelector('link[rel="canonical"]')).toBeTruthy();
   });
+
+  test('renders additional JSON-LD schemas when provided', () => {
+    const serviceSchema = { "@context": "https://schema.org", "@type": "Service", name: 'Test Service' };
+    render(
+      <HelmetProvider>
+        <SEOHead additionalSchema={[serviceSchema]} />
+      </HelmetProvider>
+    );
+    const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+    expect(scripts.some(s => s.textContent && s.textContent.includes('"@type":"Service"'))).toBe(true);
+    expect(scripts.some(s => s.textContent && s.textContent.includes('Test Service'))).toBe(true);
+  });
 });

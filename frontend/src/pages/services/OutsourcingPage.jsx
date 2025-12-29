@@ -19,43 +19,22 @@ const OutsourcingPage = () => {
     if (metas && metas.length) metas[metas.length-1].setAttribute('content', desc);
     else { const m = document.createElement('meta'); m.name='description'; m.content=desc; document.head.appendChild(m); }
 
-    const breadcrumbSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.softdab.tech' },
-        { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.softdab.tech/services' },
-        { '@type': 'ListItem', position: 3, name: 'Outsourcing' }
-      ]
-    };
-
-    const serviceSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
-      name: 'Custom Software Development Outsourcing',
-      description: 'End-to-end custom software development with full project ownership and guaranteed delivery',
-      provider: { '@type': 'Organization', name: 'SoftDAB' },
-      areaServed: ['United States', 'European Union'],
-      hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Software Development Services' }
-    };
-
-    const script1 = document.createElement('script');
-    script1.type = 'application/ld+json';
-    script1.text = JSON.stringify(breadcrumbSchema);
-    document.head.appendChild(script1);
-
-    const script2 = document.createElement('script');
-    script2.type = 'application/ld+json';
-    script2.text = JSON.stringify(serviceSchema);
-    document.head.appendChild(script2);
-
-    return () => {
-      document.head.removeChild(script1);
-      document.head.removeChild(script2);
-    };
+    // Page-specific schemas are passed to <SEOHead /> as additionalSchema (see below)
   }, []);
 
   const service = mockData.outsourcing;
+
+  const breadcrumbs = [{name: 'Home', item: 'https://www.softdab.tech/'},{name:'Services', item:'https://www.softdab.tech/services'},{name:'Outsourcing', item:'https://www.softdab.tech/services/outsourcing'}];
+
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'Custom Software Development Outsourcing',
+    description: 'End-to-end custom software development with full project ownership and guaranteed delivery',
+    provider: { '@type': 'Organization', name: 'SoftDAB' },
+    areaServed: ['United States', 'European Union'],
+    hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Software Development Services' }
+  };
 
   const processSteps = [
     {
@@ -166,7 +145,7 @@ const OutsourcingPage = () => {
 
   return (
     <div className="min-h-screen">
-      <SEOHead title={"Outsourcing & Nearshore Development — SoftDAB"} description={"Custom software development outsourcing and nearshore teams for US, Canadian and Latin American clients. Full project delivery and long-term support."} keywords={"outsourcing, nearshore, nearshore outsourcing, outsourcing USA, outsourcing Latin America, software development outsourcing, US, USA, Canada, Latin America, LATAM"} url={"https://www.softdab.tech/services/outsourcing"} />
+      <SEOHead title={"Outsourcing & Nearshore Development — SoftDAB"} description={"Custom software development outsourcing and nearshore teams for US, Canadian and Latin American clients. Full project delivery and long-term support."} keywords={"outsourcing, nearshore, nearshore outsourcing, outsourcing USA, outsourcing Latin America, software development outsourcing, US, USA, Canada, Latin America, LATAM"} url={"https://www.softdab.tech/services/outsourcing"} breadcrumbs={breadcrumbs} additionalSchema={[serviceSchema]} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">

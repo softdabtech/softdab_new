@@ -13,7 +13,8 @@ const SEOHead = ({
   modifiedTime,
   author = "SoftDAB Team",
   section = "Technology",
-  breadcrumbs = []
+  breadcrumbs = [],
+  additionalSchema = []
 }) => {
   // Resolve canonical to the provided url or current location when available
   // Do not default to homepage during server-side rendering to avoid wrong canonical for SPA routes
@@ -96,11 +97,16 @@ const SEOHead = ({
     }
   };
 
-  // Хлебные крошки Schema.org
+  // Хлебные крошки Schema.org - build from `breadcrumbs` prop if provided
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
+    "itemListElement": (breadcrumbs && breadcrumbs.length) ? breadcrumbs.map((b, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": b.name,
+      "item": b.item
+    })) : [
       {
         "@type": "ListItem",
         "position": 1,
@@ -108,7 +114,7 @@ const SEOHead = ({
         "item": "https://www.softdab.tech"
       },
       {
-        "@type": "ListItem", 
+        "@type": "ListItem",
         "position": 2,
         "name": "Services",
         "item": "https://www.softdab.tech/services"
@@ -225,6 +231,13 @@ const SEOHead = ({
       <script type="application/ld+json">
         {JSON.stringify(faqSchema)}
       </script>
+
+      {/* Additional page-specific JSON-LD schemas (array) */}
+      {Array.isArray(additionalSchema) && additionalSchema.map((s, idx) => (
+        <script key={idx} type="application/ld+json">
+          {JSON.stringify(s)}
+        </script>
+      ))}
 
       {/* Дополнительные мета теги для индексации */}
       <meta name="rating" content="general" />

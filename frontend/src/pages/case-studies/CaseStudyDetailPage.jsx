@@ -37,34 +37,20 @@ const CaseStudyDetailPage = () => {
   const keywords = [...(technologies||[]), industry, 'case study', 'custom software development'].filter(Boolean).join(', ');
 
 
-  const breadcrumbSchema = {
+  // Build article schema for the specific case study
+  const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://www.softdab.tech/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Case Studies",
-        "item": "https://www.softdab.tech/case-studies"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": title,
-        "item": "https://www.softdab.tech/case-studies/" + slug
-      }
-    ]
+    "@type": "Article",
+    "headline": title,
+    "description": description,
+    "author": { "@type": "Organization", "name": "SoftDAB" },
+    "publisher": { "@type": "Organization", "name": "SoftDAB", "logo": { "@type": "ImageObject", "url": "https://www.softdab.tech/images/softdab-logo-square.svg" } },
+    "mainEntityOfPage": `https://www.softdab.tech/case-studies/${slug}`
   };
 
   return (
     <div className="min-h-screen">
-      <SEOHead title={title + ' — SoftDAB'} description={description} keywords={keywords} url={`https://www.softdab.tech/case-studies/${slug}`} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'Case Studies', item:'https://www.softdab.tech/case-studies'},{name:title, item:`https://www.softdab.tech/case-studies/${slug}`}]} />
+      <SEOHead title={title + ' — SoftDAB'} description={description} keywords={keywords} url={`https://www.softdab.tech/case-studies/${slug}`} breadcrumbs={[{name:'Home', item:'https://www.softdab.tech/'},{name:'Case Studies', item:'https://www.softdab.tech/case-studies'},{name:title, item:`https://www.softdab.tech/case-studies/${slug}`}]} additionalSchema={[articleSchema]} />
       {/* Breadcrumb */}
       <div className="bg-gray-50 py-4 mt-20">
         <div className="container mx-auto px-6">
