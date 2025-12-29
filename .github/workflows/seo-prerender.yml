@@ -1,0 +1,153 @@
+# Workflow: prerender + verify + manual deploy
+# Secrets required:
+# - PREVIEW_SSH_PRIVATE_KEY (optional)
+# - PREVIEW_DEPLOY_USER, PREVIEW_DEPLOY_HOST, PREVIEW_DEPLOY_PATH, PREVIEW_DEPLOY_URL (optional)
+# - PRODUCTION_SSH_PRIVATE_KEY, PRODUCTION_DEPLOY_USER, PRODUCTION_DEPLOY_HOST, PRODUCTION_DEPLOY_PATH, PRODUCTION_DEPLOY_URL
+# Notes: The `prerender-verify` job runs automatically on PRs and branch pushes (seo/quick-wins)
+# The `deploy` job runs only via manual workflow_dispatch and accepts input `target` (preview|production).
+name: SEO prerender, verify & deploy
+
+on:
+  push:
+    branches: [ "seo/quick-wins" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Deploy target (preview or production)'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - production
+
+jobs:
+  prerender-verify:
+    name: Prerender and verify (PR/branch)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci
+
+      - name: Build frontend
+        run: npm --prefix frontend run build
+
+      - name: Prerender and verify head tags
+        run: npm --prefix frontend run prerender -- --verify
+
+  deploy:
+    name: Deploy to server (manual)
+    needs: prerender-verify
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci
+
+      - name: Build & prerender (again to ensure dist/ is up-to-date)
+        run: |
+          npm --prefix frontend run build
+          npm --prefix frontend run prerender
+
+      - name: Setup SSH key for target
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event.inputs.target }}" = "production" ]; then
+            echo "Using PRODUCTION SSH key"
+            echo "${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}" > /tmp/deploy_key
+          else
+            echo "Using PREVIEW SSH key"
+            echo "${{ secrets.PREVIEW_SSH_PRIVATE_KEY }}" > /tmp/deploy_key
+          fi
+          chmod 600 /tmp/deploy_key
+          eval "$(ssh-agent -s)"
+          ssh-add /tmp/deploy_key
+
+      - name: Determine deployment target and sync files
+        env:
+          TARGET: ${{ github.event.inputs.target }}
+          PREVIEW_USER: ${{ secrets.PREVIEW_DEPLOY_USER }}
+          PREVIEW_HOST: ${{ secrets.PREVIEW_DEPLOY_HOST }}
+          PREVIEW_PATH: ${{ secrets.PREVIEW_DEPLOY_PATH }}
+          PREVIEW_URL: ${{ secrets.PREVIEW_DEPLOY_URL }}
+          PRODUCTION_USER: ${{ secrets.PRODUCTION_DEPLOY_USER }}
+          PRODUCTION_HOST: ${{ secrets.PRODUCTION_DEPLOY_HOST }}
+          PRODUCTION_PATH: ${{ secrets.PRODUCTION_DEPLOY_PATH }}
+          PRODUCTION_URL: ${{ secrets.PRODUCTION_DEPLOY_URL }}
+        run: |
+          set -euo pipefail
+          if [ "$TARGET" = "production" ]; then
+            DEPLOY_USER="$PRODUCTION_USER"
+            DEPLOY_HOST="$PRODUCTION_HOST"
+            DEPLOY_PATH="$PRODUCTION_PATH"
+            DEPLOY_URL="$PRODUCTION_URL"
+          else
+            DEPLOY_USER="$PREVIEW_USER"
+            DEPLOY_HOST="$PREVIEW_HOST"
+            DEPLOY_PATH="$PREVIEW_PATH"
+            DEPLOY_URL="$PREVIEW_URL"
+          fi
+          echo "Deploying to ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
+          rsync -avz --delete --chmod=Du=rwx,Dg=rx,Fu=rw,Fg=r frontend/dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
+
+      - name: Wait for site to be responsive
+        env:
+          DEPLOY_URL: ${{ secrets.PRODUCTION_DEPLOY_URL }}
+        run: |
+          set -euo pipefail
+          URL=""
+          if [ "${{ github.event.inputs.target }}" = "production" ]; then
+            URL="${{ secrets.PRODUCTION_DEPLOY_URL }}"
+          else
+            URL="${{ secrets.PREVIEW_DEPLOY_URL }}"
+          fi
+          echo "Checking $URL"
+          for i in $(seq 1 12); do
+            if curl -fsS "$URL" -o /dev/null; then
+              echo "$URL is up"
+              break
+            fi
+            echo "Waiting for site... (attempt $i)"
+            sleep 5
+          done
+
+      - name: Run head checks against deployed site
+        env:
+          SITE_URL: ${{ secrets.PRODUCTION_DEPLOY_URL }}
+        run: |
+          if [ "${{ github.event.inputs.target }}" = "production" ]; then
+            export SITE_URL="${{ secrets.PRODUCTION_DEPLOY_URL }}"
+          else
+            export SITE_URL="${{ secrets.PREVIEW_DEPLOY_URL }}"
+          fi
+          echo "Running head checks against $SITE_URL"
+          node scripts/e2e_head_check.js "$SITE_URL"
+
+      - name: Ping Google (notify sitemap updated)
+        if: ${{ secrets.PRODUCTION_DEPLOY_URL != '' }}
+        env:
+          DEPLOY_URL: ${{ secrets.PRODUCTION_DEPLOY_URL }}
+        run: |
+          echo "Pinging Google for sitemap: $DEPLOY_URL/sitemap.generated.xml"
+          curl -fsS "https://www.google.com/ping?sitemap=${DEPLOY_URL}/sitemap.generated.xml" || true
