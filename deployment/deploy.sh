@@ -25,6 +25,8 @@ echo -e "${YELLOW}📦 Building frontend...${NC}"
 cd frontend
 npm install
 npm run build
+# Generate prerendered static snapshots so pages include canonical/hreflang/JSON-LD server-side
+npm run prerender
 cd ..
 
 echo -e "${YELLOW}📤 Uploading files to server...${NC}"
