@@ -15,7 +15,15 @@ Quick checklist
 ---------------
 1. Create GA4 property and get Measurement ID (G-XXXXXXXX)
 2. Enable BigQuery export (daily or streaming) in GA4 > Admin > BigQuery Links
-3. Set environment variable in hosting (NETLIFY/Vercel) or in runtime to expose the measurement ID as `REACT_APP_GA_MEASUREMENT_ID` or set window.__GA_MANAGER.id in server-rendered head
+3. Set environment variable in hosting (Netlify/Vercel) or inject at runtime to expose the measurement ID. For Vite-based builds we recommend using `VITE_GA_MEASUREMENT_ID` (e.g., `VITE_GA_MEASUREMENT_ID=G-XXXXXXX`) and **re-building** the site. Example (Netlify): Site settings → Build & deploy → Environment → Add variable `VITE_GA_MEASUREMENT_ID=G-XXXXXXX`. On Vercel use Project Settings → Environment Variables.
+
+Alternatively, if you inject the ID at runtime (server-side template), add this snippet to your HTML template before other scripts:
+
+```html
+<script>window.__GA_MANAGER = { id: 'G-XXXXXXX' };</script>
+```
+
+After adding the env var, rebuild and verify in the browser that `window.__GA_MANAGER.id` or `import.meta.env.VITE_GA_MEASUREMENT_ID` has the correct value.
 4. Configure consent mode and ensure cookie banner triggers `softdab:analytics-consent-granted` and `softdab:analytics-consent-revoked`
 5. Review `frontend/src/lib/analytics.js` and `frontend/src/lib/analytics-client.js` for event naming conventions
 

@@ -1,0 +1,27 @@
+name: SEO CI
+
+on:
+  pull_request:
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install root dependencies
+        run: npm ci
+      - name: Run frontend unit tests
+        run: npm --prefix frontend run test:ci
+      - name: Generate localized sitemap
+        run: npm run generate-sitemap
+      - name: Run SEO check script
+        run: node frontend/scripts/seo_check.js
+      - name: Build frontend and start preview
+        run: |
+          npm --prefix frontend run build
+          npm --prefix frontend run preview & sleep 3
+      - name: Run E2E head checks
+        run: node scripts/e2e_head_check.js http://localhost:4173
