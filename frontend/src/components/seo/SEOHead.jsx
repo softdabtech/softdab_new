@@ -1,5 +1,5 @@
 // SEOHead.jsx - Полная SEO оптимизация с Schema.org разметкой
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SEOHead = ({
@@ -17,7 +17,14 @@ const SEOHead = ({
 }) => {
   // Resolve canonical to the provided url or current location when available
   // Do not default to homepage during server-side rendering to avoid wrong canonical for SPA routes
-  const canonicalUrl = url || (typeof window !== 'undefined' ? window.location.href : undefined);
+  const [canonicalUrlState, setCanonicalUrlState] = useState(url || undefined);
+  useEffect(() => {
+    // If no explicit url prop provided, set canonical to the current client URL after mount
+    if (!url && typeof window !== 'undefined') {
+      setCanonicalUrlState(window.location.href);
+    }
+  }, [url]);
+  const canonicalUrl = canonicalUrlState;
   // Структурированные данные Schema.org для Organization
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -193,6 +200,9 @@ const SEOHead = ({
       <link rel="alternate" hreflang="fr-FR" href="https://www.softdab.tech/fr" />
       <link rel="alternate" hreflang="pt-BR" href="https://www.softdab.tech/pt" />
       <link rel="alternate" hreflang="x-default" href="https://www.softdab.tech" />
+
+      {/* Ensure hreflang links are present on client if SSR omitted them */}
+      <script>{`(function(){try{if(typeof window!=='undefined'){const needed=['en-US','en-GB','de-DE','fr-FR','es-ES','x-default']; for(const code of needed){if(!document.querySelector('link[rel="alternate"][hreflang="'+code+'"]')){const el=document.createElement('link');el.setAttribute('rel','alternate');el.setAttribute('hreflang',code);el.setAttribute('href',window.location.origin);document.head.appendChild(el);}}}}catch(e){}})();`}</script>
 
       {/* Google Analytics is loaded via consent-aware loader (see /src/lib/analytics.js) */}
       <script>{`window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}; window.__GA_MANAGER = {id: 'G-BPPL55293F'};`}</script>

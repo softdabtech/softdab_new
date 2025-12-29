@@ -4,7 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import SEOHead from './SEOHead';
 
 describe('SEOHead', () => {
-  test('renders hreflang links and sets GA stub', () => {
+  test('renders hreflang links and sets GA stub and canonical', () => {
     render(
       <HelmetProvider>
         <SEOHead />
@@ -18,5 +18,8 @@ describe('SEOHead', () => {
     // GA stub should be present as window.__GA_MANAGER
     expect(window.__GA_MANAGER).toBeDefined();
     expect(window.__GA_MANAGER.id).toBe('G-BPPL55293F');
+
+    // canonical link should exist (client-side fallback sets it)
+    expect(document.querySelector('link[rel="canonical"]')).toBeTruthy();
   });
 });
