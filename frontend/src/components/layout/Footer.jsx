@@ -26,7 +26,7 @@ const FOOTER_SECTIONS = {
   projects: [
     { name: 'Blog', href: 'https://blog.softdab.tech', external: true },
     { name: 'Crypto Solution', href: 'https://cryptography.softdab.tech', external: true },
-    { name: 'OpticalDT', href: 'https://opto.softdab.tech', external: true },
+    { name: 'OpticalDT', href: 'https://opticaldt.softdab.tech', external: true },
     { name: 'SnapSafe', href: 'https://snapsafe.softdab.tech', external: true },
     { name: 'T.Y.K.E', href: 'https://tyke.softdab.tech', external: true },
   ],
